@@ -26,6 +26,8 @@ SECRET_KEY = 'dp5kj0k1spp1*!#oc%-d#n594-_h4*3@7)*opos86(&1+#05yb'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
     'nthu-plus.herokuapp.com',
 ]
 
@@ -159,5 +161,18 @@ ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_LOGOUT_ON_GET = True
 
 ACCOUNT_ADAPTER = 'users.adapter.MyAccountAdapter'
+
+
+# deploy settings
+
+import dj_database_url
+DATABASES['default'] =  dj_database_url.config()
+
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
+
 
 
