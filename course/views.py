@@ -11,7 +11,7 @@ def add_course (request):
     all_courses = requests.get('https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/JH/OPENDATA/open_course_data_10510.json').text
     all_courses = json.loads(all_courses)
     for course in all_courses:
-        dep = course['科號'][5:9]
+        dep = course['科號'][5:9].replace(' ','')
         Course.objects.get_or_create(
             course_no = course['科號'],
             defaults = {
