@@ -1,0 +1,7 @@
+{% extends 'base.html'%}
+
+{% block content %}
+    {{ user.username }}
+    {{ user.profile.nickname }}
+    <a href="/users/{{user.id}}/edit">編輯檔案</a>
+{% endblock %}

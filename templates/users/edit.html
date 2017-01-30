@@ -1,0 +1,9 @@
+{% extends 'base.html'%}
+
+{% block content %}
+    <form action="./update" method="POST">{% csrf_token %}
+        <label for="nickname">暱稱</label>
+        <input type="text" name="nickname" value="{{ user.profile.nickname }}">
+        <input type="submit" value="更新">
+    </form>
+{% endblock %}

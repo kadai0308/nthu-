@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NTHU Plus</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" 
+            crossorigin="anonymous"></script>
+    
+
+    <style type="text/css">
+        .upper-bar {
+            margin: 10px 0 20px 0;
+            padding: 10px 10px 10px 10px;
+            box-shadow: 0px 1px 6px #888888;
+        }
+        .content {
+            position: absolute;
+            width: 100%;
+            height:  100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="upper-bar">
+        <span style="font-size: 30px;margin-right: 20px;"><a href="/">NTHU+</a></span>
+        <ul class="nav nav-pills">
+            <li role="presentation"><a href="/course_comment">修課心得</a></li>
+            <li role="presentation"><a href="#">這裡要放啥好呢</a></li>
+            {% if user.is_authenticated %}
+                <li role="presentation"><a href="/accounts/logout">快滾！</a></li>
+            {% else %}
+                <li role="presentation"><a href="/login">登登登登登五個燈！</a></li>
+            {%  endif %}
+        </ul>
+        {% if messages %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        <!-- <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul> -->
+        {% endif %}
+    </div>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

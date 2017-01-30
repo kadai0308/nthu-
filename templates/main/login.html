@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% load socialaccount %}
+    <style type="text/css">
+        .main {
+            width: 100%;
+            height: 1000px;
+            background: linear-gradient(141deg, #00A6FF 0%, #954FFF 51%, #D45AFC 75%);
+        }
+    </style>
+    <div class="main">
+        <a href="{% provider_login_url "facebook" method="oauth2" %}">Facebook OAuth2</a>
+    </div>
+{% endblock %}
+
