@@ -1,0 +1,8 @@
+defusedxml==0.4.1
+Django==1.10.5
+django-allauth==0.30.0
+oauthlib==2.0.1
+psycopg2==2.6.2
+python3-openid==3.0.10
+requests==2.12.5
+requests-oauthlib==0.7.0
