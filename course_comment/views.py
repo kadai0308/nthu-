@@ -12,6 +12,9 @@ def index (request):
     all_comments = Comment.objects.all().order_by('-created_time')
     course_comment = 'focus'
 
+    if not all_comments:
+        no_comment = True
+
     paginator = Paginator(all_comments, 10) # Show 25 contacts per page
 
     page = request.GET.get('page')
