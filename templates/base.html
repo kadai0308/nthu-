@@ -169,13 +169,53 @@
             border-style: solid solid none;
             border-width: 1px 0px;
         }
+        /* system-message */
+        .system-message {
+            position: fixed;
+            top: 100px;
+            left: 20px;
+            width: 200px;
+        }
+        .message-card {
+            width: 100%;
+            background-color: #00A6FF;
+            line-height: 50px;
+            padding-left: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            text-align: center;
+            color: #fff;
+            box-shadow: 1px 2px 3px #808080;
+            animation-name: faedOut;
+            animation-duration: 5s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+        .message-card:hover {
+           background-color: #008CFF; 
+        }
+        @keyframes faedOut {
+            0% {
+                opacity: 0;
+            }
+            70% {
+                opacity: 0.5;   
+            }
+            100% {
+                opacity: 0;
+                left: -9999px; 
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="system-message" style="display: none;">
+    <div class="system-message">
         {% if messages %}
             {% for message in messages %}
+            <div class="message-card">
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
                 {{ message }}
+            </div>
             {% endfor %}
         {% endif %}
     </div>

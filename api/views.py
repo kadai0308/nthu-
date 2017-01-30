@@ -7,7 +7,7 @@ from course_comment.models import Comment
 import re
 
 def search_course (request):
-    dep = request.GET['dep']
+    dep = request.GET.get('dep','')
     courses = Course.objects.filter(department = dep).order_by('title_tw', 'teacher')
 
     data = list()

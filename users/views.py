@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 
 from django.contrib.auth.models import User
 
@@ -25,3 +26,6 @@ def update (request, id):
 
     return redirect('/users/{id}'.format(id = id))
 
+def login_cancelled (request):
+    messages.warning(request, '登入取消呦')
+    return redirect('/')

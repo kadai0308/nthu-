@@ -31,6 +31,7 @@ urlpatterns = (
 
 # package setting
 urlpatterns += (
+    url(r'^accounts/social/login/cancelled/$', users.views.login_cancelled),
     url(r'^accounts/', include('allauth.urls')),
 )
 

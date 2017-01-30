@@ -32,8 +32,8 @@ def index (request):
 
 def new (request):
     if not request.user.is_authenticated():
-        messages.warning(request, 'You do not fucking login yet')
-        return redirect ('/login')
+        messages.warning(request, '請先登入呦')
+        return redirect ('/course_comment/')
 
     return render(request, 'course_comment/new.html')
 
