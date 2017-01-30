@@ -8,7 +8,8 @@ import re
 
 def search_course (request):
     dep = request.GET.get('dep','')
-    courses = Course.objects.filter(department = dep).order_by('title_tw', 'teacher')
+    courses = Course.objects.filter(department = dep).extra(select={'sub_course_no': "SUBSTR(course_no, 9)"})
+    courses = courses.order_by('sub_course_no', 'title_tw', 'teacher')
 
     data = list()
     for index, course in enumerate(courses):
