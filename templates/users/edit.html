@@ -1,9 +1,73 @@
 {% extends 'base.html'%}
 
 {% block content %}
-    <form action="./update" method="POST">{% csrf_token %}
-        <label for="nickname">暱稱</label>
-        <input type="text" name="nickname" value="{{ user.profile.nickname }}">
-        <input type="submit" value="更新">
-    </form>
+    <style type="text/css">
+        .box {
+            background-color: #fff;
+            box-shadow: 0 1px 4px rgba(0,0,0,.1);
+            margin-bottom: 20px;
+            margin-top: 30px;
+            margin-right: auto;
+            margin-left: auto;
+            width: 80%;
+        }
+        .box-title {
+            padding: 12px 15px 15px 10px;
+        }
+        .box-title h5 {
+            transform: translateY(30%);
+        }
+        .box-content div {
+            font-size: 18px;
+            margin: 20px 10px;
+        }
+        .std-btn {
+            outline: none;
+            background-color: #1BB394;
+            border-color: #1BB394;
+            color: white;
+            line-height: 30px;
+            font-size: 15px;
+            padding: 0 20px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-left: 15px;
+            margin-bottom: 0;
+            font-size: 8px;
+            text-align: center;
+            vertical-align: middle;
+            touch-action: manipulation;
+            cursor: pointer;
+            background-image: none;
+            border: 1px solid transparent;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+        .std-btn:hover {
+            background-color: #18A387;
+        }
+        .text-input {
+            line-height: 30px;
+            font-size: 18px;
+            width: 200px;
+            outline: none;
+        }
+    </style>
+    <div class="box marginAuto marginTop30">
+        <div class="box-title">
+            <h5>編輯個人資訊</h5>
+        </div>
+        <div class="box-content">
+            <div >Email: {{ user.username }}</div>
+            <form action="./update" method="POST">{% csrf_token %}
+                <div>
+                    <label for="nickname">暱稱：</label>
+                    <input class="text-input" type="text" name="nickname" value="{{ user.profile.nickname }}">
+                </div>
+                <div style="float: right;">
+                    <input type="submit" value="更新" class="std-btn">
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}

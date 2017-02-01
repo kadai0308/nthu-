@@ -96,5 +96,51 @@ def search (request):
     # return render(request, 'course_comment/index.html', {'contacts': contacts})
     return render(request, 'course_comment/index.html', locals())
 
+def edit (request, id):
+    comment = Comment.objects.get(id = id)
+    if not request.user.is_authenticated():
+        messages.warning(request, '請先登入呦')
+        return redirect ('/course_comment/')
+    elif request.user.id != comment.user.id:
+        messages.warning(request, '權限不符')
+        return redirect ('/course_comment/')
+
+    return render(request, 'course_comment/edit.html', locals())
+
+def update(request, id):
+    comment = Comment.objects.get(id = id)
+    if not request.user.is_authenticated():
+        messages.warning(request, '請先登入呦')
+        return redirect ('/course_comment/')
+    elif request.user.id != comment.user.id:
+        messages.warning(request, '權限不符')
+        return redirect ('/course_comment/')
+
+    comment.title = request.POST.get('title','')
+    comment.content = request.POST.get('content','')
+    
+    comment.anonymous = [False, True]['anonymous' in request.POST]
+    # score_img = request.FILES['score_img'] if 'score_img' in request.FILES else None
+
+    comment.sweety = request.POST.get('sweety', 0)
+    comment.cold = request.POST.get('cold', 0)
+    comment.hardness = request.POST.get('hardness', 0)
+
+    comment.save()
+
+    return redirect('/users/{}/course_comment'.format(request.user.id))
+
+def delete(request, id):
+    comment = Comment.objects.get(id = id)
+    if not request.user.is_authenticated():
+        messages.warning(request, '請先登入呦')
+        return redirect ('/course_comment/')
+    elif request.user.id != comment.user.id:
+        messages.warning(request, '權限不符')
+        return redirect ('/course_comment/')
+
+    comment.delete()
+
+    return redirect('/users/{}/course_comment'.format(request.user.id))
 
 

@@ -1,0 +1,106 @@
+{% extends 'base.html'%}
+{% load custom_filter %}
+
+{% block content %}
+    <style type="text/css">
+        .main {
+            width: 100%;
+        }
+        .title {
+            line-height: 15px;
+            font-size: 20px;
+            width: 250px;
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px 0;
+            background-color: #1BB394;
+            color: #fff;
+            box-shadow: 2px 3px 4px rgba(0,0,0,0.3);
+            margin-left: 20px;
+        }
+        .box {
+            max-width: 600px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        /*.box-title h5 {
+            transform: translateY(30%);
+        }*/
+        .std-btn {
+            outline: none;
+            background-color: #1BB394;
+            border-color: #1BB394;
+            color: white;
+            line-height: 20px;
+            font-size: 15px;
+            padding: 0 10px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-left: 15px;
+            margin-bottom: 0;
+            font-size: 8px;
+            text-align: center;
+            vertical-align: middle;
+            touch-action: manipulation;
+            cursor: pointer;
+            background-image: none;
+            border: 1px solid transparent;
+            white-space: nowrap;
+            text-decoration: none;
+            transform: translateY(-3px);
+        }
+        .star {
+            color: #FFD700;
+            margin-right: 5px;
+        }
+        #unfold {
+            color: rgba(0,0,0,.53);
+        }
+        #unfold:hover {
+            color: rgba(0,0,0,.9);
+        }
+    </style>
+    <div class="main">
+        <div class="title">我的修課心得</div>
+        {% if not comments %}
+            <div style="color: rgba(0,0,0,.5);text-align: center;">快來新增你的心得吧～</div>
+        {% endif %}
+        {% for comment in comments %}
+            <div class="box">
+                <div class="box-title">
+                    <h5>{{ comment.course.title_tw }} / {{ comment.course.teacher | replace:'[\u4e00-\u9fa5]+' }}</h5>
+                    <div class="box-tool">
+                        <a href="/course_comment/{{ comment.id }}/edit" class="std-btn">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                            修改心得
+                        </a>
+                        <a href="/course_comment/{{ comment.id }}/delete" class="std-btn">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            刪除心得
+                        </a>
+                    </div>
+                </div>
+                <div class="box-content">
+                    <h3>{{ comment.title }}</h3>
+                    <div>
+                        甜度：{{ comment.sweety }} <i class="fa fa-star star" aria-hidden="true"></i>
+                        涼度：{{ comment.cold }} <i class="fa fa-star star" aria-hidden="true" ></i>
+                        深度：{{ comment.hardness }} <i class="fa fa-star star" aria-hidden="true" ></i>
+                    </div>
+                    <p id='unfold' style="cursor: pointer;">{{ comment.content | truncatetw | linebreaksbr }}</p>
+                    <p id='hidden' style="display: none;cursor: pointer;">{{ comment.content | linebreaksbr }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <script type="text/javascript">
+        $('#unfold, #hidden').click(function() {
+            $(this).toggle()
+            if (this.id === 'unfold') {
+                $(this).next().toggle()
+            } else {
+                $(this).prev().toggle()
+            }
+        })
+    </script>
+{% endblock %}

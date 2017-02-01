@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 
 from django.contrib.auth.models import User
+from course_comment.models import Comment
 
 def show (request, id):
     if not request.user.is_authenticated():
@@ -29,3 +30,8 @@ def update (request, id):
 def login_cancelled (request):
     messages.warning(request, '登入取消呦')
     return redirect('/')
+
+def course_comment (request, id):
+    comments = Comment.objects.filter(user = request.user).order_by('-created_time')
+    
+    return render(request, 'users/course_comment.html', locals())

@@ -1,0 +1,230 @@
+{% extends 'base.html'%}
+
+
+{% block content %}
+    <style type="text/css">
+        .center {
+            margin-left: auto!important;
+            margin-right: auto!important;
+        }
+        .box-width {
+            width: 60%;
+            min-width: 400px;
+        }
+        .marginTop30 {
+            margin-top: 30px;
+        }
+        .box-title h3 {
+            margin: 5px 5px;
+        }
+        .select-btn {
+            background-color: #fff;
+            height: 30px;
+            outline: none;
+        }
+        .form-group {
+            margin: 20px 0;
+            display: flex;
+            border-style: solid;
+            border-width: 1px;
+            border-color: #1BB394;
+        }
+        .form-group label {
+            padding-left: 5px;
+            width: 10%;
+            line-height: 30px;
+            background-color: #1BB394;
+            color: #fff;
+        }
+        .form-group input {
+            border: none;
+            width: 90%;
+            height: 30px;
+            outline: none;
+            font-size: 18px;
+        }
+        .form-group textarea {
+            width: 90%;
+            height: 200px;
+            border-style: none;
+            text-decoration: none;
+            outline: none;
+        }
+        .submit-bar {
+            float: right;
+            margin: 30px 0;
+        }
+        .submit-btn {
+            outline: none;
+            background-color: #1BB394;
+            border-color: #1BB394;
+            color: white;
+            line-height: 30px;
+            font-size: 15px;
+            padding: 0 30px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-left: 15px;
+            margin-bottom: 0;
+            font-weight: normal;
+            text-align: center;
+            vertical-align: middle;
+            touch-action: manipulation;
+            cursor: pointer;
+            background-image: none;
+            border: 1px solid transparent;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+        .submit-btn:hover {
+            background-color: #18A387;
+        }
+        .display_flex {
+            display: flex;
+        }
+        .line_height30 {
+            line-height: 30px;
+        }
+        .marginRight20 {
+            margin-right: 20px;
+        }
+        .rating { 
+          border: none;
+          float: left;
+        }
+
+        .rating > input { display: none; } 
+        .rating > label:before { 
+          margin: 5px;
+          font-size: 1.25em;
+          font-family: FontAwesome;
+          display: inline-block;
+          content: "\f005";
+        }
+
+        .rating > .half:before { 
+          content: "\f089";
+          position: absolute;
+        }
+
+        .rating > label { 
+          color: #ddd; 
+         float: right; 
+        }
+
+        /***** CSS Magic to Highlight Stars on Hover *****/
+
+        .rating > input:checked ~ label, /* show gold star when clicked */
+        .rating:not(:checked) > label:hover, /* hover current star */
+        .rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+
+        .rating > input:checked + label:hover, /* hover current star when changing rating */
+        .rating > input:checked ~ label:hover,
+        .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+        .rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
+    </style>
+    <div class="box center marginTop30 box-width">
+        <div class="box-title">
+            <h3>修改心得</h3>
+        </div>
+        <div class="box-content">
+            <form action="/course_comment/{{ comment.id }}/update" id="comment" method="POST" enctype="multipart/form-data" onsubmit="return vaildateForm()" >
+                {% csrf_token %}
+                <div>
+                    <h4>課程已選：{{ comment.course.title_tw }}</h4>
+                </div>
+                <div>
+                    <h4>第二步：填寫心得</h4>
+                    <div class="form-group">
+                        <label for="title">標題</label>
+                        <input type="text" id="title" name="title" required="required" value="{{ comment.title }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="content">內容</label>
+                        <textarea  id="content" name="content" required="required">{{ comment.content }}</textarea>
+                    </div>
+
+                    <div class="display_flex">
+                        <div class="line_height30 marginRight20">甜度</div>
+                        <div class="rating">
+                            <input type="radio" id="sweety_star5" name="sweety" value="5" /><label class = "full" for="sweety_star5" title="Awesome - 5 stars"></label>
+                            <input type="radio" id="sweety_star4" name="sweety" value="4" /><label class = "full" for="sweety_star4" title="Pretty good - 4 stars"></label>
+                            <input type="radio" id="sweety_star3" name="sweety" value="3" /><label class = "full" for="sweety_star3" title="Meh - 3 stars"></label>
+                            <input type="radio" id="sweety_star2" name="sweety" value="2" /><label class = "full" for="sweety_star2" title="Kinda bad - 2 stars"></label>
+                            <input type="radio" id="sweety_star1" name="sweety" value="1" /><label class = "full" for="sweety_star1" title="Sucks big time - 1 star"></label>
+                        </div>
+                    </div>
+                    <div class="display_flex">
+                        <div class="line_height30 marginRight20">涼度</div>
+                        <div class="rating">
+                            <input type="radio" id="cold_star5" name="cold" value="5" /><label class = "full" for="cold_star5" title="Awesome - 5 stars"></label>
+                            <input type="radio" id="cold_star4" name="cold" value="4" /><label class = "full" for="cold_star4" title="Pretty good - 4 stars"></label>
+                            <input type="radio" id="cold_star3" name="cold" value="3" /><label class = "full" for="cold_star3" title="Meh - 3 stars"></label>
+                            <input type="radio" id="cold_star2" name="cold" value="2" /><label class = "full" for="cold_star2" title="Kinda bad - 2 stars"></label>
+                            <input type="radio" id="cold_star1" name="cold" value="1" /><label class = "full" for="cold_star1" title="Sucks big time - 1 star"></label>
+                        </div>
+                    </div>
+                    <div class="display_flex">
+                        <div class="line_height30 marginRight20">深度</div>
+                        <div class="rating">
+                            <input type="radio" id="hardness_star5" name="hardness" value="5" /><label class = "full" for="hardness_star5" title="Awesome - 5 stars"></label>
+                            <input type="radio" id="hardness_star4" name="hardness" value="4" /><label class = "full" for="hardness_star4" title="Pretty good - 4 stars"></label>
+                            <input type="radio" id="hardness_star3" name="hardness" value="3" /><label class = "full" for="hardness_star3" title="Meh - 3 stars"></label>
+                            <input type="radio" id="hardness_star2" name="hardness" value="2" /><label class = "full" for="hardness_star2" title="Kinda bad - 2 stars"></label>
+                            <input type="radio" id="hardness_star1" name="hardness" value="1" /><label class = "full" for="hardness_star1" title="Sucks big time - 1 star"></label>
+                        </div>
+                    </div>
+                    
+                    <div class="submit-bar">
+                        <label for="anonymous">匿名</label>
+                        <input type="checkbox" name="anonymous">
+                        <button type="submit" class="submit-btn">
+                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                            更新
+                        </button>
+                    </div>
+                </div>
+                <!-- <div>
+                    <h3>上傳成績分布圖</h3>
+                    <input type="file" name="score_img">
+                </div> -->
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $('.dep').change(function() {
+            let dep = $('.dep option:checked').val()
+            $.ajax({
+                url: `/api/course/search?dep=${ dep }`,
+                type: 'GET',
+                success: function (data) {
+                    $('.course').empty()
+                    $('.course').append('<option value="">請先選擇系所再選課程</option')
+                    for (i = 0; i < data.length; i++) {
+                        html = `<option value='${ data[i]["course_no"] }'>${ data[i]["title"] } / ${ data[i]["teacher"] }</option>`
+                        $('.course').append(html)
+                        $('.course').prop( "disabled", false )
+                    }
+                }
+            })
+            // console.log($('.dep option:checked').val())
+        })
+        
+        function vaildateForm () {
+            if ($('.course option:checked').val() === '') {
+                alert('請選擇課程')
+                return false
+            }
+        }
+
+        // 加上星星的值 & 匿名
+        $('input#sweety_star{{ comment.sweety }}').attr( 'checked', true )
+        $('input#cold_star{{ comment.cold }}').attr( 'checked', true )
+        $('input#hardness_star{{ comment.hardness }}').attr( 'checked', true )
+        if ('{{ comment.anonymous }}' === 'True') {
+            $('input[name=anonymous]').attr( 'checked', true )
+        }
+    </script>
+{% endblock %}
+
+

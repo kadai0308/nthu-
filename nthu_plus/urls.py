@@ -52,6 +52,9 @@ urlpatterns += (
     url(r'^course_comment/new$', course_comment.views.new),
     url(r'^course_comment/create$', course_comment.views.create),
     url(r'^course_comment/search$', course_comment.views.search),
+    url(r'^course_comment/(?P<id>[0-9]+)/edit$', course_comment.views.edit),
+    url(r'^course_comment/(?P<id>[0-9]+)/update$', course_comment.views.update),
+    url(r'^course_comment/(?P<id>[0-9]+)/delete$', course_comment.views.delete),
 )
 
 # user
@@ -59,6 +62,7 @@ urlpatterns += (
     url(r'^users/(?P<id>[0-9]+)$', users.views.show),
     url(r'^users/(?P<id>[0-9]+)/edit$', users.views.edit),
     url(r'^users/(?P<id>[0-9]+)/update$', users.views.update),
+    url(r'^users/(?P<id>[0-9]+)/course_comment$', users.views.course_comment),
 )
 
 # api

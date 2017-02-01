@@ -73,7 +73,7 @@
         }
         .fixed {
             position: fixed;
-            z-index: 500;
+            z-index: 100;
         }
         .right-top {
             top: 100px;
@@ -246,7 +246,7 @@
         <!-- <div class="loading">
             <img src="/media/image/reload.gif">
         </div> -->
-        {% if no_comment %}
+        {% if not comments %}
             <div style="color: rgba(0,0,0,.5);text-align: center;">暫時還沒有心得喔～</div>
         {% endif %}
         {% for comment in comments %}
@@ -269,7 +269,8 @@
                         涼度：{{ comment.cold }} <i class="fa fa-star" aria-hidden="true" style="color: #FFD700;margin-right: 5px;"></i>
                         深度：{{ comment.hardness }} <i class="fa fa-star" aria-hidden="true" style="color: #FFD700;margin-right: 5px;"></i>
                     </div>
-                    <p>{{ comment.content | truncatetw | linebreaksbr  }}</p>
+                    <p id='unfold' style="cursor: pointer;">{{ comment.content | truncatetw | linebreaksbr }}</p>
+                    <p id='hidden' style="display: none;cursor: pointer;">{{ comment.content | linebreaksbr }}</p>
                 </div>
             </div>
         {% endfor %}
@@ -318,13 +319,15 @@
                     }
                 }
             })
-            // console.log($('.dep option:checked').val())
         })
-        // $('.course').change(function() {
-        //     let course_no = $('.course option:checked').val();
-        //     $('.box').empty();
-        //     $('.loading').show();
-        // })
+        
+        $('#unfold, #hidden').click(function() {
+            $(this).toggle()
+            if (this.id === 'unfold') {
+                $(this).next().toggle()
+            } else {
+                $(this).prev().toggle()
+            }
+        })
     </script>
-
 {% endblock %}

@@ -90,6 +90,7 @@
         }
         .metabar-right {
             position: relative;
+            display: flex;
             float: right!important;
             top: 50%;
             transform: translateY(-50%);
@@ -174,41 +175,162 @@
             position: fixed;
             top: 100px;
             left: 20px;
-            width: 200px;
+            width: 250px;
         }
         .message-card {
             width: 100%;
-            background-color: #00A6FF;
-            line-height: 50px;
-            padding-left: 10px;
+            background-color: #3FA8FF;
+            line-height: 30px;
+            padding: 10px 5px;
             margin-bottom: 10px;
             border-radius: 5px;
             text-align: center;
             color: #fff;
             box-shadow: 1px 2px 3px #808080;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             animation-name: faedOut;
             animation-duration: 5s;
             animation-iteration-count: 1;
             animation-fill-mode: forwards;
+            overflow: hidden;
         }
         .message-card:hover {
            background-color: #008CFF; 
         }
         @keyframes faedOut {
             0% {
-                opacity: 0;
+                opacity: 0.3;
             }
             70% {
-                opacity: 0.5;   
+                opacity: 1;   
             }
             100% {
                 opacity: 0;
                 left: -9999px; 
             }
         }
+        /* user */
+        .user {
+            width: 40px;
+            height: 20px;
+            float: left;
+        }
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50px;
+            overflow: hidden;
+            margin-right: 5px;
+            box-shadow: 0px 0px 1px black;
+            outline: none;
+        }
+        .user-avatar img {
+            width: 30px;
+        }
+        .user-toggle {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: transparent;
+            cursor: pointer;
+            text-indent: -10px;
+            top: 0px;
+            border: none;
+            outline: none;
+        }
+        .user-toggle:focus {
+            z-index: -10;
+        }
+        .user-toggle:focus ~ .user-dropdown {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0px) translateX(-30px);
+        }
+        .user-dropdown .pointer {
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            top: -6px;
+            background-color: #fff;
+            left: 40px;
+            transform: rotate(-45deg);
+            border-top: solid 1px rgba(0,0,0,0.1);
+            border-right: solid 1px rgba(0,0,0,0.1);
+            border-bottom: none;
+            z-index: -10;
+        }
+        .user-dropdown {
+            top: -20px;
+            width: 115px;
+            list-style-type: none;
+            margin: 20px 0;
+            padding: 0 0;
+            transform: translateY(-10px) translateX(-30px);
+            background-color: #fff;
+            border-radius: 6px;
+            box-shadow: 0 2px 0 0 rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.07);
+            border-radius: 3px;
+            visibility: hidden;
+            opacity: 0;
+            transition: all .5s ease;
+        }
+        .user-dropdown a {
+            text-decoration: none;
+        } 
+        .user-dropdown a li {
+            text-align: center;
+            line-height: 30px;
+            border-bottom: solid 1px #f3f3f3;
+            color: rgba(0,0,0,.44);
+        }
+        .user-dropdown li:hover {
+            background-color: #f3f3f3;
+        }
     </style>
 </head>
 <body>
+    <!-- <div class="login-card">
+        {% load socialaccount %}
+        <a href="{% provider_login_url "facebook" method="oauth2" %}">Facebook OAuth2</a>  
+    </div> -->
+    <div class="metabar">
+        <div class="metabar-top">
+            <div class="metabar-left">
+                <a class="metabar-left-item {{ course_comment }}" href="/course_comment">修課心得</a>
+                <a class="metabar-left-item" id="not-yet" href="#"><img src="/static/image/metabar_item.png"></a>
+                <a class="metabar-left-item" id="not-yet" href="#"><img src="/static/image/metabar_item.png"></a>
+            </div>
+            <div class="metabar-middle"><a href="/">NTHU+</a></div>
+            <div class="metabar-right">
+            {% if not user.is_authenticated %}
+                <a class="metabar-btn" href="{% provider_login_url "facebook" method="oauth2" %}">
+                    <i class="fa fa-facebook" aria-hidden="true"></i>
+                    Login
+                </a>
+            {% else %}
+                <div class="user">
+                    <div class="user-avatar">
+                        <a href="#">
+                        <!-- <a href="/users/{{ request.user.id }}"> -->
+                            <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
+                        </a>
+                    </div>
+                    <input type="text" class="user-toggle">
+                    <ul class="user-dropdown">
+                        <li class="pointer"></li>
+                        <a href="/users/{{ request.user.id }}"><li>個人資訊</li></a>
+                        <a href="/users/{{ request.user.id }}/course_comment"><li>我的心得</li></a>
+                    </ul>
+                </div>
+                <a class="metabar-btn" href="/accounts/logout">登出</a>
+            {%  endif %}
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
     <div class="system-message">
         {% if messages %}
             {% for message in messages %}
@@ -219,36 +341,21 @@
             {% endfor %}
         {% endif %}
     </div>
-    <!-- <div class="login-card">
-        {% load socialaccount %}
-        <a href="{% provider_login_url "facebook" method="oauth2" %}">Facebook OAuth2</a>  
-    </div> -->
-    <div class="metabar">
-        <div class="metabar-top">
-            <div class="metabar-left">
-                <a class="metabar-left-item {{ course_comment }}" href="/course_comment">修課心得</a>
-                <a class="metabar-left-item" href="#"><img src="/static/image/metabar_item.png"></a>
-                <a class="metabar-left-item" href="#"><img src="/static/image/metabar_item.png"></a>
-            </div>
-            <div class="metabar-middle"><a href="/">NTHU+</a></div>
-            <div class="metabar-right">
-            {% if not user.is_authenticated %}
-                <a class="metabar-btn" href="{% provider_login_url "facebook" method="oauth2" %}">
-                    <i class="fa fa-facebook" aria-hidden="true"></i>
-                    Login
-                </a>
-            {% else %}
-                {{ request.user.profile.nickname }}
-                <a class="metabar-btn" href="/accounts/logout">登出</a>
-            {%  endif %}
-            </div>
-        </div>
-    </div>
-    <div class="content">
-        {% block content %}{% endblock %}
-    </div>
     <script type="text/javascript">
         $(document).ready(function(){$(".content").css("display","flex");;});
+        let not_yet_click_time = 0;
+        $('a#not-yet').click(function(){
+            if (not_yet_click_time === 0) {
+                alert('敬請期待！！！')
+                not_yet_click_time++
+            } else if (not_yet_click_time === 1) {
+                alert('不要這麼猴急嘛><')
+                not_yet_click_time++
+            } else if (not_yet_click_time === 2) {
+                alert('討厭～要不然你來幫我寫OAO')
+                not_yet_click_time = 0
+            }
+        })
     </script>
 </body>
 </html>

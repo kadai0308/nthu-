@@ -1,7 +1,63 @@
 {% extends 'base.html'%}
 
 {% block content %}
-    {{ user.username }}
-    {{ user.profile.nickname }}
-    <a href="/users/{{user.id}}/edit">編輯檔案</a>
+    <style type="text/css">
+        .box {
+            background-color: #fff;
+            box-shadow: 0 1px 4px rgba(0,0,0,.1);
+            margin-bottom: 20px;
+            margin-top: 30px;
+            margin-right: auto;
+            margin-left: auto;
+            width: 80%;
+        }
+        .box-title {
+            padding: 12px 15px 15px 10px;
+        }
+        .box-title h5 {
+            transform: translateY(30%);
+        }
+        .box-content div {
+            font-size: 18px;
+            margin: 20px 10px;
+        }
+        .std-btn {
+            outline: none;
+            background-color: #1BB394;
+            border-color: #1BB394;
+            color: white;
+            line-height: 20px;
+            font-size: 15px;
+            padding: 0 10px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-left: 15px;
+            margin-bottom: 0;
+            font-size: 8px;
+            text-align: center;
+            vertical-align: middle;
+            touch-action: manipulation;
+            cursor: pointer;
+            background-image: none;
+            border: 1px solid transparent;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+    </style>
+    <div class="box marginAuto marginTop30">
+        <div class="box-title">
+            <h5>個人資訊</h5>
+            <div class="box-tool">
+                <a href="/users/{{user.id}}/edit" class="std-btn">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                    編輯檔案
+                </a>
+            </div>
+        </div>
+        <div class="box-content">
+            <div >Email: {{ user.username }}</div>
+            <div>暱稱: {{ user.profile.nickname }}</div>
+        </div>
+    </div>
+
 {% endblock %}
