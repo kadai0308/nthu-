@@ -157,6 +157,9 @@
             padding: 0;
             text-overflow: ellipsis;
             float: left;
+            max-width: 350px;
+            white-space: nowrap;
+            overflow: hidden;
         }
         .box-tool {
             float: right;
@@ -340,6 +343,9 @@
             </div>
             {% endfor %}
         {% endif %}
+    </div>
+    <div class="footer">
+        
     </div>
     <script type="text/javascript">
         $(document).ready(function(){$(".content").css("display","flex");;});

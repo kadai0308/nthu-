@@ -4,19 +4,19 @@
 {% block content %}
     <style type="text/css">
         .main {
-            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .title {
             line-height: 15px;
-            font-size: 20px;
-            width: 250px;
-            text-align: center;
+            width: 800px;
             margin: 20px 0;
             padding: 20px 0;
-            background-color: #1BB394;
-            color: #fff;
-            box-shadow: 2px 3px 4px rgba(0,0,0,0.3);
-            margin-left: 20px;
+            border-bottom: solid 1px rgba(0,0,0,.15);
+        }
+        .title h4 {
+            margin: 0;
         }
         .box {
             max-width: 600px;
@@ -49,6 +49,50 @@
             text-decoration: none;
             transform: translateY(-3px);
         }
+        .btn {
+            border-radius: 3px;
+            text-decoration: none;
+            outline: none;
+            cursor: pointer;
+        }
+        .btn-shadow {
+            box-shadow: 1px 2px 3px #808080;
+        }
+        .btn-white {
+            background-color: #fff;
+            color: #808080;
+            border: solid 1px #808080;
+            float: right;
+        }
+        .btn-white:hover {
+            background-color: #f3f3f3;
+        }
+        .btn-primary {
+            background-color: #1BB394;
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background-color: #18A387;   
+        }
+        .btn-m {
+            line-height: 20px;
+            padding: 5px 10px;
+        }
+        .btn-l {
+            line-height: 20px;
+            padding: 10px 50px;
+        }
+        .fixed {
+            position: fixed;
+            z-index: 100;
+        }
+        .right-top {
+            top: 100px;
+            right: 30px;
+        }
+        .btn-danger {
+            background-color: #FC3737;
+        }
         .star {
             color: #FFD700;
             margin-right: 5px;
@@ -61,7 +105,7 @@
         }
     </style>
     <div class="main">
-        <div class="title">我的修課心得</div>
+        <div class="title"><h4>我的修課心得</h4></div>
         {% if not comments %}
             <div style="color: rgba(0,0,0,.5);text-align: center;">快來新增你的心得吧～</div>
         {% endif %}
@@ -74,7 +118,7 @@
                             <i class="fa fa-pencil" aria-hidden="true"></i>
                             修改心得
                         </a>
-                        <a href="/course_comment/{{ comment.id }}/delete" class="std-btn">
+                        <a href="/course_comment/{{ comment.id }}/delete" class="std-btn btn-danger">
                             <i class="fa fa-trash-o" aria-hidden="true"></i>
                             刪除心得
                         </a>
@@ -93,6 +137,7 @@
             </div>
         {% endfor %}
     </div>
+    <a class="btn fixed right-top btn-primary btn-l btn-shadow" href="/course_comment/new"><i class="fa fa-plus" aria-hidden="true"></i> 新增心得</a>
     <script type="text/javascript">
         $('#unfold, #hidden').click(function() {
             $(this).toggle()
@@ -100,6 +145,12 @@
                 $(this).next().toggle()
             } else {
                 $(this).prev().toggle()
+            }
+        })
+        $('.std-btn.btn-danger').click(function(){
+            let confirm = window.confirm('確定？')
+            if (confirm !== true) {
+                event.preventDefault()
             }
         })
     </script>
