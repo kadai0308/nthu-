@@ -4,7 +4,7 @@
     <style type="text/css">
         .mask {
             position: absolute;
-            background-color: rgba(0,0,0,.5);
+            background-color: rgba(0,0,0,.6);
             width: 100%;
             height: 600px;
             z-index: 400;
@@ -86,7 +86,7 @@
                 opacity: 1;
             }
             100% {
-                opacity: 0;
+                opacity: .1;
             }
         }
     </style>
@@ -94,23 +94,25 @@
         <div class="title">
             <div class="main">NTHU+</div>
             <div class="line"></div>
-            <div class="sub">Better college Life</div>
+            <div class="sub">Better College Life</div>
         </div>
         <div class="mask"></div>
-        <img id="1" class="cover" src="/static/image/cover2-2.jpeg" style="transform: translateY(-250px);">
-        <img id="2" class="cover"  src="/static/image/cover3-2.jpeg" style="transform: translateY(-30px);">
+        <img id="1" class="cover" src="/static/image/cover1.jpeg" style="transform: translateY(-250px);">
+        <img id="2" class="cover"  src="/static/image/cover2.jpeg" style="transform: translateY(-30px);">
+        <img id="3" class="cover"  src="/static/image/cover3.jpeg" style="transform: translateY(-30px);">
+        <img id="4" class="cover"  src="/static/image/cover4.jpeg" style="transform: translateY(-30px);">
     </div>
     <script type="text/javascript">
-        let id = 1;
-        $(`#${id}`).show()
-        id += 1;
+        $('#1').show()
+        let amount = $('img.cover').length
+        id = 2
         setInterval(function() {
             $('.cover').hide()
             $(`#${id}`).show()
-            id += 1
-            if (id >= 3) {
+            if (id >= amount) {
                 id = 1
             }
-        }, 9000)
+            id++;
+        }, 10000)
     </script>
 {% endblock %}
