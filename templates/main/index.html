@@ -4,17 +4,68 @@
     <style type="text/css">
         .mask {
             position: absolute;
-            background-color: rgba(0,0,0,.1);
+            background-color: rgba(0,0,0,.5);
             width: 100%;
             height: 600px;
+            z-index: 400;
         }
-        .mask .title {
-            position: relative;
+        .title {
+            position: absolute;
+            width: 100%;
             top: 50%;
-            transform: translateX(100px) translateY(-50%);
-            font-size: 50px;
+            transform: translateX(0px) translateY(-50%);
             text-align: center;
-            color: #fff;
+            color: #fff;            
+            z-index: 500;
+            font-family: 'Orbitron', sans-serif;
+        }
+        .title .main {
+            font-size: 70px;
+            letter-spacing: 20px;
+            margin-bottom: 10px;
+        }
+        .title .line {
+            position: relative;
+            width: 85%;
+            border-top: solid 2px #fff;
+            left: 50%;
+            transform: translateX(-50%);
+            animation-name: fold;
+            animation-duration: 2s;
+            animation-fill-mode: forwards;
+        }
+        @keyframes fold {
+            from {
+                width: 0%;
+            }
+            to {
+                width: 85%;
+            }
+        }
+        .title .sub {
+            position: relative;
+            width: 85%;
+            padding: 15px;
+            font-size: 50px;
+            letter-spacing: 20px;
+            left: 50%;
+            visibility: hidden;
+            transform: translateX(-50%);
+            animation-name: fadeDown;
+            animation-duration: 1s;
+            animation-delay: 2s;
+            animation-fill-mode: forwards;
+        }
+        @keyframes fadeDown {
+            from {
+                transform: translateX(-50%) translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(-50%) translateY(0px);
+                opacity: 1;
+                visibility: visible;
+            }
         }
         .image {
             overflow: hidden;
@@ -39,13 +90,15 @@
             }
         }
     </style>
-    <!-- <div class="mask"> -->
-        <!-- <div class="title">ブリリアントカレッジライフ</div> -->
-    <!-- </div> -->
     <div class="image">
-        <!-- <img src="/static/image/cover4/cover4.001.jpeg"> -->
-        <img id="1" class="cover" src="/static/image/cover2.jpeg" style="transform: translateY(-250px);">
-        <img id="2" class="cover"  src="/static/image/cover3.jpeg" style="transform: translateY(-30px);">
+        <div class="title">
+            <div class="main">NTHU+</div>
+            <div class="line"></div>
+            <div class="sub">Better college Life</div>
+        </div>
+        <div class="mask"></div>
+        <img id="1" class="cover" src="/static/image/cover2-2.jpeg" style="transform: translateY(-250px);">
+        <img id="2" class="cover"  src="/static/image/cover3-2.jpeg" style="transform: translateY(-30px);">
     </div>
     <script type="text/javascript">
         let id = 1;

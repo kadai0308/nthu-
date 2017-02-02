@@ -151,6 +151,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 # allauth settings
 SITE_ID = 4
 ACCOUNT_USER_MODEL_EMAIL_FIELD = 'email'
