@@ -74,7 +74,7 @@ def create (request):
 
 def search (request):
     
-    course_no = request.POST['course_no']
+    course_no = request.POST.get('course_no', '')
     all_comments = Comment.objects.filter(course__course_no = course_no)
     course_comment = 'focus'
 
