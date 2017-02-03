@@ -10,7 +10,7 @@ class Comment(models.Model):
     content = models.TextField()
     sweety = models.IntegerField(default = 0)     # 甜度
     cold = models.IntegerField(default = 0)       # 涼度
-    hardness = models.IntegerField(default = 0)   # 深度
+    hardness = models.IntegerField(default = 0)   # 難度
     anonymous = models.BooleanField(default = False)
     course = models.ForeignKey(Course)
     user = models.ForeignKey(User)
