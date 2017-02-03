@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.db.models import Q
 
 from course.models import Course
 from course_comment.models import Comment
@@ -7,9 +8,13 @@ from course_comment.models import Comment
 import re
 
 def search_course (request):
-    dep = request.GET.get('dep','')
-    courses = Course.objects.filter(department = dep).extra(select={'sub_course_no': "SUBSTR(course_no, 9)"})
-    courses = courses.order_by('sub_course_no', 'title_tw', 'teacher')
+    # dep = request.GET.get('dep','')
+    # courses = Course.objects.filter(department = dep)#.extra(select={'sub_course_no': "SUBSTR(course_no, 9)"})
+    
+    keyword = request.GET.get('keyword', '')
+    courses = Course.objects.filter(Q(title_tw__icontains = keyword) | Q(teacher__icontains = keyword) | Q(course_no__icontains = keyword))
+
+    courses = courses.order_by('title_tw', 'teacher')
 
     data = list()
     for index, course in enumerate(courses):
@@ -21,6 +26,9 @@ def search_course (request):
         course_data['teacher'] = replace(course.teacher)
         course_data['course_no'] = course.course_no
         data.append(course_data)
+
+    # sort by course_no
+    data = sorted(data, key = lambda course: course['course_no'][9:])
 
     response = JsonResponse(data, safe = False)
     return response

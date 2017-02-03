@@ -17,6 +17,17 @@
             padding-bottom: 25px;
             margin-bottom: 20px;
         }
+        .search-bar .quick_input {
+            margin: 10px 0;
+        }
+        .search-bar .quick_input input {
+            width: 50%;
+            line-height: 30px;
+            border: solid 1px rgb(166, 166, 166);
+            border-radius: 5px;
+            padding-left: 5px;
+            outline: none;
+        }
         .select-btn {
             background-color: #fff;
             height: 30px;
@@ -30,15 +41,6 @@
             letter-spacing: 2px;
             line-height: 20px;
         }
-        /*.right-bar {
-            position: relative;
-            width: 334px;
-            margin-right: auto!important;
-            padding-top: 10px;
-        }
-        .right-bar a {
-            text-decoration: none;
-        }*/
         .std-btn {
             border-radius: 3px;
             text-decoration: none;
@@ -80,160 +82,18 @@
             top: 100px;
             right: 30px;
         }
-        .pagination {
-          padding: 30px 0;
-          text-align: center;
-        }
-        .pagination ul {
-          margin: 0;
-          padding: 0;
-          list-style-type: none;
-        }
-        .pagination a {
-          display: inline-block;
-          padding: 10px 18px;
-          color: #222;
-          text-decoration: none;
-        }
-        .p1 a {
-          width: 40px;
-          height: 40px;
-          line-height: 40px;
-          padding: 0;
-          text-align: center;
-        }
-
-        .p1 a.is-active {
-          background-color: #1BB394;
-          border-radius: 100%;
-          color: #fff;
-        }
     </style>
     <a class="fixed right-top std-btn btn-primary btn-l btn-shadow" href="./new"><i class="fa fa-plus" aria-hidden="true"></i> 新增心得</a>
     <div class="main">
         <div class="search-bar">
             <form action="/course_comment/search" method="POST" id="search">{% csrf_token %}
                 <h4>搜尋心得</h4>
-                <div>
-                    <select class="dep select-btn" style="width: 100%;">
-                        <option value="None">請選擇開課系所</option>
-                        <option value="ANTH">ANTH　人類所 Anthropology</option>
-                        <option value="ANTU">ANTU　人類所與交大合作課程 Anthropology and NCTU</option>
-                        <option value="ASTR">ASTR　天文所 Astronomy</option>
-                        <option value="BME ">BME 　生物醫學工程研究所 Biomedical Engineering</option>
-                        <option value="BMES">BMES　醫環系 Biomedical Engineering and Environmental Sciences</option>
-                        <option value="CF  ">CF  　大學中文 College Chinese</option>
-                        <option value="CHE ">CHE 　化工系 Chemical Engineering</option>
-                        <option value="CHEM">CHEM　化學系 Chemistry</option>
-                        <option value="CL  ">CL  　中文系 Chinese Literature</option>
-                        <option value="CLC ">CLC 　華語中心 Chinese Language Center</option>
-                        <option value="CLU ">CLU 　中文系與交大合作課程 Chinese Literature and  NCTU</option>
-                        <option value="COM ">COM 　通訊所 Communications Engineering</option>
-                        <option value="CS  ">CS  　資工系 Computer Science</option>
-                        <option value="DL  ">DL  　遠距課程 Distance Learning</option>
-                        <option value="DMS ">DMS 　醫學科學系 Medical Science</option>
-                        <option value="E   ">E   　工學院 College of Engineering</option>
-                        <option value="ECON">ECON　經濟系 Economics</option>
-                        <option value="EE  ">EE  　電機系 Electrical Engineering</option>
-                        <option value="EECS">EECS　電資院學士班 Undergraduate Program of Electrical Engineering and Computer Science</option>
-                        <option value="EMBA">EMBA　高階經營管理碩士班 Executive Master of Business Administration</option>
-                        <option value="EMS ">EMS 　高階經管境外專班  </option>
-                        <option value="ENE ">ENE 　電子所 Electronic Engineering</option>
-                        <option value="ESS ">ESS 　工科系 Engineering and System Science</option>
-                        <option value="EST ">EST 　環境博士學位學程  </option>
-                        <option value="ESTU">ESTU　環境博士學程與台聯大  </option>
-                        <option value="FL  ">FL  　外語系 Foreign Languages and Literature</option>
-                        <option value="FLU ">FLU 　外語系與交大合作課程 Foreign Languages and Literature and NCTU</option>
-                        <option value="GE  ">GE  　通識教育中心 General Education</option>
-                        <option value="GEC ">GEC 　通識核心 General Education Core Courses</option>
-                        <option value="GEU ">GEU 　通識中心與交大合作課 General Education and NCTU</option>
-                        <option value="GOM ">GOM 　全球營運管理碩士學程 Dual Master Program for Global Operation Management</option>
-                        <option value="GPTS">GPTS　台灣研究教師在職進修 Graduate Program of Taiwan Studies for In-service Teachers</option>
-                        <option value="HIS ">HIS 　歷史所 History</option>
-                        <option value="HSS ">HSS 　人社院學士班 Interdisciplinary Program of Humanities and Social Sciences</option>
-                        <option value="HSSU">HSSU　人社學士班與交大合作 Humanities and Social Science & NCTU</option>
-                        <option value="IACS">IACS　亞際文化碩士學程 International Program in Inter-Asia Cultural Studies (University System of Taiwan)</option>
-                        <option value="IACU">IACU　亞際文化與台聯大合作 International Program in Inter-Asia Cultural Studies (University System of Taiwan)</option>
-                        <option value="IEEM">IEEM　工工系 Industrial Engineering and Engineering Management</option>
-                        <option value="IEM ">IEM 　工工系碩士在職專班 Industrial Engineering and Engineering Management (Engineering Professional Master Program)</option>
-                        <option value="ILS ">ILS 　學習科學研究所 Learning Sciences</option>
-                        <option value="IMBA">IMBA　IMBA International Master of Business Administration</option>
-                        <option value="IPE ">IPE 　工學院學士班 Interdisciplinary Program of  Engineering</option>
-                        <option value="IPHD">IPHD　跨院國際博士班學位學 International Intercollegiate Ph.D. Program</option>
-                        <option value="IPNS">IPNS　原科院學士班 Interdisciplinary Program of Nuclear Science</option>
-                        <option value="IPT ">IPT 　光電所 Photonics Technologies</option>
-                        <option value="IPTH">IPTH　清華學院學士班 Tsing Hua Interdisciplinary Program</option>
-                        <option value="ISA ">ISA 　資應所 Information Systems and Applications</option>
-                        <option value="ISS ">ISS 　服務科學所 Service Science</option>
-                        <option value="KARD">KARD　藝設系 Arts and Design</option>
-                        <option value="KECE">KECE　幼教系 Early Childhood Education</option>
-                        <option value="KECR">KECR　環文系 Environmental and Cultural Resources</option>
-                        <option value="KELT">KELT　教科系 Education and Learning Technology</option>
-                        <option value="KENI">KENI　英教系 English Instruction</option>
-                        <option value="KEPC">KEPC　心諮系 Educational Psychology and Counseling</option>
-                        <option value="KMSE">KMSE　數理所 Mathematics and Science Education</option>
-                        <option value="KMUS">KMUS　音樂系 Music</option>
-                        <option value="KPHE">KPHE　體育系 Physical Education</option>
-                        <option value="KSPE">KSPE　特教系 Special Education</option>
-                        <option value="KTLT">KTLT　臺語所 Taiwan Languages and Language Teaching</option>
-                        <option value="LANG">LANG　語言中心 Language Center</option>
-                        <option value="LING">LING　語言所 Linguistics</option>
-                        <option value="LS  ">LS  　生科系 Life Science</option>
-                        <option value="LSBS">LSBS　生資所 Bioinformatics and Structural Biology</option>
-                        <option value="LSBT">LSBT　生技所 Biotechnology</option>
-                        <option value="LSC ">LSC 　生科院 College of LIfe Sciene</option>
-                        <option value="LSIN">LSIN　神經科學博士學位學程 Ph.D.Program in Interdisciplinary Neuroscience(University System of Taiwan)</option>
-                        <option value="LSIP">LSIP　生科院學士班 Interdisciplinary Program of Life Sciences</option>
-                        <option value="LSMC">LSMC　分生所 Molecular and Cellular Biology</option>
-                        <option value="LSMM">LSMM　分醫所 Molecular Medicine</option>
-                        <option value="LSSN">LSSN　系神所 Systems Neuroscience</option>
-                        <option value="LST ">LST 　科法所 Law for Science and Technology</option>
-                        <option value="MATH">MATH　數學系 Mathematics</option>
-                        <option value="MATU">MATU　數學系與交大合作課程 Mathematics & NCTU</option>
-                        <option value="MBA ">MBA 　經營管理碩士班 Master of Business Administration</option>
-                        <option value="MFB ">MFB 　財務金融碩士在職專班 Master Program of  Finance and Banking</option>
-                        <option value="MI  ">MI  　軍訓 Military Education</option>
-                        <option value="MPM ">MPM 　公共政策與管理專班 Master Program of Public Policy and Management</option>
-                        <option value="MS  ">MS  　材料系 Materials Science and Engineering</option>
-                        <option value="NEMS">NEMS　奈微所 NanoEngineering and MicroSystems</option>
-                        <option value="NES ">NES 　核工所 Nuclear Engineering and Science</option>
-                        <option value="NS  ">NS  　原科系 Nuclear Science</option>
-                        <option value="NUCL">NUCL　原科院  </option>
-                        <option value="PE  ">PE  　體育 Physical Education</option>
-                        <option value="PE1 ">PE1 　大一體育 Physical Education</option>
-                        <option value="PE3 ">PE3 　體育(校隊) Physical Education</option>
-                        <option value="PHIL">PHIL　哲學所 Philosophy</option>
-                        <option value="PHYS">PHYS　物理系 Physics</option>
-                        <option value="PHYU">PHYU　物理系與交大合作課程 Physics and NCTU</option>
-                        <option value="PME ">PME 　動機系 Power Mechanical Engineering</option>
-                        <option value="QF  ">QF  　計財系 Quantitative Finance</option>
-                        <option value="RB  ">RB  　輻生[1998.6以前]  </option>
-                        <option value="RDDM">RDDM　半導體元件及製程專班 Industrial Technology R&D Master Program on Semiconductor Devices & Manufacturing Process</option>
-                        <option value="RDIC">RDIC　積體電路設計專班 Industrial Technology R&D Master Program on IC Design</option>
-                        <option value="RDPE">RDPE　產業研發碩士電力電子 Industrial Technology R&D Master Program on Power Electronics</option>
-                        <option value="SCI ">SCI 　理學院學士班 Interdisciplinary Program of Sciences</option>
-                        <option value="SLS ">SLS 　先進光源科技學位學程 Doctor Program of Science and Technology of Synchrotron Light Source</option>
-                        <option value="SNHC">SNHC　社群人智國際學程 Social Networks and Human-Centered Computing</option>
-                        <option value="SOC ">SOC 　社會所 Sociology</option>
-                        <option value="STAT">STAT　統計所 Statistics</option>
-                        <option value="STAU">STAU　統計所與交大合作課程 Statistics & NCTU</option>
-                        <option value="TE  ">TE  　師培中心(中等教程) Teacher Education</option>
-                        <option value="TEG ">TEG 　師培中心(一般課程) Teacher Education (General Courses)</option>
-                        <option value="TEX ">TEX 　師培中心與竹教大合作 Teacher Education and National Hsinchu University of Education</option>
-                        <option value="TIGP">TIGP　國際研究生學程 Taiwan International Graduate Program</option>
-                        <option value="TL  ">TL  　台文所 Taiwan Literature</option>
-                        <option value="TM  ">TM  　科管所 Technology Management</option>
-                        <option value="UPMT">UPMT　科管院學士班 Double Specialty Program of Management and Technology</option>
-                        <option value="W   ">W   　W課號課程 Interschool Courses</option>
-                        <option value="WH  ">WH  　台聯大及互惠課程  </option>
-                        <option value="WW  ">WW  　交大課程 NCTU COURSE</option>
-                        <option value="WZ  ">WZ  　外校課程 </option>
-                        <option value="X   ">X   　X抵免課程  </option>
-                        <option value="XA  ">XA  　抵免課程(大) </option>
-                        <option value="XZ  ">XZ  　抵免課程(研) </option>
-                        <option value="YZ  ">YZ  　課務組專用 </option>
-                        <option value="ZY  ">ZY  　服務學習 Service Learning</option>
-                    </select>
+                <div class="quick_input">
+                    <input type="text" name="keyword" placeholder="輸入：課名 / 老師名 / 開課系所英文縮寫" value="{{ keyword }}">
+                    <button type="submit" class="std-btn btn-m btn-white">搜尋</button>
+                </div>
+                <!-- <div>
+                    {% comment %} {% include 'partial_template/_all_department.html' %} {% endcomment %} 
                 </div>
                 <br/>
                 <div>
@@ -241,7 +101,7 @@
                         <option>請先選擇系所再選課程</option>
                     </select>
                     <button type="submit" class="std-btn btn-m btn-white">搜尋</button>
-                </div>
+                </div> -->
             </form>
         </div>
         <!-- <div class="loading">
@@ -275,33 +135,7 @@
                 </div>
             </div>
         {% endfor %}
-        <div class="pagination p1">
-            <ul>
-                {% if comments.has_previous %}
-                    <a href="?page={{ comments.previous_page_number }}"><li><</li></a>
-                {% else %}
-                    <a style="visibility: hidden;"><li><</li></a>
-                {% endif %}
-
-                {% if comments.number >= 2 %}
-                    <a><li>...</li></a>
-                    <a href="?page={{ comments.previous_page_number }}"><li>{{ comments.previous_page_number }}</li></a>
-                {% endif %}
-                
-                    <a class="is-active" href="?page={{ comments.number }}"><li>{{ comments.number }}</li></a>
-                
-                {% if comments.paginator.num_pages > comments.number %}
-                    <a href="?page={{ comments.next_page_number }}"><li>{{ comments.next_page_number }}</li></a>
-                    <a><li>...</li></a>
-                {% endif %}
-                
-                {% if comments.has_next %}
-                    <a href="?page={{ comments.next_page_number }}"><li>></li></a>
-                {% else %}
-                    <a style="visibility: hidden;"><li>></li></a>
-                {% endif %}
-            </ul>
-        </div>
+        {% include 'partial_template/_pagination.html' %}
     </div>
 
     <script type="text/javascript">

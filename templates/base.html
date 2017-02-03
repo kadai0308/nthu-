@@ -24,13 +24,6 @@
 
     </script>
     <!-- heatmap -->
-    <script>
-        (function(h,e,a,t,m,p) {
-        m=e.createElement(a);m.async=!0;m.src=t;
-        p=e.getElementsByTagName(a)[0];p.parentNode.insertBefore(m,p);
-        })(window,document,'script','https://u.heatmap.it/log.js');
-    </script>
-    <!-- heatmap2 -->
     <script type="text/javascript">
         window._pt_lt = new Date().getTime();
         window._pt_sp_2 = [];
@@ -43,6 +36,8 @@
             s.parentNode.insertBefore(atag, s);
         })();
     </script>
+    <!-- heatmap2 -->
+    <script src="//control.mockingfish.com/js/011405.js"></script>
     <style type="text/css">
         @import url(http://fonts.googleapis.com/earlyaccess/notosanstc.css);
         @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
@@ -214,6 +209,7 @@
             top: 100px;
             left: 20px;
             width: 250px;
+            z-index: 600;
         }
         .message-card {
             width: 100%;
