@@ -60,8 +60,7 @@ def new (request):
 def create (request):
     
     # get course
-    course_no = request.POST['course_no']
-    course = Course.objects.get(course_no = course_no)
+    course_no = request.POST.get('course_no', '')
 
     title = request.POST['title']
     content = request.POST['content']
@@ -73,20 +72,37 @@ def create (request):
     cold = request.POST['cold'] if 'cold' in request.POST else 0
     hardness = request.POST['hardness'] if 'hardness' in request.POST else 0
 
-
-    # create comment of course
-    Comment.objects.create(
-        title = title,
-        content = content,
-        anonymous = anonymous,
-        course = course,
-        user = request.user,
-        created_time = str(datetime.datetime.now()),
-        sweety = sweety,
-        cold = cold,
-        hardness =hardness,
-        score_img = score_img,
-    )
+    if course_no:
+        course = Course.objects.get(course_no = course_no)
+        # create comment of course
+        Comment.objects.create(
+            title = title,
+            content = content,
+            anonymous = anonymous,
+            course = course,
+            user = request.user,
+            created_time = str(datetime.datetime.now()),
+            sweety = sweety,
+            cold = cold,
+            hardness = hardness,
+            score_img = score_img,
+        )
+    else:
+        custom_course_name = request.POST.get('custom_course', '')
+        # create comment of course
+        Comment.objects.create(
+            title = title,
+            content = content,
+            anonymous = anonymous,
+            course = None,
+            custom_course_name = custom_course_name,
+            user = request.user,
+            created_time = str(datetime.datetime.now()),
+            sweety = sweety,
+            cold = cold,
+            hardness = hardness,
+            score_img = score_img,
+        )
 
     return redirect ('/course_comment')
 

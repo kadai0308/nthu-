@@ -65,6 +65,19 @@
             outline: none;
             width: 100%;
         }
+        .custom_course {
+            width: 100%;
+            line-height: 25px;
+            margin-top: 10px;
+            border: solid 1px rgb(166, 166, 166);
+            border-radius: 5px;
+            padding-left: 5px;
+            outline: none;
+            display: none;
+            animation-name: fadeUp;
+            animation-duration: 1s;
+            animation-fill-mode: forwards;
+        }
         .form-group {
             margin: 20px 0;
             display: flex;
@@ -179,9 +192,10 @@
                         <input type="text" name="keyword" placeholder="輸入：課名 / 老師名 / 開課系所英文縮寫" value="{{ keyword }}">
                         <input type="button" id="search" class="std-btn btn-m btn-white" value="搜尋"> 
                         <div>
-                            <select class="course select-btn" form="comment" name="course_no" disabled="true" required>
-                                <option value="">搜尋結果，請選擇課程</option>
+                            <select class="course select-btn" form="comment" name="course_no" disabled="true">
+                                <option value="" checked>搜尋結果，請選擇課程</option>
                             </select>
+                            <!-- <input type="text" class="custom_course" name="custom_course" placeholder="若課程本學年沒開設的話，這邊可以手動輸入"> -->
                         </div>
  <!--                        <div>
                             {% comment %} {% include 'partial_template/_all_department.html' %}{% endcomment %} 
@@ -260,39 +274,53 @@
                 url: `/api/course/search?keyword=${ keyword }`,
                 type: 'GET',
                 success: function (data) {
-
-                    $('.course').empty()
-                    $('.course').append('<option value="">搜尋結果，請選擇課程</option')
-                    for (i = 0; i < data.length; i++) {
-                        html = `<option value='${ data[i]["course_no"] }'>${ data[i]["title"] } / ${ data[i]["teacher"] }</option>`
-                        $('.course').append(html)
-                        $('.course').prop( "disabled", false )
+                    if (data.length > 0) {
+                        $('.custom_course').hide()
+                        $('.course').empty()
+                        $('.course').append('<option value="">搜尋結果，請選擇課程</option')
+                        for (i = 0; i < data.length; i++) {
+                            html = `<option value='${ data[i]["course_no"] }'>${ data[i]["title"] } / ${ data[i]["teacher"] }</option>`
+                            $('.course').append(html)
+                            $('.course').prop( "disabled", false )
+                        }
+                        $('.course').show()
+                    } else {
+                        $('.course').empty()
+                        $('.course').append('<option value="">關鍵字輸入錯誤或本學年並無開設此課</option')
+                        $('.course').show()
+                        // $('.custom_course').show()
                     }
-                    $('.course').show()
                 }
             })            
         })
 
-        $('.dep').change(function() {
-            let dep = $('.dep option:checked').val()
-            $.ajax({
-                url: `/api/course/search?dep=${ dep }`,
-                type: 'GET',
-                success: function (data) {
-                    $('.course').empty()
-                    $('.course').append('<option value="">搜尋結果，請選擇課程</option')
-                    for (i = 0; i < data.length; i++) {
-                        html = `<option value='${ data[i]["course_no"] }'>${ data[i]["title"] } / ${ data[i]["teacher"] }</option>`
-                        $('.course').append(html)
-                        $('.course').prop( "disabled", false )
-                    }
-                }
-            })
-            // console.log($('.dep option:checked').val())
-        })
+        // $('.dep').change(function() {
+        //     let dep = $('.dep option:checked').val()
+        //     $.ajax({
+        //         url: `/api/course/search?dep=${ dep }`,
+        //         type: 'GET',
+        //         success: function (data) {
+        //             if (data.length > 0) {
+
+        //                 $('.course').empty()
+        //                 $('.course').append('<option value="">搜尋結果，請選擇課程</option')
+        //                 for (i = 0; i < data.length; i++) {
+        //                     html = `<option value='${ data[i]["course_no"] }'>${ data[i]["title"] } / ${ data[i]["teacher"] }</option>`
+        //                     $('.course').append(html)
+        //                     $('.course').prop( "disabled", false )
+        //                 }
+        //             } else if {
+        //                 $('.course').append('<option value="">關鍵字輸入錯誤或本學年並無開設此課</option')
+        //                 $('.custom_course').show()
+        //             }
+        //         }
+        //     })
+        //     // console.log($('.dep option:checked').val())
+        // })
 
         function vaildateForm () {
-            if ($('.course option:checked').val() === '') {
+            console.log(($('.course option:checked').val() && $('.custom_course').val()))
+            if ($('.course option:checked').val() === '' && $('.custom_course').val() === '') {
                 alert('請選擇課程')
                 return false
             }
