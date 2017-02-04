@@ -269,7 +269,7 @@
     <script type="text/javascript">
         $('#search').click(function() {
             $('.course').hide()
-            let keyword = $('input[name=keyword]').val()
+            var keyword = $('input[name=keyword]').val()
             $.ajax({
                 url: `/api/course/search?keyword=${ keyword }`,
                 type: 'GET',

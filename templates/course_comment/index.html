@@ -139,7 +139,7 @@
 
     <script type="text/javascript">
         $('.dep').change(function() {
-            let dep = $('.dep option:checked').val()
+            var dep = $('.dep option:checked').val()
             $.ajax({
                 url: `/api/course/search?dep=${ dep }`,
                 type: 'GET',
