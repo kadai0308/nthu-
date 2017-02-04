@@ -99,7 +99,7 @@
         <div class="mask"></div>
         <img id="1" class="cover" src="/static/image/cover1.jpeg" style="transform: translateY(-250px);">
         <img id="2" class="cover"  src="/static/image/cover2.jpeg" style="transform: translateY(-30px);">
-        <img id="3" class="cover"  src="/static/image/cover3.jpeg" style="transform: translateY(-30px);">
+        <!-- <img id="3" class="cover"  src="/static/image/cover3.jpeg" style="transform: translateY(-30px);"> -->
     </div>
     <script type="text/javascript">
         $('#1').show()
@@ -108,10 +108,10 @@
         setInterval(function() {
             $('.cover').hide()
             $(`#${id}`).show()
+            id++;
             if (id >= amount) {
                 id = 1
             }
-            id++;
         }, 10000)
     </script>
 {% endblock %}
