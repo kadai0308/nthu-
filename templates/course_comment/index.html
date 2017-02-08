@@ -234,9 +234,10 @@
             }
         })
 
-        $('.inter-card .std-btn').click(function(event) {
+        $('.inter-card .std-btn, .threaten .std-btn').click(function(event) {
             event.preventDefault();
             $('.card').hide()
+            $('.threaten').hide()
             $('.encourage').fadeIn()
             setTimeout(function() {
                 window.location.href = '/course_comment/new'
