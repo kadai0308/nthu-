@@ -16,7 +16,7 @@ def _check_comment_auth(view):
         print (request, args, kargs)
         if not request.user.is_authenticated():
             messages.warning(request, '請先登入呦')
-            return redirect ('/course_comment/')
+            return redirect ('/')
 
         if 'comment_id' in kargs:
             comment = Comment.objects.get(id = kargs['comment_id'])
@@ -30,9 +30,11 @@ def _check_comment_auth(view):
     
     return check
 
-
+@_check_comment_auth
 def index (request):
-    # img_url = '/' + Comment.objects.all()[0].score_img.url
+    if not request.user.comment_set.exists():
+        ban = 'ban'
+
     all_comments = Comment.objects.all().order_by('-created_time')
     course_comment = 'focus'
 
@@ -48,7 +50,6 @@ def index (request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         comments = paginator.page(paginator.num_pages)
 
-    # return render(request, 'course_comment/index.html', {'contacts': contacts})
     return render(request, 'course_comment/index.html', locals())
 
 @_check_comment_auth

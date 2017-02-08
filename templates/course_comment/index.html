@@ -81,9 +81,79 @@
             top: 100px;
             right: 30px;
         }
+        .ban {
+            -moz-filter: blur(5px);
+            -webkit-filter: blur(5px);
+            -o-filter: blur(5px);
+            -ms-filter: blur(5px);
+            filter: blur(5px);
+        }
+        .course-mask {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 600;
+            background-color: rgba(0,0,0,.5);
+        }
+        .course-mask .card {
+            text-align: center;
+            position: relative;
+            margin-top: 60px;
+            width: 600px;
+            background-color: #fff;
+            margin-right: auto;
+            margin-left: auto;
+            border-radius: 5px;
+            padding: 10px 10px;
+        }
+        .course-mask .card h4 {
+            text-align: center;
+            margin: 50px 10px;
+        }
+        .course-mask .card .inter-card div {
+            text-align: center;
+            margin: 30px 10px;
+        }
+        .course-mask .card .inter-card div span {
+            cursor: pointer;
+        }
+        .course-mask .card .inter-card {
+            width: 100%;
+            height: 100%;
+            border: solid 1px #1BB394;
+        }
+        .course-mask .threaten a {
+            position: relative;
+            top: -70px;
+        }
+        .course-mask .threaten, .encourage {
+            text-align: center;
+            position: absolute;
+            display: none;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-65%);
+        }
     </style>
-    <a class="fixed right-top std-btn btn-primary btn-l btn-shadow" href="./new"><i class="fa fa-plus" aria-hidden="true"></i> 新增心得</a>
-    <div class="main">
+    {% if ban %}
+    <div class="course-mask">
+        <div class="card">
+            <div class="inter-card">
+                <h4>在看之前要先發一篇心得喔～助人也助己～</h4>
+                <a class="std-btn btn-primary btn-l" href="./new"><i class="fa fa-plus" aria-hidden="true"></i> 按這裡發表第一篇心得</a>
+                <div><span href="#" class="wait">等一下再填</span></div>
+                <img style="width: 400px;" class="cat" src="/static/image/cat.png">
+            </div>
+        </div>
+        <div class="threaten">
+            <img src="/static/image/threaten.png">
+            <a class="std-btn btn-primary btn-l" href="./new"><i class="fa fa-plus" aria-hidden="true"></i> 按這裡發表第一篇心得</a>
+        </div>
+        <img class="encourage" src="/static/image/encourage.png">
+    </div>
+    {% endif %}
+    <a class="fixed right-top std-btn btn-primary btn-l btn-shadow {{ban}}" href="./new"><i class="fa fa-plus" aria-hidden="true"></i> 新增心得</a>
+    <div class="main {{ban}}">
         <div class="search-bar">
             <form action="/course_comment/search" method="POST" id="search">{% csrf_token %}
                 <h4>搜尋心得</h4>
@@ -162,6 +232,20 @@
             } else {
                 $(this).prev().toggle()
             }
+        })
+
+        $('.inter-card .std-btn').click(function(event) {
+            event.preventDefault();
+            $('.card').hide()
+            $('.encourage').fadeIn()
+            setTimeout(function() {
+                window.location.href = '/course_comment/new'
+            }, 1500);
+        })
+
+        $('.wait').click(function() {
+            $('.card').hide()
+            $('.threaten').fadeIn()
         })
     </script>
 {% endblock %}
