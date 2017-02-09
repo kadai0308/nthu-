@@ -189,11 +189,11 @@
                 <div>
                     <h4>第一步：選擇課程</h4>
                     <div class="quick_search"> <!-- 依照系所 -->
-                        <input type="text" name="keyword" placeholder="輸入：課名 / 老師名 / 開課系所英文縮寫" value="{{ keyword }}">
+                        <input type="text" name="keyword" placeholder="輸入：課名 / 老師名 / 開課系所英文縮寫" value="{{ keyword }}" required>
                         <input type="button" id="search" class="std-btn btn-m btn-white" value="搜尋"> 
                         <div>
-                            <select class="course select-btn" form="comment" name="course_no" disabled="true">
-                                <option value="" checked>搜尋結果，請選擇課程</option>
+                            <select class="course select-btn" form="comment" name="course_no" disabled="true" required>
+                                <option value="">搜尋結果，請選擇課程</option>
                             </select>
                             <!-- <input type="text" class="custom_course" name="custom_course" placeholder="若課程本學年沒開設的話，這邊可以手動輸入"> -->
                         </div>
@@ -293,30 +293,6 @@
                 }
             })            
         })
-
-        // $('.dep').change(function() {
-        //     let dep = $('.dep option:checked').val()
-        //     $.ajax({
-        //         url: `/api/course/search?dep=${ dep }`,
-        //         type: 'GET',
-        //         success: function (data) {
-        //             if (data.length > 0) {
-
-        //                 $('.course').empty()
-        //                 $('.course').append('<option value="">搜尋結果，請選擇課程</option')
-        //                 for (i = 0; i < data.length; i++) {
-        //                     html = `<option value='${ data[i]["course_no"] }'>${ data[i]["title"] } / ${ data[i]["teacher"] }</option>`
-        //                     $('.course').append(html)
-        //                     $('.course').prop( "disabled", false )
-        //                 }
-        //             } else if {
-        //                 $('.course').append('<option value="">關鍵字輸入錯誤或本學年並無開設此課</option')
-        //                 $('.custom_course').show()
-        //             }
-        //         }
-        //     })
-        //     // console.log($('.dep option:checked').val())
-        // })
 
         function vaildateForm () {
             console.log(($('.course option:checked').val() && $('.custom_course').val()))
