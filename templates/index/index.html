@@ -71,8 +71,22 @@
             overflow: hidden;
             height: 600px;
         }
-        .cover {
+        /*.cover {
             width: 100%;
+            display: none;
+            animation-name: fade;
+            animation-duration: 10s;
+            animation-fill-mode: forwards;
+        }*/
+        .cover {
+            background-image: url('/static/image/cover1.jpeg');
+            height: 100%;
+            width: 100%;
+            background-size: Cover;
+            display: block;
+            position: absolute;
+            top: 0px;
+            left: 0px;
             display: none;
             animation-name: fade;
             animation-duration: 10s;
@@ -89,16 +103,24 @@
                 opacity: .1;
             }
         }
+        .img1 {
+            background-image: url('/static/image/cover1.jpeg');
+        }
+        .img2 {
+            background-image: url('/static/image/cover2.jpeg');   
+        }
     </style>
     <div class="image">
+        <div id="1" class="cover img1"></div>
+        <div id="2" class="cover img2"></div>
         <div class="title">
             <div class="main">NTHU+</div>
             <div class="line"></div>
             <div class="sub">Better College Life</div>
         </div>
         <div class="mask"></div>
-        <img id="1" class="cover" src="/static/image/cover1.jpeg" style="transform: translateY(-250px);">
-        <img id="2" class="cover"  src="/static/image/cover2.jpeg" style="transform: translateY(-30px);">
+        <!-- <img id="1" class="cover" src="/static/image/cover1.jpeg" style="transform: translateY(-250px);"> -->
+        <!-- <img id="2" class="cover"  src="/static/image/cover2.jpeg" style="transform: translateY(-30px);"> -->
         <!-- <img id="3" class="cover"  src="/static/image/cover3.jpeg" style="transform: translateY(-30px);"> -->
     </div>
     <script type="text/javascript">
