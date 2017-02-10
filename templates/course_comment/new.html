@@ -43,7 +43,7 @@
             cursor: pointer;
         }
         .course {
-            display: none;
+            /*display: none;*/
             margin-top: 10px;
             animation-name: fadeUp;
             animation-duration: 1s;
@@ -193,19 +193,9 @@
                         <input type="button" id="search" class="std-btn btn-m btn-white" value="搜尋"> 
                         <div>
                             <select class="course select-btn" form="comment" name="course_no" disabled="true" required>
-                                <option value="">搜尋結果，請選擇課程</option>
+                                <option value="">請搜尋課程</option>
                             </select>
-                            <!-- <input type="text" class="custom_course" name="custom_course" placeholder="若課程本學年沒開設的話，這邊可以手動輸入"> -->
                         </div>
- <!--                        <div>
-                            {% comment %} {% include 'partial_template/_all_department.html' %}{% endcomment %} 
-                        </div>
-                        <br/>
-                        <div>
-                            <select class="course select-btn" form="comment" name="course_no" disabled="true" required>
-                                <option value="">請先選擇系所再選課程</option>
-                            </select>
-                        </div> -->
                     </div>
                 </div>
                 <div>
@@ -295,8 +285,7 @@
         })
 
         function vaildateForm () {
-            console.log(($('.course option:checked').val() && $('.custom_course').val()))
-            if ($('.course option:checked').val() === '' && $('.custom_course').val() === '') {
+            if ($('.course option:checked').val() === '') {
                 alert('請選擇課程')
                 return false
             }
