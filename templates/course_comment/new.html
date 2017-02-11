@@ -190,7 +190,7 @@
                 <div>
                     <h4>第一步：選擇課程</h4>
                     <div class="quick_search"> <!-- 依照系所 -->
-                        <input type="text" name="keyword" placeholder="輸入：課名 / 老師名 / 開課系所英文縮寫" value="{{ keyword }}" required>
+                        <input type="text" name="keyword" id="keyword" placeholder="輸入：課名 / 老師名 / 開課系所英文縮寫" value="{{ keyword }}" required>
                         <input type="button" id="search" class="std-btn btn-m btn-white" value="搜尋"> 
                         <div>
                             <select class="course select-btn" form="comment" name="course_no" disabled="true" required>
@@ -292,6 +292,18 @@
                 }
             })            
         })
+
+        $("#keyword").keypress(function(e) {
+            if (e.key === 'Enter') {
+                $("#search").trigger( "click" );
+            }
+        })
+
+        $("#comment").keypress(function(e) {
+            if (e.key === 'Enter') {
+                return false
+            }
+        })        
 
         $("#comment").submit(function() {
             if ($('.course option:checked').val() === '') {
