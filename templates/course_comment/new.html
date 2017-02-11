@@ -101,10 +101,11 @@
         }
         .form-group textarea {
             width: 90%;
-            height: 200px;
+            height: 100px;
             border-style: none;
             text-decoration: none;
             outline: none;
+            font-size: 20px;
         }
         .submit-bar {
             float: right;
@@ -205,7 +206,15 @@
                         <input type="text" id="title" name="title" required="required">
                     </div>
                     <div class="form-group">
-                        <label for="content">內容</label>
+                        <label for="ta">助教表現</label>
+                        <textarea  id="ta" name="ta"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="scoring">評分方式</label>
+                        <textarea  id="scoring" name="scoring" required="required"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="content">修課心得</label>
                         <textarea  id="content" name="content" required="required"></textarea>
                     </div>
 
@@ -284,12 +293,12 @@
             })            
         })
 
-        function vaildateForm () {
+        $("#comment").submit(function() {
             if ($('.course option:checked').val() === '') {
                 alert('請選擇課程')
                 return false
             }
-        }
+        })
     </script>
 {% endblock %}
 

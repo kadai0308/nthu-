@@ -63,8 +63,17 @@ def create (request):
     # get course
     course_no = request.POST.get('course_no', '')
 
-    title = request.POST['title']
-    content = request.POST['content']
+    if course_no == '':
+        return redirect(request.META.get('HTTP_REFERER'))
+
+    title = request.POST.get('title', '')
+    scoring = request.POST.get('scoring', '')
+    ta = request.POST.get('ta', '')
+    content = request.POST.get('content', '')
+
+    total_content = '【評分方式】' + scoring + '\n'
+    total_content += '【助教表現】' + ta + '\n'
+    total_content += '【修課心得】' + content + '\n'
     
     anonymous = [False, True]['anonymous' in request.POST]
     score_img = request.FILES['score_img'] if 'score_img' in request.FILES else None
@@ -78,7 +87,7 @@ def create (request):
         # create comment of course
         Comment.objects.create(
             title = title,
-            content = content,
+            content = total_content,
             anonymous = anonymous,
             course = course,
             user = request.user,

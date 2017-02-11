@@ -26,4 +26,12 @@ def add_course (request):
                 }
             )
 
-    
+
+def uniq(seq):
+    seen = dict()
+    dep = seq[::2]
+    limit = seq[1::2]
+    for index, i in enumerate(dep):
+        if not i in seen:
+            seen[i] = limit[index]
+    return seen
