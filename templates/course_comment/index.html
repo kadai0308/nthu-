@@ -3,116 +3,18 @@
 {% load custom_filter %}
 
 {% block content %}
+    <!-- css import -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/ui/button.css' %}">
-    <style type="text/css">
-        .main {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            max-width: 800px;
-            margin-left: auto!important;
-            margin-right: auto!important;
-            padding: 0 20px;
-        }
-        .search-bar {
-            border-bottom: solid 1px rgba(0,0,0,.15);
-            padding-bottom: 25px;
-            margin-bottom: 20px;
-        }
-        .search-bar .quick_input {
-            margin: 10px 0;
-        }
-        .search-bar .quick_input input {
-            width: 50%;
-            border: solid 1px rgb(166, 166, 166);
-            border-radius: 5px;
-            padding: 8px 10px;
-            outline: none;
-        }
-        .box-content p {
-            letter-spacing: 2px;
-            line-height: 20px;
-        }
-        .btn-shadow {
-            box-shadow: 1px 2px 3px #808080;
-        }
-        .fixed {
-            position: fixed;
-            z-index: 100;
-        }
-        .right-top {
-            top: 100px;
-            right: 30px;
-        }
-        .ban {
-            -moz-filter: blur(5px);
-            -webkit-filter: blur(5px);
-            -o-filter: blur(5px);
-            -ms-filter: blur(5px);
-            filter: blur(5px);
-        }
-        .course-mask {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: 600;
-            background-color: rgba(0,0,0,.5);
-        }
-        .course-mask .card {
-            text-align: center;
-            position: relative;
-            margin-top: 60px;
-            width: 600px;
-            background-color: #fff;
-            margin-right: auto;
-            margin-left: auto;
-            border-radius: 5px;
-            padding: 10px 10px;
-        }
-        .course-mask .card h4 {
-            text-align: center;
-            margin: 50px 10px;
-        }
-        .course-mask .card .inter-card div {
-            text-align: center;
-            margin: 30px 10px;
-        }
-        .course-mask .card .inter-card div span {
-            cursor: pointer;
-        }
-        .course-mask .card .inter-card {
-            width: 100%;
-            height: 100%;
-            border: solid 1px #1BB394;
-        }
-        .course-mask .threaten a {
-            position: relative;
-            top: -70px;
-        }
-        .course-mask .threaten, .encourage {
-            text-align: center;
-            position: absolute;
-            display: none;
-            top: 50%;
-            left: 50%;
-            transform: translateX(-50%) translateY(-65%);
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/app/course_comment/index.css' %}">
+    <!-- main part -->
     {% if ban %}
         <div class="course-mask">
             <div class="card">
                 <div class="inter-card">
                     <h4>在看之前要先發一篇心得喔～助人也助己～</h4>
-                    <a class="btn btn-main btn-xl" href="./new"><i class="fa fa-plus" aria-hidden="true"></i> 按這裡發表第一篇心得</a>
-                    <div><span href="#" class="wait">等一下再填</span></div>
-                    <img style="width: 400px;" class="cat" src="/static/image/cat.png">
+                    <a class="btn btn-main btn-xl line-height50" href="./new"><i class="fa fa-plus" aria-hidden="true"></i> 按這裡發表第一篇心得</a>
                 </div>
             </div>
-            <div class="threaten">
-                <img src="/static/image/threaten.png">
-                <a class="btn btn-main btn-xl" href="./new"><i class="fa fa-plus" aria-hidden="true"></i> 按這裡發表第一篇心得</a>
-            </div>
-            <img class="encourage" src="/static/image/encourage.png">
         </div>
     {% endif %}
     <a class="fixed right-top btn btn-main btn-xl btn-shadow {{ban}}" href="./new"><i class="fa fa-plus" aria-hidden="true"></i> 新增心得</a>
@@ -127,7 +29,7 @@
             </form>
         </div>
         {% if not comments %}
-            <div style="color: rgba(0,0,0,.5);text-align: center;">暫時還沒有心得喔～</div>
+            <div class="default-text">暫時還沒有心得喔～</div>
         {% endif %}
         {% for comment in comments %}
             <div class="box">
@@ -145,36 +47,19 @@
                 <div class="box-content">
                     <h3>{{ comment.title }}</h3>
                     <div>
-                        甜度：{{ comment.sweety }} <i class="fa fa-star" aria-hidden="true" style="color: #FFD700;margin-right: 5px;"></i>
-                        涼度：{{ comment.cold }} <i class="fa fa-star" aria-hidden="true" style="color: #FFD700;margin-right: 5px;"></i>
-                        難度：{{ comment.hardness }} <i class="fa fa-star" aria-hidden="true" style="color: #FFD700;margin-right: 5px;"></i>
+                        甜度：{{ comment.sweety }} <i class="fa fa-star star" aria-hidden="true"></i>
+                        涼度：{{ comment.cold }} <i class="fa fa-star star" aria-hidden="true"></i>
+                        難度：{{ comment.hardness }} <i class="fa fa-star star" aria-hidden="true"></i>
                     </div>
-                    <p id='unfold' style="cursor: pointer;">{{ comment.content | truncatetw | linebreaksbr }}</p>
-                    <p id='hidden' style="display: none;cursor: pointer;">{{ comment.content | linebreaksbr }}</p>
+                    <p id='unfold'>{{ comment.content | truncatetw | linebreaksbr }}</p>
+                    <p id='hidden'>{{ comment.content | linebreaksbr }}</p>
                 </div>
             </div>
         {% endfor %}
         {% include 'partial_template/_pagination.html' %}
     </div>
 
-    <script type="text/javascript">
-        $('.dep').change(function() {
-            var dep = $('.dep option:checked').val()
-            $.ajax({
-                url: `/api/course/search?dep=${ dep }`,
-                type: 'GET',
-                success: function (data) {
-                    $('.course').empty()
-                    $('.course').append('<option value="">請先選擇系所再選課程</option')
-                    for (i = 0; i < data.length; i++) {
-                        html = `<option value='${ data[i]["course_no"] }'>${ data[i]["title"] } / ${ data[i]["teacher"] }</option>`
-                        $('.course').append(html)
-                        $('.course').prop( "disabled", false )
-                    }
-                }
-            })
-        })
-        
+    <script type="text/javascript">       
         $('#unfold, #hidden').click(function() {
             $(this).toggle()
             if (this.id === 'unfold') {
@@ -182,21 +67,6 @@
             } else {
                 $(this).prev().toggle()
             }
-        })
-
-        $('.inter-card .btn, .threaten .btn').click(function(event) {
-            event.preventDefault();
-            $('.card').hide()
-            $('.threaten').hide()
-            $('.encourage').fadeIn()
-            setTimeout(function() {
-                window.location.href = '/course_comment/new'
-            }, 1500);
-        })
-
-        $('.wait').click(function() {
-            $('.card').hide()
-            $('.threaten').fadeIn()
         })
     </script>
 {% endblock %}

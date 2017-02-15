@@ -4,6 +4,7 @@
     text-decoration: none;
     outline: none;
     cursor: pointer;   
+    border: none;
 }
 
 /* btn color */

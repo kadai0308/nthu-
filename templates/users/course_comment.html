@@ -3,53 +3,10 @@
 {% load custom_filter %}
 
 {% block content %}
+    <!-- css import -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/ui/button.css' %}">
-    <style type="text/css">
-        .main {
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .title {
-            line-height: 15px;
-            width: 800px;
-            margin: 20px 0;
-            padding: 20px 0;
-            border-bottom: solid 1px rgba(0,0,0,.15);
-        }
-        .box-title {
-            line-height: 46px;
-            padding-top: 0px;
-            padding-left: 20px;
-            padding-right: 0px;
-        }
-        .btn {
-            border-radius: 5px;
-            margin-right: 10px;
-        }
-        .fixed {
-            position: fixed;
-            z-index: 100;
-        }
-        .right-top {
-            top: 100px;
-            right: 30px;
-        }
-        .star {
-            color: #FFD700;
-            margin-right: 5px;
-        }
-        #unfold {
-            color: rgba(0,0,0,.53);
-        }
-        #unfold:hover {
-            color: rgba(0,0,0,.9);
-        }
-        .default-text {
-            color: rgba(0,0,0,.5);
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/app/users/course_comment.css' %}">
+    <!-- main part -->
     <div class="main">
         <a class="btn fixed right-top btn-main btn-xl btn-shadow" href="/course_comment/new"><i class="fa fa-plus" aria-hidden="true"></i> 新增心得</a>
         <div class="title"><div>我的修課心得</div></div>
@@ -78,8 +35,8 @@
                         涼度：{{ comment.cold }} <i class="fa fa-star star" aria-hidden="true" ></i>
                         難度：{{ comment.hardness }} <i class="fa fa-star star" aria-hidden="true" ></i>
                     </div>
-                    <p id='unfold' style="cursor: pointer;">{{ comment.content | truncatetw | linebreaksbr }}</p>
-                    <p id='hidden' style="display: none;cursor: pointer;">{{ comment.content | linebreaksbr }}</p>
+                    <p id='unfold'>{{ comment.content | truncatetw | linebreaksbr }}</p>
+                    <p id='hidden'>{{ comment.content | linebreaksbr }}</p>
                 </div>
             </div>
         {% endfor %}

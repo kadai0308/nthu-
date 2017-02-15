@@ -1,7 +1,8 @@
 {% extends 'base.html'%}
-
+{% load static %}
 
 {% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ui/button.css' %}">
     <style type="text/css">
         .box {
             width: 60%;
@@ -16,31 +17,12 @@
         .box-title h3 {
             margin: 5px 5px;
         }
-        .quick_search input:nth-child(1) {
+        .quick_search .input {
             width: 50%;
-            line-height: 25px;
+            padding: 8px 10px;
             border: solid 1px rgb(166, 166, 166);
             border-radius: 5px;
-            padding-left: 5px;
             outline: none;
-        }
-        .btn-white {
-            background-color: #fff;
-            color: #808080;
-            border: solid 1px #808080;
-        }
-        .btn-white:hover {
-            background-color: #f3f3f3;
-        }
-        .btn-m {
-            line-height: 20px;
-            padding: 5px 10px;
-        }
-        .std-btn {
-            border-radius: 3px;
-            text-decoration: none;
-            outline: none;
-            cursor: pointer;
         }
         .course {
             /*display: none;*/
@@ -111,31 +93,6 @@
             float: right;
             margin: 30px 0;
         }
-        .submit-btn {
-            outline: none;
-            background-color: #1BB394;
-            border-color: #1BB394;
-            color: white;
-            line-height: 30px;
-            font-size: 15px;
-            padding: 0 30px;
-            border-radius: 5px;
-            display: inline-block;
-            margin-left: 15px;
-            margin-bottom: 0;
-            font-weight: normal;
-            text-align: center;
-            vertical-align: middle;
-            touch-action: manipulation;
-            cursor: pointer;
-            background-image: none;
-            border: 1px solid transparent;
-            white-space: nowrap;
-            text-decoration: none;
-        }
-        .submit-btn:hover {
-            background-color: #18A387;
-        }
         .display_flex {
             display: flex;
         }
@@ -185,20 +142,18 @@
             <h3>填寫心得</h3>
         </div>
         <div class="box-content">
-            <form action="/course_comment/create" id="comment" method="POST" enctype="multipart/form-data" onsubmit="return vaildateForm()" >
-                {% csrf_token %}
+            <h4>第一步：選擇課程</h4>
+            <div class="quick_search"> <!-- 依照系所 -->
+                <input class="input" type="text" name="keyword" id="keyword" placeholder="輸入：課名 / 老師名 / 開課系所英文縮寫" value="{{ keyword }}" autocomplete="off">
+                <input type="button" id="search" class="btn btn-s btn-white" value="搜尋"> 
                 <div>
-                    <h4>第一步：選擇課程</h4>
-                    <div class="quick_search"> <!-- 依照系所 -->
-                        <input type="text" name="keyword" id="keyword" placeholder="輸入：課名 / 老師名 / 開課系所英文縮寫" value="{{ keyword }}" required>
-                        <input type="button" id="search" class="std-btn btn-m btn-white" value="搜尋"> 
-                        <div>
-                            <select class="course select-btn" form="comment" name="course_no" disabled="true" required>
-                                <option value="">請搜尋課程</option>
-                            </select>
-                        </div>
-                    </div>
+                    <select class="course select-btn" form="comment" name="course_no" disabled="true" required>
+                        <option value="">請搜尋課程</option>
+                    </select>
                 </div>
+            </div>
+            <form action="/course_comment/create" id="comment" method="POST" enctype="multipart/form-data" onsubmit="return vaildateForm()" autocomplete="off">
+                {% csrf_token %}
                 <div>
                     <h4>第二步：填寫心得</h4>
                     <div class="form-group">
@@ -252,7 +207,7 @@
                     <div class="submit-bar">
                         <label for="anonymous">匿名</label>
                         <input type="checkbox" name="anonymous">
-                        <button type="submit" class="submit-btn">
+                        <button type="submit" class="btn btn-main btn-m">
                             <i class="fa fa-chevron-right" aria-hidden="true"></i>
                             送出
                         </button>
