@@ -129,7 +129,7 @@
         id = 2
         setInterval(function() {
             $('.cover').hide()
-            $(`#${id}`).show()
+            $('#' + id + '').show()
             id++;
             if (id >= amount) {
                 id = 1

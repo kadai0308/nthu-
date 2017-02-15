@@ -1,7 +1,9 @@
 {% extends 'base.html'%}
+{% load static %}
 {% load custom_filter %}
 
 {% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ui/button.css' %}">
     <style type="text/css">
         .main {
             position: relative;
@@ -22,56 +24,17 @@
         }
         .search-bar .quick_input input {
             width: 50%;
-            line-height: 30px;
             border: solid 1px rgb(166, 166, 166);
             border-radius: 5px;
-            padding-left: 5px;
+            padding: 8px 10px;
             outline: none;
-        }
-        .select-btn {
-            background-color: #fff;
-            height: 30px;
-            outline: none;
-        }
-        .loading {
-            text-align: center;
-            display: none;
         }
         .box-content p {
             letter-spacing: 2px;
             line-height: 20px;
         }
-        .std-btn {
-            border-radius: 3px;
-            text-decoration: none;
-            outline: none;
-            cursor: pointer;
-        }
         .btn-shadow {
             box-shadow: 1px 2px 3px #808080;
-        }
-        .btn-white {
-            background-color: #fff;
-            color: #808080;
-            border: solid 1px #808080;
-        }
-        .btn-white:hover {
-            background-color: #f3f3f3;
-        }
-        .btn-primary {
-            background-color: #1BB394;
-            color: #fff;
-        }
-        .btn-primary:hover {
-            background-color: #18A387;   
-        }
-        .btn-m {
-            line-height: 20px;
-            padding: 5px 10px;
-        }
-        .btn-l {
-            line-height: 20px;
-            padding: 10px 50px;
         }
         .fixed {
             position: fixed;
@@ -136,46 +99,33 @@
         }
     </style>
     {% if ban %}
-    <div class="course-mask">
-        <div class="card">
-            <div class="inter-card">
-                <h4>在看之前要先發一篇心得喔～助人也助己～</h4>
-                <a class="std-btn btn-primary btn-l" href="./new"><i class="fa fa-plus" aria-hidden="true"></i> 按這裡發表第一篇心得</a>
-                <div><span href="#" class="wait">等一下再填</span></div>
-                <img style="width: 400px;" class="cat" src="/static/image/cat.png">
+        <div class="course-mask">
+            <div class="card">
+                <div class="inter-card">
+                    <h4>在看之前要先發一篇心得喔～助人也助己～</h4>
+                    <a class="btn btn-main btn-xl" href="./new"><i class="fa fa-plus" aria-hidden="true"></i> 按這裡發表第一篇心得</a>
+                    <div><span href="#" class="wait">等一下再填</span></div>
+                    <img style="width: 400px;" class="cat" src="/static/image/cat.png">
+                </div>
             </div>
+            <div class="threaten">
+                <img src="/static/image/threaten.png">
+                <a class="btn btn-main btn-xl" href="./new"><i class="fa fa-plus" aria-hidden="true"></i> 按這裡發表第一篇心得</a>
+            </div>
+            <img class="encourage" src="/static/image/encourage.png">
         </div>
-        <div class="threaten">
-            <img src="/static/image/threaten.png">
-            <a class="std-btn btn-primary btn-l" href="./new"><i class="fa fa-plus" aria-hidden="true"></i> 按這裡發表第一篇心得</a>
-        </div>
-        <img class="encourage" src="/static/image/encourage.png">
-    </div>
     {% endif %}
-    <a class="fixed right-top std-btn btn-primary btn-l btn-shadow {{ban}}" href="./new"><i class="fa fa-plus" aria-hidden="true"></i> 新增心得</a>
+    <a class="fixed right-top btn btn-main btn-xl btn-shadow {{ban}}" href="./new"><i class="fa fa-plus" aria-hidden="true"></i> 新增心得</a>
     <div class="main {{ban}}">
         <div class="search-bar">
             <form action="/course_comment/search" method="POST" id="search">{% csrf_token %}
                 <h4>搜尋心得</h4>
                 <div class="quick_input">
                     <input type="text" name="keyword" placeholder="輸入：課名 / 老師名 / 開課系所英文縮寫" value="{{ keyword }}">
-                    <button type="submit" class="std-btn btn-m btn-white">搜尋</button>
+                    <button type="submit" class="btn btn-s btn-white">搜尋</button>
                 </div>
-                <!-- <div>
-                    {% comment %} {% include 'partial_template/_all_department.html' %} {% endcomment %} 
-                </div>
-                <br/>
-                <div>
-                    <select class="course select-btn" form="search" name="course_no" disabled="true">
-                        <option>請先選擇系所再選課程</option>
-                    </select>
-                    <button type="submit" class="std-btn btn-m btn-white">搜尋</button>
-                </div> -->
             </form>
         </div>
-        <!-- <div class="loading">
-            <img src="/media/image/reload.gif">
-        </div> -->
         {% if not comments %}
             <div style="color: rgba(0,0,0,.5);text-align: center;">暫時還沒有心得喔～</div>
         {% endif %}
@@ -234,7 +184,7 @@
             }
         })
 
-        $('.inter-card .std-btn, .threaten .std-btn').click(function(event) {
+        $('.inter-card .btn, .threaten .btn').click(function(event) {
             event.preventDefault();
             $('.card').hide()
             $('.threaten').hide()

@@ -270,11 +270,10 @@
             $('.course').hide()
             var keyword = $('input[name=keyword]').val()
             $.ajax({
-                url: `/api/course/search?keyword=${ keyword }`,
+                url: '/api/course/search?keyword=' + keyword ,
                 type: 'GET',
                 success: function (data) {
                     if (data.length > 0) {
-                        $('.custom_course').hide()
                         $('.course').empty()
                         $('.course').append('<option value="">搜尋結果，請選擇課程</option')
                         for (i = 0; i < data.length; i++) {
@@ -287,7 +286,6 @@
                         $('.course').empty()
                         $('.course').append('<option value="">關鍵字輸入錯誤或本學年並無開設此課</option')
                         $('.course').show()
-                        // $('.custom_course').show()
                     }
                 }
             })            
@@ -299,7 +297,7 @@
             }
         })
 
-        $("#comment").keypress(function(e) {
+        $("#comment #title").keypress(function(e) {
             if (e.key === 'Enter') {
                 return false
             }
