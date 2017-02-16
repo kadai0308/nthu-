@@ -35,14 +35,6 @@
             <div class="box">
                 <div class="box-title">
                     <h5>{{ comment.course.title_tw }} / {{ comment.course.teacher | replace:'[\u4e00-\u9fa5]+' }}</h5>
-                    <div class="box-tool">
-                        {% if comment.anonymous %}
-                            匿名
-                        {% else %}
-                            <!-- <img src="{{ comment.user.socialaccount_set.all.0.get_avatar_url }}" /> -->
-                            {{ comment.user.profile.nickname }}
-                        {% endif %}
-                    </div>
                 </div>
                 <div class="box-content">
                     <h3>{{ comment.title }}</h3>

@@ -71,11 +71,10 @@ def create (request):
     ta = request.POST.get('ta', '')
     content = request.POST.get('content', '')
 
-    total_content = '【評分方式】' + scoring + '\n'
-    total_content += '【助教表現】' + ta + '\n'
-    total_content += '【修課心得】' + content + '\n'
+    total_content = '【評分方式】' + scoring + '\n\n'
+    total_content += '【助教表現】' + ta + '\n\n'
+    total_content += '【修課心得】' + content + '\n\n'
     
-    anonymous = [False, True]['anonymous' in request.POST]
     score_img = request.FILES['score_img'] if 'score_img' in request.FILES else None
 
     sweety = request.POST['sweety'] if 'sweety' in request.POST else 0
@@ -153,8 +152,7 @@ def update(request, comment):
 
     comment.title = request.POST.get('title','')
     comment.content = request.POST.get('content','')
-    
-    comment.anonymous = [False, True]['anonymous' in request.POST]
+
     # score_img = request.FILES['score_img'] if 'score_img' in request.FILES else None
 
     comment.sweety = request.POST.get('sweety', 0)

@@ -60,8 +60,6 @@
                     </div>
                     
                     <div class="submit-bar">
-                        <label for="anonymous">匿名</label>
-                        <input type="checkbox" name="anonymous">
                         <button type="submit" class="btn btn-main btn-m">
                             <i class="fa fa-chevron-right" aria-hidden="true"></i>
                             更新
@@ -105,9 +103,6 @@
         $('input#sweety_star{{ comment.sweety }}').attr( 'checked', true )
         $('input#cold_star{{ comment.cold }}').attr( 'checked', true )
         $('input#hardness_star{{ comment.hardness }}').attr( 'checked', true )
-        if ('{{ comment.anonymous }}' === 'True') {
-            $('input[name=anonymous]').attr( 'checked', true )
-        }
     </script>
 {% endblock %}
 
