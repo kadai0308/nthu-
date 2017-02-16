@@ -1,0 +1,84 @@
+.box {
+    width: 60%;
+}
+.center {
+    margin-left: auto!important;
+    margin-right: auto!important;
+}
+.marginTop30 {
+    margin-top: 30px;
+}
+.box-title h3 {
+    margin: 5px 5px;
+}
+.quick_search .input {
+    width: 50%;
+    padding: 8px 10px;
+    border: solid 1px rgb(166, 166, 166);
+    border-radius: 5px;
+    outline: none;
+}
+.course {
+    margin-top: 10px;
+    animation-name: fadeUp;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+.select-btn {
+    background-color: #fff;
+    height: 35px;
+    outline: none;
+    width: 100%;
+}
+.form-group {
+    margin: 20px 0;
+    display: flex;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #1BB394;
+}
+.form-group label {
+    padding-left: 5px;
+    width: 10%;
+    line-height: 30px;
+    background-color: #1BB394;
+    color: #fff;
+}
+.form-group input {
+    border: none;
+    width: 90%;
+    height: 30px;
+    outline: none;
+    font-size: 18px;
+}
+.form-group textarea {
+    width: 90%;
+    height: 100px;
+    border-style: none;
+    text-decoration: none;
+    outline: none;
+    font-size: 20px;
+}
+.submit-bar {
+    float: right;
+    margin: 30px 0;
+}
+.display_flex {
+    display: flex;
+}
+.line_height30 {
+    line-height: 30px;
+}
+.marginRight20 {
+    margin-right: 20px;
+}

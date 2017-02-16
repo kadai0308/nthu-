@@ -1,128 +1,12 @@
 {% extends 'base.html'%}
-
+{% load static %}
 
 {% block content %}
-    <style type="text/css">
-        .center {
-            margin-left: auto!important;
-            margin-right: auto!important;
-        }
-        .box-width {
-            width: 60%;
-            min-width: 400px;
-        }
-        .marginTop30 {
-            margin-top: 30px;
-        }
-        .box-title h3 {
-            margin: 5px 5px;
-        }
-        .select-btn {
-            background-color: #fff;
-            height: 30px;
-            outline: none;
-        }
-        .form-group {
-            margin: 20px 0;
-            display: flex;
-            border-style: solid;
-            border-width: 1px;
-            border-color: #1BB394;
-        }
-        .form-group label {
-            padding-left: 5px;
-            width: 10%;
-            line-height: 30px;
-            background-color: #1BB394;
-            color: #fff;
-        }
-        .form-group input {
-            border: none;
-            width: 90%;
-            height: 30px;
-            outline: none;
-            font-size: 18px;
-        }
-        .form-group textarea {
-            width: 90%;
-            height: 200px;
-            border-style: none;
-            text-decoration: none;
-            outline: none;
-        }
-        .submit-bar {
-            float: right;
-            margin: 30px 0;
-        }
-        .submit-btn {
-            outline: none;
-            background-color: #1BB394;
-            border-color: #1BB394;
-            color: white;
-            line-height: 30px;
-            font-size: 15px;
-            padding: 0 30px;
-            border-radius: 5px;
-            display: inline-block;
-            margin-left: 15px;
-            margin-bottom: 0;
-            font-weight: normal;
-            text-align: center;
-            vertical-align: middle;
-            touch-action: manipulation;
-            cursor: pointer;
-            background-image: none;
-            border: 1px solid transparent;
-            white-space: nowrap;
-            text-decoration: none;
-        }
-        .submit-btn:hover {
-            background-color: #18A387;
-        }
-        .display_flex {
-            display: flex;
-        }
-        .line_height30 {
-            line-height: 30px;
-        }
-        .marginRight20 {
-            margin-right: 20px;
-        }
-        .rating { 
-          border: none;
-          float: left;
-        }
-
-        .rating > input { display: none; } 
-        .rating > label:before { 
-          margin: 5px;
-          font-size: 1.25em;
-          font-family: FontAwesome;
-          display: inline-block;
-          content: "\f005";
-        }
-
-        .rating > .half:before { 
-          content: "\f089";
-          position: absolute;
-        }
-
-        .rating > label { 
-          color: #ddd; 
-         float: right; 
-        }
-
-        /***** CSS Magic to Highlight Stars on Hover *****/
-
-        .rating > input:checked ~ label, /* show gold star when clicked */
-        .rating:not(:checked) > label:hover, /* hover current star */
-        .rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
-
-        .rating > input:checked + label:hover, /* hover current star when changing rating */
-        .rating > input:checked ~ label:hover,
-        .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
-        .rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
-    </style>
+    <!-- css import -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ui/button.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ui/rating_star.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/app/course_comment/edit.css' %}">
+    <!-- main part -->
     <div class="box center marginTop30 box-width">
         <div class="box-title">
             <h3>修改心得</h3>
@@ -178,7 +62,7 @@
                     <div class="submit-bar">
                         <label for="anonymous">匿名</label>
                         <input type="checkbox" name="anonymous">
-                        <button type="submit" class="submit-btn">
+                        <button type="submit" class="btn btn-main btn-m">
                             <i class="fa fa-chevron-right" aria-hidden="true"></i>
                             更新
                         </button>

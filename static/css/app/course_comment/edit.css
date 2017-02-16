@@ -1,0 +1,60 @@
+.center {
+    margin-left: auto!important;
+    margin-right: auto!important;
+}
+.box-width {
+    width: 60%;
+    min-width: 400px;
+}
+.marginTop30 {
+    margin-top: 30px;
+}
+.box-title h3 {
+    margin: 5px 5px;
+}
+.select-btn {
+    background-color: #fff;
+    height: 30px;
+    outline: none;
+}
+.form-group {
+    margin: 20px 0;
+    display: flex;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #1BB394;
+}
+.form-group label {
+    padding-left: 5px;
+    width: 10%;
+    line-height: 30px;
+    background-color: #1BB394;
+    color: #fff;
+}
+.form-group input {
+    border: none;
+    width: 90%;
+    height: 30px;
+    outline: none;
+    font-size: 18px;
+}
+.form-group textarea {
+    width: 90%;
+    height: 200px;
+    border-style: none;
+    text-decoration: none;
+    outline: none;
+}
+.submit-bar {
+    float: right;
+    margin: 30px 0;
+}
+.display_flex {
+    display: flex;
+}
+.line_height30 {
+    line-height: 30px;
+}
+.marginRight20 {
+    margin-right: 20px;
+}
