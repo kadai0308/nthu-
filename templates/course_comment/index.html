@@ -20,7 +20,7 @@
     <a class="fixed right-top btn btn-main btn-xl btn-shadow {{ban}}" href="./new"><i class="fa fa-plus" aria-hidden="true"></i> 新增心得</a>
     <div class="main {{ban}}">
         <div class="search-bar">
-            <form action="/course_comment/search" method="POST" id="search">{% csrf_token %}
+            <form action="/course_comment/search" method="GET" id="search">
                 <h4>搜尋心得</h4>
                 <div class="quick_input">
                     <input type="text" name="keyword" placeholder="輸入：課名 / 老師名 / 開課系所英文縮寫" value="{{ keyword }}">

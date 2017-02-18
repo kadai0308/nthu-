@@ -119,7 +119,7 @@ def search (request):
     # course_no = request.POST.get('course_no', '')
     # all_comments = Comment.objects.filter(course__course_no = course_no)
     
-    keyword = request.POST.get('keyword', '')
+    keyword = request.GET.get('keyword', '')
     courses = Course.objects.filter(Q(title_tw__icontains = keyword) | Q(teacher__icontains = keyword) | Q(course_no__icontains = keyword))
     all_comments = Comment.objects.filter(course__in = courses).order_by('-created_time')
     
