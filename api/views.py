@@ -31,7 +31,7 @@ def search_course (request):
         data.append(course_data)
 
     # sort by course_no
-    data = sorted(data, key = lambda course: course['course_no'][9:])
+    data = sorted(data, key = lambda course: course['course_no'][4:])
 
     response = JsonResponse(data, safe = False)
     return response
