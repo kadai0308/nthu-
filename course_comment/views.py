@@ -129,6 +129,8 @@ def search (request):
     if not all_comments:
         no_comment = True
 
+    print (type(all_comments))
+
     paginator = Paginator(all_comments, 10) # Show 10 contacts per page
 
     page = request.GET.get('page', 1)

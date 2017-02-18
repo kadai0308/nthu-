@@ -20,7 +20,7 @@ from django.conf.urls import include
 from django.conf.urls.static import static
 
 from index.views import index
-from course.views import add_course
+import course.views as course
 import api.views as api
 import course_comment.views as course_comment
 import users.views as users
@@ -42,7 +42,9 @@ urlpatterns += (
 
 # course 
 urlpatterns += (
-    url(r'^course/add_course$', add_course),
+    url(r'^course/$', course.index),
+    url(r'^course/search$', course.search),
+    url(r'^course/add_course$', course.add_course),
 )
 
 # course_comment

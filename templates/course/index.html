@@ -1,0 +1,48 @@
+{% extends 'base.html'%}
+{% load static %}
+{% load custom_filter %}
+
+{% block content %}
+    <!-- css import -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ui/button.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/app/course/index.css' %}">
+    <!-- main part -->
+    <div class="main">
+        <div class="box">
+            <div class="box-title">
+                <h5>課程總覽</h5>
+            </div>
+            <div class="box-content">
+                <div class="search-bar">
+                    <form action="/course/search" method="GET" id="search">
+                        <h4>搜尋課程</h4>
+                        <div class="quick_input">
+                            <input type="text" name="keyword" placeholder="輸入：課名 / 老師名 / 開課系所英文縮寫" value="{{ keyword }}">
+                            <button type="submit" class="btn btn-s btn-white">搜尋</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="table">
+                    <div class="title">
+                        <div class="table-box">系所</div>
+                        <div class="table-box">課名</div>
+                        <div class="table-box">授課老師</div>
+                        <div class="table-box">學分</div>
+                    </div>
+                    <div>
+                        {% for course in all_courses %}
+                            <div class="course">
+                                <div class="table-box">{{ course.department }}</div>
+                                <div class="table-box">{{ course.title_tw }}</div>
+                                <div class="table-box">{{ course.teacher | replace:'[\u4e00-\u9fa5]+' }}</div>
+                                <div class="table-box">{{ course.credit }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% include 'partial_template/_pagination.html' %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
