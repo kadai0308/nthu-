@@ -16,10 +16,13 @@ def search_course (request):
 
     courses = courses.order_by('title_tw', 'teacher')
 
+    for i in courses:
+        print (i.course_no)
+
     data = list()
     for index, course in enumerate(courses):
-        if data and courses[index - 1].title_tw == course.title_tw and courses[index - 1].teacher == course.teacher:
-            continue
+        # if data and courses[index - 1].title_tw == course.title_tw and courses[index - 1].teacher == course.teacher:
+        #     continue
 
         course_data = dict()
         course_data['title'] = course.title_tw
@@ -61,3 +64,48 @@ def replace (string):
     return ', '.join(result)
 
 
+
+# for i in Course.objects.all():
+#     i.course_no = i.course_no[5:]
+#     i.save()
+
+# for i in Course.objects.all():
+#     search = Course.objects.filter(title_tw=i.title_tw, teacher = i.teacher)
+#     if len(search) > 1:
+#         print (len(search), i.title_tw, i.teacher)
+
+
+# for i in Course.objects.objects.filter(comment_set__isnull=False):
+#     search = Course.objects.filter(course_no=i.course_no)
+#     if len(search) > 1:
+#         rep = list(set(search) - set(i))
+#         if rep.title_tw == i.title_tw:
+#             if rep.comment_set and not i.comment_set:
+#                 i.delete()
+#                 print (1)
+#             elif not rep.comment_set and i.comment_set:
+#                 rep.delete()
+#                 print (2)
+#             elif rep.comment_set and i.comment_set:
+#                 for comment in rep.comment_set.all():
+#                     comment.course = i
+#                     comment.save()
+#                 rep.save()
+#                 print (3)
+#             else:
+#                 rep.delete()
+#                 print (4)
+
+# for i in Course.objects.all():
+#     search = Course.objects.filter(title_tw = i.title_tw, teacher = i.teacher)
+#     if len(search) > 1:
+#         print (search[0].title_tw)
+#         clone_data = model_to_dict(search[0])
+#         clone_data.pop('id', None)
+#         new_course = Course(**clone_data)
+#         new_course.save()
+#         for old_course in search:
+#             # print (old_course.comment_set.all())
+#             old_course.comment_set.all().update(course = new_course)
+#             old_course.delete()
+#         print (Course.objects.filter(title_tw = i.title_tw, teacher = i.teacher).count())

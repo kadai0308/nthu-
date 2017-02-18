@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
-
 from django.shortcuts import render
 
 from course.models import Course
 
 import json
 import requests
+
+def index (request):
+    pass
+
+def show (request):
+    pass
 
 def add_course (request):
     urls = ['https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/JH/OPENDATA/open_course_data.json', 'https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/JH/OPENDATA/open_course_data_10510.json']
