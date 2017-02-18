@@ -18,8 +18,8 @@ def search_course (request):
 
     data = list()
     for index, course in enumerate(courses):
-        if data and courses[index - 1].title_tw == course.title_tw and courses[index - 1].teacher == course.teacher:
-            continue
+        # if data and courses[index - 1].title_tw == course.title_tw and courses[index - 1].teacher == course.teacher:
+        #     continue
 
         course_data = dict()
         course_data['title'] = course.title_tw
