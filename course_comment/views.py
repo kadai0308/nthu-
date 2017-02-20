@@ -13,7 +13,6 @@ import datetime
 def _check_comment_auth(view):
     @wraps(view)
     def check(request, *args, **kargs):
-        print (request, args, kargs)
         if not request.user.is_authenticated():
             messages.warning(request, '請先登入呦')
             return redirect ('/')
@@ -42,20 +41,23 @@ def index (request):
 
     page = request.GET.get('page')
     try:
-        comments = paginator.page(page)
+        results = paginator.page(page)
     except PageNotAnInteger:
         # If page is not an integer, deliver first page.
-        comments = paginator.page(1)
+        results = paginator.page(1)
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
-        comments = paginator.page(paginator.num_pages)
+        results = paginator.page(paginator.num_pages)
 
     return render(request, 'course_comment/index.html', locals())
 
 @_check_comment_auth
 def new (request):
+    course_id = request.GET.get('course_id', '')
+    if course_id:
+        course = Course.objects.get(id = int(course_id))
 
-    return render(request, 'course_comment/new.html')
+    return render(request, 'course_comment/new.html', locals())
 
 @_check_comment_auth
 def create (request):
@@ -135,13 +137,13 @@ def search (request):
 
     page = request.GET.get('page', 1)
     try:
-        comments = paginator.page(page)
+        results = paginator.page(page)
     except PageNotAnInteger:
         # If page is not an integer, deliver first page.
-        comments = paginator.page(1)
+        results = paginator.page(1)
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
-        comments = paginator.page(paginator.num_pages)
+        results = paginator.page(paginator.num_pages)
 
     # return render(request, 'course_comment/index.html', {'contacts': contacts})
     return render(request, 'course_comment/index.html', locals())

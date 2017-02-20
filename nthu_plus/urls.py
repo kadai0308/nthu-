@@ -43,7 +43,9 @@ urlpatterns += (
 # course 
 urlpatterns += (
     url(r'^course/$', course.index),
+    url(r'^course/(?P<course_id>[0-9]+)$', course.show),
     url(r'^course/search$', course.search),
+    url(r'^course/import_course_score_range$', course.import_course_score_range),
     url(r'^course/add_course$', course.add_course),
 )
 

@@ -1,5 +1,6 @@
 {% extends 'base.html'%}
 {% load static %}
+{% load custom_filter %}
 
 {% block content %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/ui/button.css' %}">
@@ -144,12 +145,18 @@
         <div class="box-content">
             <h4>第一步：選擇課程</h4>
             <div class="quick_search"> <!-- 依照系所 -->
-                <input class="input" type="text" name="keyword" id="keyword" placeholder="輸入：課名 / 老師名 / 開課系所英文縮寫" value="{{ keyword }}" autocomplete="off">
+                <input class="input" type="text" name="keyword" id="keyword" value="{{ course.title_tw }}" placeholder="輸入：課名 / 老師名 / 開課系所英文縮寫" value="{{ keyword }}" autocomplete="off">
                 <input type="button" id="search" class="btn btn-s btn-white" value="搜尋"> 
                 <div>
-                    <select class="course select-btn" form="comment" name="course_no" disabled="true" required>
-                        <option value="">請搜尋課程</option>
-                    </select>
+                    {% if course %}
+                        <select class="course select-btn" form="comment" name="course_no" required>
+                            <option value="{{ course.course_no }}" checked>{{ course.title_tw }} / {{ course.teacher | replace:'[\u4e00-\u9fa5]+' }}</option>
+                        </select>
+                    {% else %}
+                        <select class="course select-btn" form="comment" name="course_no" disabled="true" required>
+                            <option value="">請搜尋課程</option>
+                        </select>
+                    {% endif %}
                 </div>
             </div>
             <form action="/course_comment/create" id="comment" method="POST" enctype="multipart/form-data" onsubmit="return vaildateForm()" autocomplete="off">

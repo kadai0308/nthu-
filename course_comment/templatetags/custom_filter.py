@@ -10,12 +10,13 @@ def replace (string, args):
     return ', '.join(result)
 
 @register.filter
-def truncatetw (string):
+def truncatetw (string, lines=5):
     new_string = string
     string_split = string.split('\n')
-    
-    if len(string_split) > 5:
-        new_string = '\n'.join(string_split[:5]) + '......'
+    lines = int(lines)
+
+    if len(string_split) > lines:
+        new_string = '\n'.join(string_split[:lines]) + '......'
     elif len(string) > 200:
         new_string = string[:200] + '......'
 

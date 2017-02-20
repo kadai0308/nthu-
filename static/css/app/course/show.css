@@ -1,0 +1,151 @@
+.main {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 800px;
+    margin-left: auto!important;
+    margin-right: auto!important;
+    padding: 0 20px;
+}
+
+.box {
+    margin-top: 60px;
+}
+
+.comment-href {
+    color: #000;
+    text-decoration: none;
+}
+
+.rating-area {
+    display: flex;
+    width: 100%;
+    text-align: center;
+    letter-spacing: 3px;
+
+}
+
+.rating {
+    width: 30%;
+    height: 100px;
+    margin: 0 2%;
+    padding: 10px 0px;
+    box-shadow: 1px 1px 2px rgba(0,0,0,.2);
+    transition: .35s;
+}
+
+.rating:hover {
+    box-shadow: 1px 1px 4px rgba(0,0,0,.5);
+}
+
+.rating-title {
+    font-size: 20px;
+}
+
+.rating-score {
+    position: relative;
+    /*top: 50%;
+    transform: translateY(-50%);*/
+    font-size: 60px;
+    width: 100%;
+    text-align: center;
+    font-weight: lighter;
+}
+
+.rating-score span {
+    font-size: 18px;
+}
+
+.slide {
+    display: flex;
+    width: 100%;
+}
+
+.slide-icon {
+    width: 15%;
+    font-size: 30px;
+    text-align: center;
+}
+
+.slide-icon i {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.slide-main {
+    position: relative;
+    width: 70%;
+    max-width: 500px;
+    height: 300px;
+    overflow: hidden;
+}
+
+.slide-main-ab {
+    position: absolute;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    height: 100%;
+}
+
+.slide-main-ab .box {
+    width: 500px;
+}
+
+.no-comment {
+    text-align: center;
+    padding: 80px 0;
+    background-color: #f3f3f3;
+}
+
+.import-score {
+    display: none;
+    position: fixed;
+    z-index: 400;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+}
+
+.mask {
+    position: fixed;
+    display: none;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+}
+
+.ban {
+    -moz-filter: blur(5px);
+    -webkit-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(10px);
+}
+
+.warning {
+    margin: 10px 0;
+    padding: 10px 0;
+    font-size: 20px;
+    border-bottom: solid 1px gray;
+}
+
+form {
+    text-align: center;
+    margin: 10px;
+}
+
+.explain {
+    margin: 10px 0;
+}
+
+.input-main {
+    width: 50%;
+    border: solid 1px rgb(166, 166, 166);
+    border-radius: 5px;
+    padding: 8px 10px;
+    outline: none;
+}
