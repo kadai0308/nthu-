@@ -87,7 +87,7 @@ def create (request):
         Comment.objects.create(
             title = title,
             content = total_content,
-            anonymous = anonymous,
+            anonymous = True,
             course = course,
             user = request.user,
             created_time = str(datetime.datetime.now()),
