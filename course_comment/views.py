@@ -13,7 +13,6 @@ import datetime
 def _check_comment_auth(view):
     @wraps(view)
     def check(request, *args, **kargs):
-        print (request, args, kargs)
         if not request.user.is_authenticated():
             messages.warning(request, '請先登入呦')
             return redirect ('/')
@@ -81,37 +80,26 @@ def create (request):
     cold = request.POST['cold'] if 'cold' in request.POST else 0
     hardness = request.POST['hardness'] if 'hardness' in request.POST else 0
 
-    if course_no:
-        course = Course.objects.get(course_no = course_no)
-        # create comment of course
-        Comment.objects.create(
-            title = title,
-            content = total_content,
-            anonymous = True,
-            course = course,
-            user = request.user,
-            created_time = str(datetime.datetime.now()),
-            sweety = sweety,
-            cold = cold,
-            hardness = hardness,
-            score_img = score_img,
-        )
-    # else:
-    #     custom_course_name = request.POST.get('custom_course', '')
-    #     # create comment of course
-    #     Comment.objects.create(
-    #         title = title,
-    #         content = content,
-    #         anonymous = anonymous,
-    #         course = None,
-    #         custom_course_name = custom_course_name,
-    #         user = request.user,
-    #         created_time = str(datetime.datetime.now()),
-    #         sweety = sweety,
-    #         cold = cold,
-    #         hardness = hardness,
-    #         score_img = score_img,
-    #     )
+    try:
+        if course_no:
+            course = Course.objects.get(course_no = course_no)
+            # create comment of course
+            Comment.objects.create(
+                title = title,
+                content = total_content,
+                anonymous = True,
+                course = course,
+                user = request.user,
+                created_time = str(datetime.datetime.now()),
+                sweety = sweety,
+                cold = cold,
+                hardness = hardness,
+                score_img = score_img,
+            )
+    except  Exception as e: 
+        print ('log1:', str(e))
+        import sys
+        print ('log2:', str(sys.exc_info()))
 
     return redirect ('/course_comment')
 
