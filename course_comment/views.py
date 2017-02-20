@@ -96,22 +96,22 @@ def create (request):
             hardness = hardness,
             score_img = score_img,
         )
-    else:
-        custom_course_name = request.POST.get('custom_course', '')
-        # create comment of course
-        Comment.objects.create(
-            title = title,
-            content = content,
-            anonymous = anonymous,
-            course = None,
-            custom_course_name = custom_course_name,
-            user = request.user,
-            created_time = str(datetime.datetime.now()),
-            sweety = sweety,
-            cold = cold,
-            hardness = hardness,
-            score_img = score_img,
-        )
+    # else:
+    #     custom_course_name = request.POST.get('custom_course', '')
+    #     # create comment of course
+    #     Comment.objects.create(
+    #         title = title,
+    #         content = content,
+    #         anonymous = anonymous,
+    #         course = None,
+    #         custom_course_name = custom_course_name,
+    #         user = request.user,
+    #         created_time = str(datetime.datetime.now()),
+    #         sweety = sweety,
+    #         cold = cold,
+    #         hardness = hardness,
+    #         score_img = score_img,
+    #     )
 
     return redirect ('/course_comment')
 
