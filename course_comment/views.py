@@ -66,6 +66,7 @@ def create (request):
         return redirect(request.META.get('HTTP_REFERER'))
 
     title = request.POST.get('title', '')
+    teacher = request.POST.get('teacher', '')
     scoring = request.POST.get('scoring', '')
     ta = request.POST.get('ta', '')
     content = request.POST.get('content', '')
@@ -82,7 +83,7 @@ def create (request):
 
     try:
         if course_no:
-            course = Course.objects.get(course_no = course_no)
+            course = Course.objects.get(course_no = course_no, teacher__icontains = teacher)
             # create comment of course
             Comment.objects.create(
                 title = title,

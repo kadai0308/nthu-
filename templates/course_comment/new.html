@@ -26,6 +26,7 @@
                 {% csrf_token %}
                 <div>
                     <h4>第二步：填寫心得</h4>
+                    <input id="teacher" type="hidden" name="teacher">
                     <div class="form-group">
                         <label for="title">標題</label>
                         <input type="text" id="title" name="title" required="required">
@@ -113,6 +114,11 @@
                     }
                 }
             })            
+        })
+
+        $('.course').change(function() {
+            var teacher = $('.course option:checked').text().split(' / ')[1]
+            $('#teacher').val(teacher)
         })
 
         $("#keyword").keypress(function(e) {
