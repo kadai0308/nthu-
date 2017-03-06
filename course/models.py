@@ -9,13 +9,14 @@ class Course (models.Model):
     title_tw = models.CharField(max_length = 255)
     title_en = models.CharField(max_length = 255)
     credit = models.CharField(max_length = 255)
-    teacher = models.CharField(max_length = 255)
+    teacher = models.TextField()
     semester = models.CharField(max_length = 255)
     department = models.CharField(max_length = 255)
 
 class CourseByYear (models.Model):
     course_no = models.CharField(max_length = 255)
-    class_time = models.CharField(max_length = 255)
+    room_and_time = models.CharField(max_length = 255)
+    course = models.ForeignKey(Course, null = True)
 
 class ScoreRange (models.Model):
     course = models.OneToOneField(CourseByYear, null = True)
