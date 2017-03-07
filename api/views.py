@@ -28,6 +28,7 @@ def search_course (request):
         course_data['title'] = course.title_tw
         course_data['teacher'] = replace(course.teacher)
         course_data['course_no'] = course.course_no
+        course_data['course_id'] = course.id
         data.append(course_data)
 
     # sort by course_no

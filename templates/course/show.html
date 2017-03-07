@@ -8,7 +8,12 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/app/course/show.css' %}">
     <!-- main part -->
     <div class="box import-score">
-        <div class="box-title">匯入成績</div>
+        <div class="box-title inline-box">
+            匯入成績
+            <div class="close">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </div>
+        </div>
         <div class="box-content">
             <div class="warning">
                 警告警告警告警告警告警告警告警告警告警告警告警告警告警告
@@ -81,11 +86,14 @@
                     </div>
                 </div>
                 <div class="score_range">
+                    <h4>歷年成績分布</h4>
                     {% if score_range %}
+                        
                     {% else %}
-                        <h4>歷年成績分布</h4>
-                        <div>現在暫時沒有成績資料喔～</div>
-                        <a id="import" class="btn btn-m btn-main">匯入成績分布</a>
+                        <div class="chart-background">
+                            <div>現在暫時沒有成績資料喔～</div>
+                            <a id="import" class="btn btn-m btn-main">匯入成績分布</a>
+                        </div>
                     {% endif %}
                 </div>
             </div>
@@ -128,6 +136,12 @@
             $('.main').addClass('ban')
             $('.mask').show()
             $('.import-score').fadeIn()
+        })
+
+        $('.close').click(function() {
+            $('.main').removeClass('ban')
+            $('.import-score').fadeOut()
+            $('.mask').hide()
         })
 
         $('#send_post').click(function() {

@@ -239,7 +239,7 @@
                         $('.course').empty()
                         $('.course').append('<option value="">搜尋結果，請選擇課程</option')
                         for (i = 0; i < data.length; i++) {
-                            html = `<option value='${ data[i]["course_no"] }'>${ data[i]["title"] } / ${ data[i]["teacher"] }</option>`
+                            html = `<option value='${ data[i]["course_id"] }'>${ data[i]["title"] } / ${ data[i]["teacher"] }</option>`
                             $('.course').append(html)
                             $('.course').prop( "disabled", false )
                         }

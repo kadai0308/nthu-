@@ -12,6 +12,11 @@
     margin-top: 60px;
 }
 
+.inline-box {
+    display: -webkit-inline-box;
+    width: 100%;
+}
+
 .comment-href {
     color: #000;
     text-decoration: none;
@@ -110,6 +115,11 @@
     width: 400px;
 }
 
+.close {
+    width: 83%;
+    text-align: right;
+}
+
 .mask {
     position: fixed;
     display: none;
@@ -148,4 +158,16 @@ form {
     border-radius: 5px;
     padding: 8px 10px;
     outline: none;
+}
+
+.score-range {
+    padding: 0px 30px;
+}
+
+.chart-background {
+    width: 100%;
+    height: 100px;
+    padding-top: 30px;
+    background-color: #f3f3f3;
+    text-align: center;
 }
