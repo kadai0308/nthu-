@@ -118,24 +118,12 @@ def create (request):
 
     return redirect ('/course_comment')
 
-def search (request):
-    # course_no = request.POST.get('course_no', '')
-    # all_comments = Comment.objects.filter(course__course_no = course_no)
-    
-    keyword = request.POST.get('keyword', '')
-    courses = Course.objects.filter(Q(title_tw__icontains = keyword) | Q(teacher__icontains = keyword) | Q(course_no__icontains = keyword))
-    all_comments = Comment.objects.filter(course__in = courses).order_by('-created_time')
-    
+def show (request, comment_id):
+    all_comments = [Comment.objects.get(id = comment_id)]
     course_comment = 'focus'
+    paginator = Paginator(all_comments, 10) # Show 10 conmment per page
 
-    if not all_comments:
-        no_comment = True
-
-    print (type(all_comments))
-
-    paginator = Paginator(all_comments, 10) # Show 10 contacts per page
-
-    page = request.GET.get('page', 1)
+    page = request.GET.get('page')
     try:
         results = paginator.page(page)
     except PageNotAnInteger:
@@ -144,8 +132,6 @@ def search (request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         results = paginator.page(paginator.num_pages)
-
-    # return render(request, 'course_comment/index.html', {'contacts': contacts})
     return render(request, 'course_comment/index.html', locals())
 
 @_check_comment_auth
@@ -176,4 +162,33 @@ def delete(request, comment):
 
     return redirect('/users/{}/course_comment'.format(request.user.id))
 
+def search (request):
+    # course_no = request.POST.get('course_no', '')
+    # all_comments = Comment.objects.filter(course__course_no = course_no)
+    
+    keyword = request.POST.get('keyword', '')
+    courses = Course.objects.filter(Q(title_tw__icontains = keyword) | Q(teacher__icontains = keyword) | Q(course_no__icontains = keyword))
+    all_comments = Comment.objects.filter(course__in = courses).order_by('-created_time')
+    
+    course_comment = 'focus'
+
+    if not all_comments:
+        no_comment = True
+
+    print (type(all_comments))
+
+    paginator = Paginator(all_comments, 10) # Show 10 contacts per page
+
+    page = request.GET.get('page', 1)
+    try:
+        results = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        results = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        results = paginator.page(paginator.num_pages)
+
+    # return render(request, 'course_comment/index.html', {'contacts': contacts})
+    return render(request, 'course_comment/index.html', locals())
 

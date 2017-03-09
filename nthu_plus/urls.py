@@ -55,6 +55,7 @@ urlpatterns += (
     url(r'^course_comment/new$', course_comment.new),
     url(r'^course_comment/create$', course_comment.create),
     url(r'^course_comment/search$', course_comment.search),
+    url(r'^course_comment/(?P<comment_id>[0-9]+)$', course_comment.show),
     url(r'^course_comment/(?P<comment_id>[0-9]+)/edit$', course_comment.edit),
     url(r'^course_comment/(?P<comment_id>[0-9]+)/update$', course_comment.update),
     url(r'^course_comment/(?P<comment_id>[0-9]+)/delete$', course_comment.delete),

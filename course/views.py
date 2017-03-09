@@ -131,16 +131,16 @@ def add_course (request):
                 # get_or_create return (object, created)
                 print (year, semester,course['課程中文名稱'])
                 course_in_db = Course.objects.get_or_create(
-                    title_tw = course['課程中文名稱'],
-                    teacher = course['授課教師'],
-                    defaults = {
-                        'title_tw': html.unescape(course['課程中文名稱']),
-                        'title_en': course['課程英文名稱'],
-                        'credit': course['學分數'],
-                        'teacher': html.unescape(course['授課教師']),
-                        'department': dep,
-                    }
-                )
+                        title_tw = course['課程中文名稱'],
+                        teacher = course['授課教師'],
+                        defaults = {
+                            'title_tw': html.unescape(course['課程中文名稱']),
+                            'title_en': course['課程英文名稱'],
+                            'credit': course['學分數'],
+                            'teacher': html.unescape(course['授課教師']),
+                            'department': dep,
+                        }
+                    )
                 course_in_db[0].coursebyyear_set.get_or_create(
                         course_no = course['科號'],
                         defaults = {
