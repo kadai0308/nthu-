@@ -6,6 +6,7 @@
     <!-- css import -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/ui/button.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/app/course/show.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <!-- main part -->
     <div class="box import-score">
         <div class="box-title inline-box">
@@ -87,14 +88,14 @@
                 </div>
                 <div class="score_range">
                     <h4>歷年成績分布</h4>
-                    {% if score_range %}
-                        
-                    {% else %}
-                        <div class="chart-background">
-                            <div>現在暫時沒有成績資料喔～</div>
-                            <a id="import" class="btn btn-m btn-main">匯入成績分布</a>
-                        </div>
-                    {% endif %}
+                    
+                    <canvas id="range" class="score_range_data"></canvas>
+                
+                    <div class="chart-background">
+                        <div>現在暫時沒有成績資料喔～</div>
+                        <a id="import" class="btn btn-m btn-main">匯入成績分布</a>
+                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -157,5 +158,56 @@
                 }
             })
         })
+
+        // chart
+        var score_range = [];
+        $.ajax({
+            type: 'GET',
+            url: '/api/course/score_range?id=' + '{{course_id}}',
+            success: function (score_range_data) {
+                console.log(score_range_data)
+                if (score_range_data.length) {
+                    $('.chart-background').hide()
+                } else {
+                    $('#range').hide()
+                }
+                score_range = score_range_data
+            },
+            async: false
+        })
+
+        var ctx = document.getElementById("range");
+        var data = {
+            labels: ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "E", "X"],
+            datasets: score_range
+        };
+        var score_range = new Chart(ctx, {
+            type: "bar",
+            data: data,
+            options: {
+                FontSize: 50,
+                scales: {
+                    xAxes: [{
+                        barPercentage: 0.4,
+                        scaleLabel: {
+                            display: false,
+                            labelString: '級距',
+                            fontSize: 18,
+                        },
+                        ticks: {
+                            fontSize: 20
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                        display: true,
+                        labelString: 'Percentage (%)',
+                        fontSize: 18,
+                        },
+                    }]
+                },
+            }
+        });
+        console.log(score_range)
     </script>
 {% endblock %}

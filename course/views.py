@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.db.models import Avg
 from django.http import JsonResponse
 
-from course.models import Course
+from course.models import Course, CourseByYear, ScoreRange
 
 import json
 import requests
@@ -92,14 +92,24 @@ def import_course_score_range (request):
             score_range_soup = BeautifulSoup(score_range_html, 'html.parser')
 
             score_range_data = score_range_soup.find_all('tr')[2].text
-            score_range_data_list = score_range_data.replace('\xa0', '').replace(' ','').split('\n')[2:]
+            score_range_data_list = score_range_data.replace('\xa0', '').replace(' ','').replace('%', '').split('\n')[2:]
+            # print (score_range_data_list[0].decode('utf8'))
 
-            course_no = course_no.replace('%20', ' ')
+            course_data_col = i.find_all('td')
+            course_no = course_data_col[0].text + course_data_col[1].text + course_data_col[2].text.replace('\xa0', '')
 
-            print (score_range_soup.find('b'))
-            
-            print (course.title_tw, course.teacher)
-            print ('-'*100)
+            course_by_year = CourseByYear.objects.get(course_no = course_no)
+            ScoreRange.objects.update_or_create(
+                    course = course_by_year,
+                    defaults = {
+                        "user": request.user,
+                        "course": course_by_year,
+                        "score_data": score_range_data_list,
+                    } 
+                )
+            print (course_by_year.course.title_tw)
+            print (score_range_data_list)
+            # print ('-'*100)
         except  Exception as e:
             print (str(e))
             continue

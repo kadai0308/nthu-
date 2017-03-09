@@ -72,5 +72,6 @@ urlpatterns += (
 # api
 urlpatterns += (
     url(r'^api/course/search$', api.search_course),
+    url(r'^api/course/score_range$', api.score_range),
     url(r'^api/comment/search$', api.search_comment),
 )

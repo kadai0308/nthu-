@@ -57,6 +57,27 @@ def search_comment (request):
     response = JsonResponse(data, safe = False)
     return response
 
+def score_range (request):
+    course_id = request.GET.get('id', '')
+    course = Course.objects.get(id = course_id)
+    score_range_exist_list = []
+
+    background_set = ["#32C9A6", "#E2BCBE", "#F9D8A7"]
+    index = 0
+    for course_by_year in course.coursebyyear_set.all():
+        if hasattr(course_by_year, 'scorerange'):
+            data = {}
+            data['course_no'] = course_by_year.course_no
+            data['backgroundColor'] = background_set[index]
+            data['label'] = course_by_year.course_no[:3] + '學年' + ('上' if course_by_year.course_no[3:5] == '10' else '下')
+            data['data'] = [float(x) if x else 0 for x in course_by_year.scorerange.score_data[:24:2]]
+            data['borderWidth'] = 1
+            score_range_exist_list.append(data)
+            index += 1
+
+    response = JsonResponse(score_range_exist_list, safe = False)
+    return response
+
 # private
 
 def replace (string):
