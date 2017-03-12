@@ -169,8 +169,10 @@ def add_course_func ():
                     )    
 add_course_func.delay()
 
-def add_course (request):    
+def add_course (request):
+    print ('before')
     add_course_func
+    print ('after')
     # years = range(99, 106)
     # semesters = [10, 20]
 
