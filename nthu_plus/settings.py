@@ -172,21 +172,9 @@ ACCOUNT_ADAPTER = 'users.adapter.MyAccountAdapter'
 # rq settings
 
 RQ_QUEUES = {
-    'default': {
-        'HOST': 'localhost',
-        'PORT': 6379,
-        'DB': 0,
-        'PASSWORD': '',
-        'DEFAULT_TIMEOUT': 360,
-    },
     'high': {
         'URL': 'redis://redistogo:327e917a2a8d5a43d7fb540550a1f347@koi.redistogo.com:11690/', # If you're on Heroku
         'DEFAULT_TIMEOUT': 500,
-    },
-    'low': {
-        'HOST': 'localhost',
-        'PORT': 6379,
-        'DB': 0,
     }
 }
 
