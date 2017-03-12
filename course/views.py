@@ -15,7 +15,7 @@ from bs4 import BeautifulSoup
 import re
 import html
 
-from django_rq import job, enqueue
+from django_rq import job, enqueue, get_queue
 
 from nthu_plus import settings
 
@@ -134,8 +134,6 @@ def import_course_score_range (request):
 
     return JsonResponse('success', safe = False)
 
-
-@job
 def add_course_func ():
 
     years = range(99, 106)
@@ -168,10 +166,10 @@ def add_course_func ():
                             'room_and_time': course['教室與上課時間'],
                         }
                     )    
-add_course_func.delay()
 
 def add_course (request):
     print ('before')
+    queue = django_rq.get_queue('high')
     django_rq.enqueue(add_course_func)
     print ('after')
     # years = range(99, 106)
