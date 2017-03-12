@@ -1,2 +1,2 @@
 web: gunicorn nthu_plus.wsgi
-worker: python nthu_plus/manage.py rqworker default
+worker: python manage.py rqworker default
