@@ -47,6 +47,7 @@ urlpatterns += (
     url(r'^course/search$', course.search),
     url(r'^course/import_course_score_range$', course.import_course_score_range),
     url(r'^course/add_course$', course.add_course),
+    url(r'^course/add_course_worker$', course.add_course_worker),
 )
 
 # course_comment

@@ -7,11 +7,26 @@ from django.http import JsonResponse
 
 from course.models import Course, CourseByYear, ScoreRange
 
+import os
+from functools import wraps
 import json
 import requests
 from bs4 import BeautifulSoup
 import re
 import html
+from rq import Queue
+from worker import conn
+
+from nthu_plus import settings
+
+def _background(view):
+    @wraps(view)
+    def run(request):
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "nthu_plus.settings")
+        q = Queue(connection = conn)
+        result = q.enqueue(view)
+        return (view)
+    return run(view)
 
 def index (request):
     all_courses = Course.objects.order_by('department')
@@ -119,7 +134,8 @@ def import_course_score_range (request):
 
     return JsonResponse('success', safe = False)
 
-def add_course (request):
+@_background
+def add_course (request):    
 
     years = range(99, 106)
     semesters = [10, 20]
@@ -152,8 +168,7 @@ def add_course (request):
                         }
                     )
 
+def add_course_worker (request):
 
-
-
-
-
+    q = Queue(connection = conn)
+    result = q.enqueue(add_course)
