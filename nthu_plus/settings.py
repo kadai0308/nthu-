@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'users',
     'course',
     'course_comment',
+    "django_rq",
 ]
 
 MIDDLEWARE = [
@@ -166,6 +167,27 @@ ACCOUNT_LOGOUT_ON_GET = True
 
 ACCOUNT_ADAPTER = 'users.adapter.MyAccountAdapter'
 
+
+# rq settings
+
+RQ_QUEUES = {
+    'default': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+        'PASSWORD': '',
+        'DEFAULT_TIMEOUT': 360,
+    },
+    'high': {
+        'URL': os.getenv('REDISTOGO_URL', 'redis://localhost:6379/0'), # If you're on Heroku
+        'DEFAULT_TIMEOUT': 500,
+    },
+    'low': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+    }
+}
 
 # deploy settings
 

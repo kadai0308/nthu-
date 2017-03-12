@@ -15,18 +15,18 @@ from bs4 import BeautifulSoup
 import re
 import html
 from rq import Queue
-from worker import conn
+from django_rq import job
 
 from nthu_plus import settings
 
-def _background(view):
-    @wraps(view)
-    def run(request):
-        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "nthu_plus.settings")
-        q = Queue(connection = conn)
-        result = q.enqueue(view)
-        return (view)
-    return run(view)
+# def _background(view):
+#     @wraps(view)
+#     def run(request):
+#         os.environ.setdefault("DJANGO_SETTINGS_MODULE", "nthu_plus.settings")
+#         q = Queue(connection = conn)
+#         result = q.enqueue(view)
+#         return (view)
+#     return run(view)
 
 def index (request):
     all_courses = Course.objects.order_by('department')
@@ -134,7 +134,7 @@ def import_course_score_range (request):
 
     return JsonResponse('success', safe = False)
 
-@_background
+@job
 def add_course (request):    
 
     years = range(99, 106)

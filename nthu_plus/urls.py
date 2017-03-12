@@ -47,7 +47,7 @@ urlpatterns += (
     url(r'^course/search$', course.search),
     url(r'^course/import_course_score_range$', course.import_course_score_range),
     url(r'^course/add_course$', course.add_course),
-    url(r'^course/add_course_worker$', course.add_course_worker),
+    # url(r'^course/add_course_worker$', course.add_course_worker),
 )
 
 # course_comment
@@ -76,4 +76,9 @@ urlpatterns += (
     url(r'^api/course/search$', api.search_course),
     url(r'^api/course/score_range$', api.score_range),
     url(r'^api/comment/search$', api.search_comment),
+)
+
+# rq
+urlpatterns += (
+    url(r'^django-rq/', include('django_rq.urls')),
 )
