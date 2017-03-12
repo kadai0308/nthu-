@@ -172,9 +172,17 @@ ACCOUNT_ADAPTER = 'users.adapter.MyAccountAdapter'
 # rq settings
 
 RQ_QUEUES = {
+    'default': {
+        'URL': os.getenv('REDISTOGO_URL', 'redis://localhost:6379/0'),
+        'DEFAULT_TIMEOUT': 360,
+    },
     'high': {
-        'URL': os.getenv('REDISTOGO_URL', 'redis://redistogo:b646f08d2bb610f81541043e66a25e3f@crestfish.redistogo.com:11830/'), # If you're on Heroku
+        'URL': os.getenv('REDISTOGO_URL', 'redis://localhost:6379/0'), # If you're on Heroku
         'DEFAULT_TIMEOUT': 500,
+    },
+    'low': {
+        'URL': os.getenv('REDISTOGO_URL', 'redis://localhost:6379/0'),
+        'DEFAULT_TIMEOUT': 200,
     }
 }
 
