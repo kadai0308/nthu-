@@ -170,7 +170,7 @@ def add_course_func ():
 def add_course (request):
     print ('before')
     queue = django_rq.get_queue('high')
-    django_rq.enqueue(add_course_func)
+    queue.enqueue(add_course_func)
     print ('after')
     # years = range(99, 106)
     # semesters = [10, 20]
