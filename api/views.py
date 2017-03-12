@@ -64,7 +64,7 @@ def score_range (request):
 
     background_set = ["#32C9A6", "#E2BCBE", "#F9D8A7"]
     index = 0
-    for course_by_year in course.coursebyyear_set.all():
+    for course_by_year in course.coursebyyear_set.all().order_by('-course_no'):
         if hasattr(course_by_year, 'scorerange'):
             data = {}
             data['course_no'] = course_by_year.course_no
@@ -74,6 +74,8 @@ def score_range (request):
             data['borderWidth'] = 1
             score_range_exist_list.append(data)
             index += 1
+            if index == 3:
+                break
 
     response = JsonResponse(score_range_exist_list, safe = False)
     return response

@@ -14,7 +14,7 @@ import re
 import html
 
 def index (request):
-    all_courses = Course.objects.order_by('course_no')
+    all_courses = Course.objects.order_by('department')
     
     paginator = Paginator(all_courses, 10) # Show 10 comment per page
 
@@ -35,13 +35,16 @@ def show (request, course_id):
     course = Course.objects.get(id = course_id)
     comments = course.comment_set.all()
     comments_amount = course.comment_set.count()
-    
+
     sweety_average = comments.aggregate(Avg('sweety'))['sweety__avg'] or 0.0
     cold_average = comments.aggregate(Avg('cold'))['cold__avg'] or 0.0
     hardness_average = comments.aggregate(Avg('hardness'))['hardness__avg'] or 0.0
     sweety_average = round(sweety_average, 1)
     cold_average = round(cold_average, 1)
     hardness_average = round(hardness_average, 1)
+
+    user_score_range = request.user.scorerange_set.exists()
+    course_score_range = course.coursebyyear_set.filter(scorerange__isnull = False).exists()
 
     return render(request, 'course/show.html', locals())
 

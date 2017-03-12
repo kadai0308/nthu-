@@ -17,7 +17,7 @@
         </div>
         <div class="box-content">
             <div class="warning">
-                警告警告警告警告警告警告警告警告警告警告警告警告警告警告
+                NTHU+ 承諾不從校務資訊系統中取用任何其他資料，若仍有疑慮可以參考我們的程式碼：https://github.com/kadai0308/nthu-plus
             </div>
             <div class="explain">
                 <p>登入校資訊系統後，複製網址列上的代碼貼上匯入</p>
@@ -88,14 +88,19 @@
                 </div>
                 <div class="score_range">
                     <h4>歷年成績分布</h4>
-                    
-                    <canvas id="range" class="score_range_data"></canvas>
-                
-                    <div class="chart-background">
-                        <div>現在暫時沒有成績資料喔～</div>
-                        <a id="import" class="btn btn-m btn-main">匯入成績分布</a>
-                    </div>
-                    
+                    <!-- 限定有匯入才能看 -->
+                    {% if user_score_range %}
+                        <div class="chart-background">
+                            <div>分享成績以開啟本功能</div>
+                            <a id="import" class="btn btn-m btn-main">分享成績分布</a>
+                        </div>
+                    {% else %}
+                        <canvas id="range" class="score_range_data"></canvas>
+                        <div class="chart-background">
+                            <div>現在暫時沒有成績資料喔～</div>
+                            <a id="import" class="btn btn-m btn-main">分享成績分布</a>
+                        </div>
+                    {% endif%}
                 </div>
             </div>
         </div>
