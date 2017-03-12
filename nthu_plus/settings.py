@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import redis
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
     'users',
     'course',
     'course_comment',
+    'django_rq',
 ]
 
 MIDDLEWARE = [
@@ -169,12 +171,24 @@ ACCOUNT_ADAPTER = 'users.adapter.MyAccountAdapter'
 
 # rq settings
 
-# RQ_QUEUES = {
-#     'high': {
-#         'URL': os.getenv('REDISTOGO_URL', 'redis://localhost:6379'), # If you're on Heroku
-#         'DEFAULT_TIMEOUT': 500,
-#     }
-# }
+RQ_QUEUES = {
+    'default': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+        'PASSWORD': '',
+        'DEFAULT_TIMEOUT': 360,
+    },
+    'high': {
+        'URL': os.getenv('REDISTOGO_URL', 'redis://localhost:6379/0'), # If you're on Heroku
+        'DEFAULT_TIMEOUT': 500,
+    },
+    'low': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+    }
+}
 
 # deploy settings
 

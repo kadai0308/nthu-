@@ -79,6 +79,6 @@ urlpatterns += (
 )
 
 # rq
-# urlpatterns += (
-#     url(r'^django-rq/', include('django_rq.urls')),
-# )
+urlpatterns += (
+    url(r'^django-rq/', include('django_rq.urls')),
+)
