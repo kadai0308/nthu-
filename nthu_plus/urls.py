@@ -20,7 +20,7 @@ from django.conf.urls import include
 from django.conf.urls.static import static
 
 from index.views import index
-from course.views import add_course
+import course.views as course
 import api.views as api
 import course_comment.views as course_comment
 import users.views as users
@@ -42,7 +42,11 @@ urlpatterns += (
 
 # course 
 urlpatterns += (
-    url(r'^course/add_course$', add_course),
+    url(r'^course/$', course.index),
+    url(r'^course/(?P<course_id>[0-9]+)$', course.show),
+    url(r'^course/search$', course.search),
+    url(r'^course/import_course_score_range$', course.import_course_score_range),
+    url(r'^course/add_course$', course.add_course),
 )
 
 # course_comment
@@ -51,6 +55,7 @@ urlpatterns += (
     url(r'^course_comment/new$', course_comment.new),
     url(r'^course_comment/create$', course_comment.create),
     url(r'^course_comment/search$', course_comment.search),
+    url(r'^course_comment/(?P<comment_id>[0-9]+)$', course_comment.show),
     url(r'^course_comment/(?P<comment_id>[0-9]+)/edit$', course_comment.edit),
     url(r'^course_comment/(?P<comment_id>[0-9]+)/update$', course_comment.update),
     url(r'^course_comment/(?P<comment_id>[0-9]+)/delete$', course_comment.delete),
@@ -68,5 +73,6 @@ urlpatterns += (
 # api
 urlpatterns += (
     url(r'^api/course/search$', api.search_course),
+    url(r'^api/course/score_range$', api.score_range),
     url(r'^api/comment/search$', api.search_comment),
 )

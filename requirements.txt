@@ -1,8 +1,10 @@
+beautifulsoup4==4.5.3
 defusedxml==0.4.1
 dj-database-url==0.4.2
 Django==1.10.5
 django-allauth==0.30.0
 gunicorn==19.6.0
+jsonfield==1.0.3
 oauthlib==2.0.1
 psycopg2==2.6.2
 python3-openid==3.0.10

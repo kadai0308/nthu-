@@ -41,28 +41,31 @@ def index (request):
 
     page = request.GET.get('page')
     try:
-        comments = paginator.page(page)
+        results = paginator.page(page)
     except PageNotAnInteger:
         # If page is not an integer, deliver first page.
-        comments = paginator.page(1)
+        results = paginator.page(1)
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
-        comments = paginator.page(paginator.num_pages)
+        results = paginator.page(paginator.num_pages)
 
     return render(request, 'course_comment/index.html', locals())
 
 @_check_comment_auth
 def new (request):
+    course_id = request.GET.get('course_id', '')
+    if course_id:
+        course = Course.objects.get(id = int(course_id))
 
-    return render(request, 'course_comment/new.html')
+    return render(request, 'course_comment/new.html', locals())
 
 @_check_comment_auth
 def create (request):
     
     # get course
-    course_no = request.POST.get('course_no', '')
+    course_id = request.POST.get('course_no', '')
 
-    if course_no == '':
+    if course_id == '':
         return redirect(request.META.get('HTTP_REFERER'))
 
     title = request.POST.get('title', '')
@@ -82,8 +85,8 @@ def create (request):
     hardness = request.POST['hardness'] if 'hardness' in request.POST else 0
 
     try:
-        if course_no:
-            course = Course.objects.get(course_no = course_no, teacher__icontains = teacher)
+        if course_id:
+            course = Course.objects.get(id = course_id)
             # create comment of course
             Comment.objects.create(
                 title = title,
@@ -112,24 +115,54 @@ def search (request):
     courses = Course.objects.filter(Q(title_tw__icontains = keyword) | Q(teacher__icontains = keyword) | Q(course_no__icontains = keyword))
     all_comments = Comment.objects.filter(course__in = courses).order_by('-created_time')
     
+    if course_no:
+        course = Course.objects.get(course_no = course_no)
+        # create comment of course
+        Comment.objects.create(
+            title = title,
+            content = total_content,
+            anonymous = anonymous,
+            course = course,
+            user = request.user,
+            created_time = str(datetime.datetime.now()),
+            sweety = sweety,
+            cold = cold,
+            hardness = hardness,
+            score_img = score_img,
+        )
+    # else:
+    #     custom_course_name = request.POST.get('custom_course', '')
+    #     # create comment of course
+    #     Comment.objects.create(
+    #         title = title,
+    #         content = content,
+    #         anonymous = anonymous,
+    #         course = None,
+    #         custom_course_name = custom_course_name,
+    #         user = request.user,
+    #         created_time = str(datetime.datetime.now()),
+    #         sweety = sweety,
+    #         cold = cold,
+    #         hardness = hardness,
+    #         score_img = score_img,
+    #     )
+
+    return redirect ('/course_comment')
+
+def show (request, comment_id):
+    all_comments = [Comment.objects.get(id = comment_id)]
     course_comment = 'focus'
+    paginator = Paginator(all_comments, 10) # Show 10 conmment per page
 
-    if not all_comments:
-        no_comment = True
-
-    paginator = Paginator(all_comments, 10) # Show 10 contacts per page
-
-    page = request.GET.get('page', 1)
+    page = request.GET.get('page')
     try:
-        comments = paginator.page(page)
+        results = paginator.page(page)
     except PageNotAnInteger:
         # If page is not an integer, deliver first page.
-        comments = paginator.page(1)
+        results = paginator.page(1)
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
-        comments = paginator.page(paginator.num_pages)
-
-    # return render(request, 'course_comment/index.html', {'contacts': contacts})
+        results = paginator.page(paginator.num_pages)
     return render(request, 'course_comment/index.html', locals())
 
 @_check_comment_auth
@@ -159,4 +192,33 @@ def delete(request, comment):
 
     return redirect('/users/{}/course_comment'.format(request.user.id))
 
+def search (request):
+    # course_no = request.POST.get('course_no', '')
+    # all_comments = Comment.objects.filter(course__course_no = course_no)
+    
+    keyword = request.POST.get('keyword', '')
+    courses = Course.objects.filter(Q(title_tw__icontains = keyword) | Q(teacher__icontains = keyword) | Q(course_no__icontains = keyword))
+    all_comments = Comment.objects.filter(course__in = courses).order_by('-created_time')
+    
+    course_comment = 'focus'
+
+    if not all_comments:
+        no_comment = True
+
+    print (type(all_comments))
+
+    paginator = Paginator(all_comments, 10) # Show 10 contacts per page
+
+    page = request.GET.get('page', 1)
+    try:
+        results = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        results = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        results = paginator.page(paginator.num_pages)
+
+    # return render(request, 'course_comment/index.html', {'contacts': contacts})
+    return render(request, 'course_comment/index.html', locals())
 

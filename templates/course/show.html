@@ -1,0 +1,218 @@
+{% extends 'base.html'%}
+{% load static %}
+{% load custom_filter %}
+
+{% block content %}
+    <!-- css import -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ui/button.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/app/course/show.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <!-- main part -->
+    <div class="box import-score">
+        <div class="box-title inline-box">
+            匯入成績
+            <div class="close">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </div>
+        </div>
+        <div class="box-content">
+            <div class="warning">
+                NTHU+ 承諾不從校務資訊系統中取用任何其他資料，若仍有疑慮可以參考我們的程式碼：https://github.com/kadai0308/nthu-plus
+            </div>
+            <div class="explain">
+                <p>登入校資訊系統後，複製網址列上的代碼貼上匯入</p>
+                <img src="/static/image/ccxp.png" style="width: 100%;">
+            </div>
+            <input name='acixstore' id="acixstore" class="input-main input-m" type="text" placeholder="acixstore">
+            <button id="send_post" class="btn btn-s btn-white">匯入</button>
+        </div>
+    </div>
+    <div class="mask"></div>
+    <div class="main">
+        <div class="box">
+            <div class="box-title">
+                <h5>{{ course.title_tw }} / {{ course.teacher }}</h5>
+            </div>
+            <div class="box-content">
+                <h4>綜合評價 ({{ comments_amount }} 人)</h4>
+                <div class="rating-area">
+                    <div class="rating">
+                        <div class="rating-title">甜度</div>
+                        <div class="rating-score">{{ sweety_average }}<span> / 5</span></div>
+                    </div>
+                    <div class="rating">
+                        <div class="rating-title">涼度</div>
+                        <div class="rating-score">{{ cold_average }}<span> / 5</span></div>
+                    </div>
+                    <div class="rating">
+                        <div class="rating-title">難度</div>
+                        <div class="rating-score">{{ hardness_average }}<span> / 5</span></div>
+                    </div>
+                </div>
+                <div>
+                    <h4>課程心得</h4>
+                    <div class="slide">
+                        <div id="left" class="slide-icon"><i class="fa fa-angle-left" aria-hidden="true"></i></div>
+                        <div class="slide-main">
+                            <div class="slide-main-ab">
+                                {% if not comments %}
+                                    <div class="no-comment box">
+                                        <div class="no-comment-title">暫時還沒有心得喔～</div>
+                                        <a href="/course_comment/new?course_id={{ course.id }}" class="btn btn-m btn-main">新增心得</a>
+                                    </div>
+                                {% endif %}
+                                {% for comment in comments %}
+                                    <div class="box slide-box" style="margin: 0px;">
+                                        <div class="box-title">
+                                            <h5>{{ comment.course.title_tw }} / {{ comment.course.teacher | replace:'[\u4e00-\u9fa5]+' }}</h5>
+                                        </div>
+                                        <div class="box-content">
+                                            <a class="comment-href" href="/course_comment/{{ comment.id }}">
+                                                <h3>{{ comment.title }}</h3>
+                                                <div>
+                                                    甜度：{{ comment.sweety }} <i class="fa fa-star star" aria-hidden="true"></i>
+                                                    涼度：{{ comment.cold }} <i class="fa fa-star star" aria-hidden="true"></i>
+                                                    難度：{{ comment.hardness }} <i class="fa fa-star star" aria-hidden="true"></i>
+                                                </div>
+                                                <p>
+                                                    {{ comment.content| truncatetw:4 | linebreaksbr }}
+                                                </p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div id="right" class="slide-icon"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+                    </div>
+                </div>
+                <div class="score_range">
+                    <h4>歷年成績分布</h4>
+                    <!-- 限定有匯入才能看 -->
+                    {% if user_score_range %}
+                        <div class="chart-background">
+                            <div>分享成績以開啟本功能</div>
+                            <a id="import" class="btn btn-m btn-main">分享成績分布</a>
+                        </div>
+                    {% else %}
+                        <canvas id="range" class="score_range_data"></canvas>
+                        <div class="chart-background">
+                            <div>現在暫時沒有成績資料喔～</div>
+                            <a id="import" class="btn btn-m btn-main">分享成績分布</a>
+                        </div>
+                    {% endif%}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var comments_amount = {{ comments.count }}
+        if (comments_amount !== 0) {
+            now_comment = 1;
+            $('#left').click(function () {
+                now_comment--;
+                if (now_comment <= 0) {
+                    $('.slide-main-ab').animate({
+                        left: "-=" + 500*(comments_amount - 1)
+                    })   
+                    now_comment = comments_amount;
+                } else {
+                    $('.slide-main-ab').animate({
+                        left: "+=500"
+                    })
+                }
+            })
+            $('#right').click(function () {
+                now_comment++;
+
+                if (now_comment >= comments_amount+1) {
+                    $('.slide-main-ab').animate({
+                        right: "-=" + 500*(comments_amount - 1)
+                    })   
+                    now_comment = 1;
+                } else {
+                    $('.slide-main-ab').animate({
+                        right: "+=500"
+                    })
+                }
+            })
+        }
+
+        $('#import').click(function() {
+            $('.main').addClass('ban')
+            $('.mask').show()
+            $('.import-score').fadeIn()
+        })
+
+        $('.close').click(function() {
+            $('.main').removeClass('ban')
+            $('.import-score').fadeOut()
+            $('.mask').hide()
+        })
+
+        $('#send_post').click(function() {
+            $.ajax({
+                type: "POST",
+                url: '/course/import_course_score_range',
+                data: {
+                    acixstore: $('#acixstore').val(),
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                },
+                success: function (return_message) {
+                    console.log(return_message)
+                }
+            })
+        })
+
+        // chart
+        var score_range = [];
+        $.ajax({
+            type: 'GET',
+            url: '/api/course/score_range?id=' + '{{course_id}}',
+            success: function (score_range_data) {
+                console.log(score_range_data)
+                if (score_range_data.length) {
+                    $('.chart-background').hide()
+                } else {
+                    $('#range').hide()
+                }
+                score_range = score_range_data
+            },
+            async: false
+        })
+
+        var ctx = document.getElementById("range");
+        var data = {
+            labels: ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "E", "X"],
+            datasets: score_range
+        };
+        var score_range = new Chart(ctx, {
+            type: "bar",
+            data: data,
+            options: {
+                FontSize: 50,
+                scales: {
+                    xAxes: [{
+                        barPercentage: 0.4,
+                        scaleLabel: {
+                            display: false,
+                            labelString: '級距',
+                            fontSize: 18,
+                        },
+                        ticks: {
+                            fontSize: 20
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                        display: true,
+                        labelString: 'Percentage (%)',
+                        fontSize: 18,
+                        },
+                    }]
+                },
+            }
+        });
+        console.log(score_range)
+    </script>
+{% endblock %}

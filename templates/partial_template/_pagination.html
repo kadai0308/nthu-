@@ -32,26 +32,26 @@
 
 <div class="pagination p1">
     <ul>
-        {% if comments.has_previous %}
-            <a href="?keyword={{ keyword }}&page={{ comments.previous_page_number }}"><li><</li></a>
+        {% if results.has_previous %}
+            <a href="?keyword={{ keyword }}&page={{ results.previous_page_number }}"><li><</li></a>
         {% else %}
             <a style="visibility: hidden;"><li><</li></a>
         {% endif %}
 
-        {% if comments.number >= 2 %}
+        {% if results.number >= 2 %}
             <a><li>...</li></a>
-            <a href="?keyword={{ keyword }}&page={{ comments.previous_page_number }}"><li>{{ comments.previous_page_number }}</li></a>
+            <a href="?keyword={{ keyword }}&page={{ results.previous_page_number }}"><li>{{ results.previous_page_number }}</li></a>
         {% endif %}
         
-            <a class="is-active" href="?keyword={{ keyword }}&page={{ comments.number }}"><li>{{ comments.number }}</li></a>
+            <a class="is-active" href="?keyword={{ keyword }}&page={{ results.number }}"><li>{{ results.number }}</li></a>
         
-        {% if comments.paginator.num_pages > comments.number %}
-            <a href="?keyword={{ keyword }}&page={{ comments.next_page_number }}"><li>{{ comments.next_page_number }}</li></a>
+        {% if results.paginator.num_pages > results.number %}
+            <a href="?keyword={{ keyword }}&page={{ results.next_page_number }}"><li>{{ results.next_page_number }}</li></a>
             <a><li>...</li></a>
         {% endif %}
         
-        {% if comments.has_next %}
-            <a href="?keyword={{ keyword }}&page={{ comments.next_page_number }}"><li>></li></a>
+        {% if results.has_next %}
+            <a href="?keyword={{ keyword }}&page={{ results.next_page_number }}"><li>></li></a>
         {% else %}
             <a style="visibility: hidden;"><li>></li></a>
         {% endif %}

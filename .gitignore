@@ -1,3 +1,4 @@
 *.pyc
 local_settings.py
+work_state.txt
 .DS_Store
