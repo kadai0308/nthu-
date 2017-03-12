@@ -14,7 +14,8 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import html
-from django_rq import job
+
+from django_rq import job, enqueue
 
 from nthu_plus import settings
 
@@ -171,7 +172,7 @@ add_course_func.delay()
 
 def add_course (request):
     print ('before')
-    add_course_func()
+    django_rq.enqueue(add_course_func)
     print ('after')
     # years = range(99, 106)
     # semesters = [10, 20]
