@@ -106,6 +106,10 @@
     background-color: #f3f3f3;
 }
 
+.no-comment .title {
+    margin-bottom: 15px;
+}
+
 .import-score {
     display: none;
     position: fixed;
@@ -171,3 +175,6 @@ form {
     text-align: center;
 }
 
+.chart-background .title {
+    margin-bottom: 15px;
+}

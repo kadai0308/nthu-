@@ -45,8 +45,9 @@ def show (request, course_id):
     cold_average = round(cold_average, 1)
     hardness_average = round(hardness_average, 1)
 
-    user_score_range = request.user.scorerange_set.exists()
-    course_score_range = course.coursebyyear_set.filter(scorerange__isnull = False).exists()
+    if not request.user.is_anonymous:
+        user_score_range = request.user.scorerange_set.exists()
+        course_score_range = course.coursebyyear_set.filter(scorerange__isnull = False).exists()
 
     return render(request, 'course/show.html', locals())
 
