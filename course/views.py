@@ -12,10 +12,7 @@ from functools import wraps
 import json
 import requests
 from bs4 import BeautifulSoup
-import re
 import html
-
-from django_rq import job
 import django_rq
 
 def index (request):
@@ -162,8 +159,3 @@ def add_course (request):
     queue.enqueue(add_course_func)
     print ('after')
 
-
-def add_course_worker (request):
-
-    q = Queue(connection = conn)
-    result = q.enqueue(add_course)

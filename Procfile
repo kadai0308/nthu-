@@ -1,2 +1,2 @@
 web: gunicorn nthu_plus.wsgi
-worker: python manage.py rqworker high
+worker: python manage.py rqworker high default low
