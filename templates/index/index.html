@@ -109,9 +109,12 @@
         .img2 {
             background-image: url('/static/image/cover2.jpeg');   
         }
+        .active {
+            display: block;
+        }
     </style>
     <div class="image">
-        <div id="1" class="cover img1"></div>
+        <div id="1" class="cover img1 active"></div>
         <div id="2" class="cover img2"></div>
         <div class="title">
             <div class="main">NTHU+</div>
@@ -125,15 +128,21 @@
     </div>
     <script type="text/javascript">
         $('#1').show()
-        var amount = $('img.cover').length
-        id = 2
-        setInterval(function() {
-            $('.cover').hide()
-            $('#' + id + '').show()
-            id++;
-            if (id >= amount) {
-                id = 1
+        var amount = $('div.cover').length
+        setInterval( 
+            function() {
+                var x = $('.cover.active');
+                var next = x.next();
+                if (next[0].className === 'title') {
+                    next = $('.img1');
+                }
+                x.removeClass('active');
+                next.addClass('active');
             }
-        }, 10000)
+        , 10000 );
+        // setInterval(function() {
+        //     $('.cover').toggle()
+        //     console.log(id)
+        // }, 500)
     </script>
 {% endblock %}
