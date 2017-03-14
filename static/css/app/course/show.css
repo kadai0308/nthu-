@@ -116,11 +116,15 @@
     z-index: 400;
     left: 50%;
     transform: translateX(-50%);
-    width: 400px;
+    width: 70%;
+}
+
+.box-title .left {
+    width: 50%;
 }
 
 .close {
-    width: 83%;
+    width: 50%;
     text-align: right;
 }
 
