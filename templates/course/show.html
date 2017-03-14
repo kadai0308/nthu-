@@ -151,6 +151,7 @@
         })
 
         $('#send_post').click(function() {
+            // console.log('hihi')
             $.ajax({
                 type: "POST",
                 url: '/course/import_course_score_range',
@@ -159,7 +160,7 @@
                     csrfmiddlewaretoken: '{{ csrf_token }}',
                 },
                 success: function (return_message) {
-                    console.log(return_message)
+                    // console.log(return_message)
                 }
             })
         })

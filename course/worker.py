@@ -40,10 +40,8 @@ def add_course_func ():
                         }
                     )
 
-def import_course_score_range ():
-    ACIXSTORE = request.POST.get('acixstore', '')
-    print(ACIXSTORE)
-
+def import_course_score_range_func (ACIXSTORE, user):
+    
     url = 'https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/JH/8/R/6.3/JH8R63002.php?ACIXSTORE={}'.format(ACIXSTORE)
     html = requests.get(url).content
     soup = BeautifulSoup(html, 'html.parser')
@@ -78,7 +76,7 @@ def import_course_score_range ():
             ScoreRange.objects.update_or_create(
                     course = course_by_year,
                     defaults = {
-                        "user": request.user,
+                        "user": user,
                         "course": course_by_year,
                         "score_data": score_range_data_list,
                     } 
