@@ -89,13 +89,14 @@
                 <div class="score_range">
                     <h4>歷年成績分布</h4>
                     <!-- 限定有匯入才能看 -->
-                    {% if user_score_range %}
+                    {% if not user_score_range and course_score_range %}
                         <div class="chart-background">
                             <div class="title">分享成績以開啟本功能</div>
                             <a id="import" class="btn btn-m btn-main">分享成績分布</a>
                         </div>
-                    {% else %}
+                    {% elif user_score_range and course_score_range %}
                         <canvas id="range" class="score_range_data"></canvas>
+                    {% else %}
                         <div class="chart-background">
                             <div class="title">現在暫時沒有成績資料喔～</div>
                             <a id="import" class="btn btn-m btn-main">分享成績分布</a>
@@ -171,49 +172,44 @@
             type: 'GET',
             url: '/api/course/score_range?id=' + '{{course_id}}',
             success: function (score_range_data) {
-                console.log(score_range_data)
-                if (score_range_data.length) {
-                    $('.chart-background').hide()
-                } else {
-                    $('#range').hide()
-                }
                 score_range = score_range_data
             },
             async: false
         })
 
-        var ctx = document.getElementById("range");
-        var data = {
-            labels: ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "E", "X"],
-            datasets: score_range
-        };
-        var score_range = new Chart(ctx, {
-            type: "bar",
-            data: data,
-            options: {
-                FontSize: 50,
-                scales: {
-                    xAxes: [{
-                        barPercentage: 0.4,
-                        scaleLabel: {
-                            display: false,
-                            labelString: '級距',
-                            fontSize: 18,
-                        },
-                        ticks: {
-                            fontSize: 20
-                        }
-                    }],
-                    yAxes: [{
-                        scaleLabel: {
-                        display: true,
-                        labelString: 'Percentage (%)',
-                        fontSize: 18,
-                        },
-                    }]
-                },
+        if ("{{user_score_range}}" === "True") {
+            var ctx = document.getElementById("range");
+            var data = {
+                labels: ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "E", "X"],
+                datasets: score_range
             }
-        });
-        console.log(score_range)
+            var score_range = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: {
+                    FontSize: 50,
+                    scales: {
+                        xAxes: [{
+                            barPercentage: 0.4,
+                            scaleLabel: {
+                                display: false,
+                                labelString: '級距',
+                                fontSize: 18,
+                            },
+                            ticks: {
+                                fontSize: 20
+                            }
+                        }],
+                        yAxes: [{
+                            scaleLabel: {
+                            display: true,
+                            labelString: 'Percentage (%)',
+                            fontSize: 18,
+                            },
+                        }]
+                    },
+                }
+            });
+        }
     </script>
 {% endblock %}
