@@ -23,7 +23,7 @@ def add_course_func ():
                 print (year, semester,course['課程中文名稱'])
                 course_in_db = Course.objects.get_or_create(
                         title_tw = course['課程中文名稱'],
-                        teacher = course['授課教師'],
+                        teacher = html.unescape(course['授課教師']),
                         defaults = {
                             'title_tw': html.unescape(course['課程中文名稱']),
                             'title_en': course['課程英文名稱'],
