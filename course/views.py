@@ -14,6 +14,7 @@ import requests
 from bs4 import BeautifulSoup
 import html
 import django_rq
+from course.worker import add_course_func
 
 def index (request):
     all_courses = Course.objects.order_by('department')
@@ -127,4 +128,5 @@ def add_course (request):
     queue = django_rq.get_queue('high')
     queue.enqueue(add_course_func)
     print ('after')
+    return redirect('/')
 

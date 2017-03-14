@@ -107,48 +107,6 @@ def create (request):
 
     return redirect ('/course_comment')
 
-def search (request):
-    # course_no = request.POST.get('course_no', '')
-    # all_comments = Comment.objects.filter(course__course_no = course_no)
-    
-    keyword = request.GET.get('keyword', '')
-    courses = Course.objects.filter(Q(title_tw__icontains = keyword) | Q(teacher__icontains = keyword) | Q(course_no__icontains = keyword))
-    all_comments = Comment.objects.filter(course__in = courses).order_by('-created_time')
-    
-    if course_no:
-        course = Course.objects.get(course_no = course_no)
-        # create comment of course
-        Comment.objects.create(
-            title = title,
-            content = total_content,
-            anonymous = anonymous,
-            course = course,
-            user = request.user,
-            created_time = str(datetime.datetime.now()),
-            sweety = sweety,
-            cold = cold,
-            hardness = hardness,
-            score_img = score_img,
-        )
-    # else:
-    #     custom_course_name = request.POST.get('custom_course', '')
-    #     # create comment of course
-    #     Comment.objects.create(
-    #         title = title,
-    #         content = content,
-    #         anonymous = anonymous,
-    #         course = None,
-    #         custom_course_name = custom_course_name,
-    #         user = request.user,
-    #         created_time = str(datetime.datetime.now()),
-    #         sweety = sweety,
-    #         cold = cold,
-    #         hardness = hardness,
-    #         score_img = score_img,
-    #     )
-
-    return redirect ('/course_comment')
-
 def show (request, comment_id):
     all_comments = [Comment.objects.get(id = comment_id)]
     course_comment = 'focus'
@@ -193,19 +151,13 @@ def delete(request, comment):
     return redirect('/users/{}/course_comment'.format(request.user.id))
 
 def search (request):
-    # course_no = request.POST.get('course_no', '')
-    # all_comments = Comment.objects.filter(course__course_no = course_no)
     
-    keyword = request.POST.get('keyword', '')
+    keyword = request.GET.get('keyword', '')
     courses = Course.objects.filter(Q(title_tw__icontains = keyword) | Q(teacher__icontains = keyword) | Q(course_no__icontains = keyword))
     all_comments = Comment.objects.filter(course__in = courses).order_by('-created_time')
-    
-    course_comment = 'focus'
 
     if not all_comments:
         no_comment = True
-
-    print (type(all_comments))
 
     paginator = Paginator(all_comments, 10) # Show 10 contacts per page
 
