@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.conf.urls import include
 from django.conf.urls.static import static
 
-from index.views import index
+from index.views import index, privacy_policy
 import course.views as course
 import api.views as api
 import course_comment.views as course_comment
@@ -37,7 +37,7 @@ urlpatterns += (
 # main
 urlpatterns += (
     url(r'^$', index),
-    # url(r'^login/$', login),
+    url(r'^privacypolicy$', privacy_policy),
 )
 
 # course 
