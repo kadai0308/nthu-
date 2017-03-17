@@ -196,7 +196,7 @@ CHANNEL_LAYERS = {
         "CONFIG": {
             "hosts": [os.environ.get('REDISTOGO_URL', 'redis://localhost:6379')],
         },
-        "ROUTING": "chat.routing.channel_routing",
+        "ROUTING": "course.channels.routing.channel_routing",
     },
 }
 
