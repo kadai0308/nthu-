@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/ui/button.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/ui/table.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/app/course/index.css' %}">
+    <script type="text/javascript" src="{% static 'js/socket/reconnecting-websocket.min.js' %}"></script>
     <!-- main part -->
     <div class="main">
         <div class="box">
@@ -22,6 +23,8 @@
                             <button type="submit" class="btn btn-s btn-white">搜尋</button>
                         </div>
                     </form>
+                    <!-- <input id="socket_text" type="text">
+                    <button id="socket"></button> -->
                 </div>
                 <div class="table">
                     <div class="table-title">
@@ -59,5 +62,26 @@
             </div>
         </div>
     </div>
-
+    <script type="text/javascript">
+        // Note that the path doesn't matter for routing; any WebSocket
+        // connection gets bumped over to WebSocket consumers
+        // socket = new WebSocket("ws://" + window.location.host + '/' +window.location.href.split('keyword=')[1]);
+        // socket.onmessage = function(e) {
+        //     console.log(e.data)
+        // }
+        // $('#socket').click(function() {
+        //     var text = $('#socket_text')[0].value
+        //     socket.send(text)
+        // })
+        // Call onopen directly if socket is already open
+        // if (socket.readyState == WebSocket.OPEN) socket.onopen();
+        
+        // var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+        // var chat_socket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + window.location.pathname);
+        
+        // console.log(ws_scheme + '://' + window.location.host + window.location.pathname)
+        // chat_socket.onmessage = function(message) {
+        //     console.log(message)
+        // }
+    </script>
 {% endblock %}

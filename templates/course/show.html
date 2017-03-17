@@ -27,6 +27,9 @@
             <button id="send_post" class="btn btn-s btn-white">匯入</button>
         </div>
     </div>
+    <div class="progress-bar">
+        <div class="fill-color"></div>
+    </div>
     <div class="mask"></div>
     <div class="main">
         <div class="box">
@@ -151,20 +154,20 @@
             $('.mask').hide()
         })
 
-        $('#send_post').click(function() {
-            // console.log('hihi')
-            $.ajax({
-                type: "POST",
-                url: '/course/import_course_score_range',
-                data: {
-                    acixstore: $('#acixstore').val(),
-                    csrfmiddlewaretoken: '{{ csrf_token }}',
-                },
-                success: function (return_message) {
-                    // console.log(return_message)
-                }
-            })
-        })
+        // $('#send_post').click(function() {
+        //     // console.log('hihi')
+        //     $.ajax({
+        //         type: "POST",
+        //         url: '/course/import_course_score_range',
+        //         data: {
+        //             acixstore: $('#acixstore').val(),
+        //             csrfmiddlewaretoken: '{{ csrf_token }}',
+        //         },
+        //         success: function (return_message) {
+        //             // console.log(return_message)
+        //         }
+        //     })
+        // })
 
         // chart
         var score_range = [];
@@ -177,7 +180,7 @@
             async: false
         })
 
-        if ("{{user_score_range}}" === "True") {
+        if ("{{course_score_range}}" === "True") {
             var ctx = document.getElementById("range");
             var data = {
                 labels: ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "E", "X"],
@@ -202,14 +205,61 @@
                         }],
                         yAxes: [{
                             scaleLabel: {
-                            display: true,
-                            labelString: 'Percentage (%)',
-                            fontSize: 18,
+                                display: true,
+                                labelString: 'Percentage (%)',
+                                fontSize: 18,
+
                             },
+                            ticks: {
+                                        min: 0,
+                                        max: 100,
+                                        stepSize: 10
+                                    },
                         }]
                     },
                 }
             });
         }
+[{
+            display: true,
+            
+        }]
+        // socket
+        var user_id = "{{request.user.id}}"
+        socket = new WebSocket("ws://" + window.location.host + '/' + user_id);
+        socket.onmessage = function(message) {
+            var data = JSON.parse(message.data)
+            if (data.status === 'initial progress bar') {
+                // initial progress bar
+                $('.progress-bar').fadeIn();
+            } 
+            else if (data.status === 'update') {
+                // update progress
+                console.log(data.progress)
+                $('.progress-bar .fill-color').animate({
+                    width: data.progress + '%'
+                }, 1000)
+            }
+            else if (data.status === 'complete') {
+                // notice import complete
+
+            }
+            else if (data.status === 'fail') {
+                $('.system-message').append(
+                        '<div class="message-card">' +
+                            '<i class="fa fa-info-circle" aria-hidden="true"></i>' +
+                            ' 失敗摟烏拉拉' +
+                        '</div>'
+                    )
+            }
+
+        }
+        $('#send_post').click(function() {
+            var send_data = {
+                task: 'import_course_score_range',
+                acixstore: $('#acixstore').val(),
+            }
+            socket.send(JSON.stringify(send_data))
+        })
     </script>
 {% endblock %}

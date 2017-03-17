@@ -27,7 +27,6 @@
     width: 100%;
     text-align: center;
     letter-spacing: 3px;
-
 }
 
 .rating {
@@ -165,6 +164,29 @@ form {
     border-radius: 5px;
     padding: 8px 10px;
     outline: none;
+}
+
+.progress-bar {
+    display: none;
+    border-radius: 50px;
+    position: fixed;
+    width: 600px;
+    height: 30px;
+    z-index: 400;
+    top: 60%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: black;
+    margin-left: auto!important;
+    margin-right: auto!important;
+}
+
+.fill-color {
+    width: 0%;
+    background-color: #1BB394;
+    z-index: 400;
+    height: 30px;
+    border-radius: 50px;
 }
 
 .score-range {

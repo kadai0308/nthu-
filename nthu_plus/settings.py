@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'course',
     'course_comment',
     'django_rq',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -184,6 +185,19 @@ RQ_QUEUES = {
         'URL': os.getenv('REDISTOGO_URL', 'redis://localhost:6379/0'),
         'DEFAULT_TIMEOUT': 200,
     }
+}
+
+
+# channels settings
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ.get('REDISTOGO_URL', 'redis://localhost:6379')],
+        },
+        "ROUTING": "chat.routing.channel_routing",
+    },
 }
 
 # deploy settings
