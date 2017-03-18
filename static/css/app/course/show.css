@@ -168,15 +168,13 @@ form {
 
 .progress-bar {
     display: none;
+    overflow: hidden;
     border-radius: 50px;
-    position: fixed;
-    width: 600px;
+    width: 80%;
     height: 30px;
     z-index: 400;
-    top: 60%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: black;
+    border: 1px solid #f3f3f3;
+    text-align: center;
     margin-left: auto!important;
     margin-right: auto!important;
 }
@@ -187,6 +185,12 @@ form {
     z-index: 400;
     height: 30px;
     border-radius: 50px;
+}
+
+.progress-bar .state {
+    position: relative;
+    top: -26px;
+    color: rgba(0,0,0,.44);
 }
 
 .score-range {
