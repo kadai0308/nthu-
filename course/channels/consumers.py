@@ -48,7 +48,7 @@ def ws_message(message):
             }, immediately = True)
             # iter the course
             for index, i in enumerate(main_sheet.find_all('tr')[1:]):
-                if index % 10 == 0:
+                if index % 5 == 0:
                     Group(group_name).send({
                         'text': json.dumps({
                                     'status': 'update',

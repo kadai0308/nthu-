@@ -237,9 +237,6 @@
                 $('.progress-bar .fill-color').animate({
                     width: data.progress + '%'
                 }, 1000)
-                if (data.progress >= 60) {
-                    $('.progress-bar span').css( "color", "white" );
-                }
             }
             else if (data.status === 'complete') {
                 // notice import complete
