@@ -191,6 +191,14 @@
                 type: 'bar',
                 data: data,
                 options: {
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                // console.log(tooltipItem)
+                                return tooltipItem.yLabel + ' %'
+                            }
+                        }
+                    },
                     FontSize: 50,
                     scales: {
                         xAxes: [{
