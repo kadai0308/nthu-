@@ -18,7 +18,7 @@ class CourseByYear (models.Model):
     room_and_time = models.CharField(max_length = 255)
     course = models.ForeignKey(Course, null = True)
 
-class ScoreRange (models.Model):
+class ScoreDistribution (models.Model):
     course = models.OneToOneField(CourseByYear, null = True)
     user = models.ForeignKey(User, null = True)
     semester = models.CharField(max_length = 255)

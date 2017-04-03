@@ -5,7 +5,11 @@ from django.db.models import Q
 from django.db.models import Avg
 from django.http import JsonResponse
 
-from course.models import Course, CourseByYear, ScoreRange
+from course_apps.course_page.models import Course, CourseByYear, ScoreDistribution
+ScoreRange = ScoreDistribution
+
+import course.models as old_course
+import course_apps.course_page.models as new_course
 
 import os
 from functools import wraps
@@ -14,7 +18,7 @@ import requests
 from bs4 import BeautifulSoup
 import html
 import django_rq
-from course.worker import add_course_func, import_course_score_range_func
+from course_apps.course_page.worker import add_course_func, import_course_score_range_func, copy_coursebyyear_data
 
 def index (request):
     all_courses = Course.objects.order_by('department')
@@ -31,7 +35,7 @@ def index (request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         results = paginator.page(paginator.num_pages)
 
-    return render(request, 'course/index.html', locals())
+    return render(request, 'course_page/index.html', locals())
     
 
 def show (request, course_id):
@@ -85,6 +89,31 @@ def add_course (request):
     queue.enqueue(add_course_func)
     print ('after')
     return redirect('/')
+
+def copy_course_data (request):
+    for course in old_course.Course.objects.all():
+        new = new_course.Course.objects.create()
+        new.title_tw = course.title_tw
+        new.title_en = course.title_en
+        new.teacher = course.teacher
+        new.credit = course.credit
+        new.department = course.department
+        new.save()
+
+def copy_courseyear_data (request):
+    print ('before')
+    queue = django_rq.get_queue('high')
+    queue.enqueue(copy_coursebyyear_data)
+    print ('after')
+    return redirect('/')
+
+def copy_score_data (request):
+    for score in old_course.ScoreRange.objects.all():
+        new = new_course.ScoreDistribution.objects.create()
+        course = new_course.CourseByYear.objects.get(course_no = score.course.course_no)
+        new.course = course
+        new.user = score.user
+        new.save()
 
 # for course in Course.objects.all():
 #     if len(Course.objects.filter(title_tw = course.title_tw, teacher = course.teacher)) > 1:

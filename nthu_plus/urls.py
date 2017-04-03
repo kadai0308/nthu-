@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 
 from index.views import index, privacy_policy
 import course.views as course
+import course_apps.course_page.views as course_page
 import api.views as api
 import course_comment.views as course_comment
 import users.views as users
@@ -48,6 +49,24 @@ urlpatterns += (
     url(r'^course/add_course$', course.add_course),
     url(r'^course/import_course_score_range$', course.import_course_score_range),
 )
+
+# test course_page
+
+urlpatterns += (
+    url(r'^course_page/$', course_page.index),
+    url(r'^course_page/(?P<course_id>[0-9]+)$', course_page.show),
+    url(r'^course_page/search$', course_page.search),
+    url(r'^course_page/add_course$', course_page.add_course),
+    url(r'^course_page/import_course_score_range$', course_page.import_course_score_range),
+)
+
+urlpatterns += (
+    url(r'^test/course/$', course_page.index),
+    url(r'^copy_course_data/$', course_page.copy_course_data),
+    url(r'^copy_courseyear_data/$', course_page.copy_courseyear_data),
+    url(r'^copy_score_data/$', course_page.copy_score_data)
+)
+
 
 # course_comment
 urlpatterns += (

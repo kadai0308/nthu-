@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'course_comment',
     'django_rq',
     'channels',
+    'course_apps.course_page',
 ]
 
 MIDDLEWARE = [
@@ -74,6 +75,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
+            './course_apps/course_page/templates',
             './templates',
         ],
         'APP_DIRS': True,

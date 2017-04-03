@@ -1,0 +1,87 @@
+{% extends 'base.html'%}
+{% load static %}
+{% load custom_filter %}
+
+{% block content %}
+    <!-- css import -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ui/button.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ui/table.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/app/course/index.css' %}">
+    <script type="text/javascript" src="{% static 'js/socket/reconnecting-websocket.min.js' %}"></script>
+    <!-- main part -->
+    <div class="main">
+        <div class="box">
+            <div class="box-title">
+                <h5>課程總覽</h5>
+            </div>
+            <div class="box-content">
+                <div class="search-bar">
+                    <form action="/course/search" method="GET" id="search">
+                        <h4>搜尋課程</h4>
+                        <div class="quick_input">
+                            <input type="text" name="keyword" placeholder="輸入：課名 / 老師名 / 開課系所英文縮寫" value="{{ keyword }}">
+                            <button type="submit" class="btn btn-s btn-white">搜尋</button>
+                        </div>
+                    </form>
+                    <!-- <input id="socket_text" type="text">
+                    <button id="socket"></button> -->
+                </div>
+                <div class="table">
+                    <div class="table-title">
+                        <div class="table-box">系所</div>
+                        <div class="table-box">課名</div>
+                        <div class="table-box">授課老師</div>
+                        <div class="table-box">學分</div>
+                        <div class="table-box"></div>
+                    </div>
+                        {% for course in results %}
+                            <div class="table-row">
+                                <div class="table-box">
+                                    <a class="course_href" href="/course/search?keyword={{ course.department }}">
+                                        {{ course.department }}
+                                    </a>
+                                </div>
+                                <div class="table-box">
+                                    <a class="course_href" href="./{{ course.id }}">
+                                        <span>{{ course.title_tw }}</span>
+                                    </a>
+                                </div>
+                                <div class="table-box">
+                                    <a class="course_href" href="/course/search?keyword={{ course.teacher | replace:'[\u4e00-\u9fa5]+' }}">
+                                        {{ course.teacher | replace:'[\u4e00-\u9fa5]+' }}
+                                    </a>
+                                </div>
+                                <div class="table-box">{{ course.credit }}</div>
+                                <div class="table-box">
+                                    <a href="/course_comment/new?course_id={{ course.id }}" class="btn btn-xs btn-main">新增心得</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                </div>
+                {% include 'partial_template/_pagination.html' %}
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        // Note that the path doesn't matter for routing; any WebSocket
+        // connection gets bumped over to WebSocket consumers
+        // socket = new WebSocket("ws://" + window.location.host + '/' +window.location.href.split('keyword=')[1]);
+        // socket.onmessage = function(e) {
+        //     console.log(e.data)
+        // }
+        // $('#socket').click(function() {
+        //     var text = $('#socket_text')[0].value
+        //     socket.send(text)
+        // })
+        // Call onopen directly if socket is already open
+        // if (socket.readyState == WebSocket.OPEN) socket.onopen();
+        
+        // var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+        // var chat_socket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + window.location.pathname);
+        
+        // console.log(ws_scheme + '://' + window.location.host + window.location.pathname)
+        // chat_socket.onmessage = function(message) {
+        //     console.log(message)
+        // }
+    </script>
+{% endblock %}
