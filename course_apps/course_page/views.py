@@ -101,11 +101,17 @@ def copy_course_data (request):
         new.save()
 
 def copy_courseyear_data (request):
-    print ('before')
-    queue = django_rq.get_queue('high')
-    queue.enqueue(copy_coursebyyear_data)
-    print ('after')
-    return redirect('/')
+    for data in old_course.CourseByYear.objects.all():
+        new = new_course.CourseByYear.objects.create()
+        new.course_no = data.course_no
+        new.room_and_time = data.room_and_time
+        course_title = data.course.title_tw
+        course_teacher = data.course.teacher
+        a = new_course.Course.objects.filter(title_tw = course_title, teacher = course_teacher)
+        if a.count() > 1:
+            print (a[0].title_tw, a[0].teacher)
+        new.course = new_course.Course.objects.get(title_tw = course_title, teacher = course_teacher)
+        new.save()
 
 def copy_score_data (request):
     for score in old_course.ScoreRange.objects.all():
