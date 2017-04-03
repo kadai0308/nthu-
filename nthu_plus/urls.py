@@ -60,12 +60,12 @@ urlpatterns += (
     url(r'^course_page/import_course_score_range$', course_page.import_course_score_range),
 )
 
-urlpatterns += (
-    url(r'^test/course/$', course_page.index),
-    url(r'^copy_course_data/$', course_page.copy_course_data),
-    url(r'^copy_courseyear_data/$', course_page.copy_courseyear_data),
-    url(r'^copy_score_data/$', course_page.copy_score_data)
-)
+# urlpatterns += (
+#     url(r'^test/course/$', course_page.index),
+#     url(r'^copy_course_data/$', course_page.copy_course_data),
+#     url(r'^copy_courseyear_data/$', course_page.copy_courseyear_data),
+#     url(r'^copy_score_data/$', course_page.copy_score_data)
+# )
 
 
 # course_comment
