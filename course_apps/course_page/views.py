@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from course_apps.course_page.models import Course, CourseByYear, ScoreDistribution
 
 import course.models as old_course
-# import course_apps.course_page.models as new_course
+import course_apps.course_page.models as new_course
 
 import os
 from functools import wraps
