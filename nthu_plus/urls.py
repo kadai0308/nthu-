@@ -57,7 +57,7 @@ urlpatterns += (
     url(r'^course_page/search$', course_page.search),
     url(r'^course_page/add_course$', course_page.add_course),
     url(r'^course_page/import_course_score_range$', course_page.import_course_score_range),
-    url(r'^update/$', course_page.update_course_data),
+    url(r'^copy_score_data/$', course_page.copy_score_data),
 )
 
 # urlpatterns += (

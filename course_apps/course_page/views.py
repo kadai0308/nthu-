@@ -99,11 +99,11 @@ def add_course (request):
 #         new.department = course.department
 #         new.save()
 
-def update_course_data(request):
-    for course in Course.objects.all():
-        old = old_course.Course.objects.get(teacher = course.teacher, title_tw = course.title_tw)
-        course.course_no = old.course_no
-        course.save()
+# def update_course_data(request):
+#     for course in Course.objects.all():
+#         old = old_course.Course.objects.get(teacher = course.teacher, title_tw = course.title_tw)
+#         course.course_no = old.course_no
+#         course.save()
 
 
 # def copy_courseyear_data (request):
@@ -119,10 +119,11 @@ def update_course_data(request):
 #         new.course = new_course.Course.objects.get(title_tw = course_title, teacher = course_teacher)
 #         new.save()
 
-# def copy_score_data (request):
-#     for score in old_course.ScoreRange.objects.all():
-#         new = new_course.ScoreDistribution.objects.create()
-#         course = new_course.CourseByYear.objects.get(course_no = score.course.course_no)
-#         new.course = course
-#         new.user = score.user
-#         new.save()
+def copy_score_data (request):
+    for score in old_course.ScoreRange.objects.all():
+        new = new_course.ScoreDistribution.objects.create()
+        course = new_course.CourseByYear.objects.get(course_no = score.course.course_no)
+        new.course = course
+        new.score_data = score.score_data
+        new.user = score.user
+        new.save()
