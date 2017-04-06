@@ -20,10 +20,9 @@ from django.conf.urls import include
 from django.conf.urls.static import static
 
 from index.views import index, privacy_policy
-import course.views as course
 import course_apps.course_page.views as course_page
+import course_apps.course_post.views as course_post
 import api.views as api
-import course_comment.views as course_comment
 import users.views as users
 
 urlpatterns = (
@@ -42,15 +41,15 @@ urlpatterns += (
 )
 
 # course 
-urlpatterns += (
-    url(r'^course/$', course.index),
-    url(r'^course/(?P<course_id>[0-9]+)$', course.show),
-    url(r'^course/search$', course.search),
-    url(r'^course/add_course$', course.add_course),
-    url(r'^course/import_course_score_range$', course.import_course_score_range),
-)
+# urlpatterns += (
+#     url(r'^course/$', course.index),
+#     url(r'^course/(?P<course_id>[0-9]+)$', course.show),
+#     url(r'^course/search$', course.search),
+#     url(r'^course/add_course$', course.add_course),
+#     url(r'^course/import_course_score_range$', course.import_course_score_range),
+# )
 
-# test course_page
+# course_page
 
 urlpatterns += (
     url(r'^course_page/$', course_page.index),
@@ -58,6 +57,7 @@ urlpatterns += (
     url(r'^course_page/search$', course_page.search),
     url(r'^course_page/add_course$', course_page.add_course),
     url(r'^course_page/import_course_score_range$', course_page.import_course_score_range),
+    url(r'^update/$', course_page.update_course_data),
 )
 
 # urlpatterns += (
@@ -68,16 +68,29 @@ urlpatterns += (
 # )
 
 
-# course_comment
+# course_post
+# urlpatterns += (
+#     url(r'^course_post/$', course_post.index),
+#     url(r'^course_post/new$', course_post.new),
+#     url(r'^course_post/create$', course_post.create),
+#     url(r'^course_post/search$', course_post.search),
+#     url(r'^course_post/(?P<post_id>[0-9]+)$', course_post.show),
+#     url(r'^course_post/(?P<post_id>[0-9]+)/edit$', course_post.edit),
+#     url(r'^course_post/(?P<post_id>[0-9]+)/update$', course_post.update),
+#     url(r'^course_post/(?P<post_id>[0-9]+)/delete$', course_post.delete),
+# )
+
+# course_post
 urlpatterns += (
-    url(r'^course_comment/$', course_comment.index),
-    url(r'^course_comment/new$', course_comment.new),
-    url(r'^course_comment/create$', course_comment.create),
-    url(r'^course_comment/search$', course_comment.search),
-    url(r'^course_comment/(?P<comment_id>[0-9]+)$', course_comment.show),
-    url(r'^course_comment/(?P<comment_id>[0-9]+)/edit$', course_comment.edit),
-    url(r'^course_comment/(?P<comment_id>[0-9]+)/update$', course_comment.update),
-    url(r'^course_comment/(?P<comment_id>[0-9]+)/delete$', course_comment.delete),
+    url(r'^course_post/$', course_post.index),
+    url(r'^course_post/new$', course_post.new),
+    url(r'^course_post/create$', course_post.create),
+    url(r'^course_post/search$', course_post.search),
+    url(r'^course_post/(?P<post_id>[0-9]+)$', course_post.show),
+    url(r'^course_post/(?P<post_id>[0-9]+)/edit$', course_post.edit),
+    url(r'^course_post/(?P<post_id>[0-9]+)/update$', course_post.update),
+    url(r'^course_post/(?P<post_id>[0-9]+)/delete$', course_post.delete),
+    url(r'^course_post/$', course_post.index),
 )
 
 # user
@@ -86,14 +99,14 @@ urlpatterns += (
     url(r'^users/(?P<user_id>[0-9]+)$', users.show),
     url(r'^users/(?P<user_id>[0-9]+)/edit$', users.edit),
     url(r'^users/(?P<user_id>[0-9]+)/update$', users.update),
-    url(r'^users/(?P<user_id>[0-9]+)/course_comment$', users.course_comment),
+    url(r'^users/(?P<user_id>[0-9]+)/course_post$', users.course_post),
 )
 
 # api
 urlpatterns += (
     url(r'^api/course/search$', api.search_course),
     url(r'^api/course/score_range$', api.score_range),
-    url(r'^api/comment/search$', api.search_comment),
+    url(r'^api/post/search$', api.search_post),
 )
 
 # rq

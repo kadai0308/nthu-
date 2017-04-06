@@ -1,5 +1,5 @@
 from channels.routing import route
-from course.channels.consumers import ws_connect, ws_message, ws_disconnect
+from course_apps.course_page.channels.consumers import ws_connect, ws_message, ws_disconnect
 
 channel_routing = [
     route("websocket.connect", ws_connect),

@@ -17,7 +17,7 @@
     width: 100%;
 }
 
-.comment-href {
+.post-href {
     color: #000;
     text-decoration: none;
 }
@@ -99,13 +99,13 @@
     width: 500px;
 }
 
-.no-comment {
+.no-post {
     text-align: center;
     padding: 80px 0;
     background-color: #f3f3f3;
 }
 
-.no-comment .title {
+.no-post .title {
     margin-bottom: 15px;
 }
 

@@ -5,38 +5,38 @@
 {% block content %}
     <!-- css import -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/ui/button.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/app/users/course_comment.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/app/users/course_post.css' %}">
     <!-- main part -->
     <div class="main">
-        <a class="btn fixed right-top btn-main btn-xl btn-shadow" href="/course_comment/new"><i class="fa fa-plus" aria-hidden="true"></i> 新增心得</a>
+        <a class="btn fixed right-top btn-main btn-xl btn-shadow" href="/course_post/new"><i class="fa fa-plus" aria-hidden="true"></i> 新增心得</a>
         <div class="title"><div>我的修課心得</div></div>
-        {% if not comments %}
+        {% if not posts %}
             <div class="default-text">快來新增你的心得吧～</div>
         {% endif %}
-        {% for comment in comments %}
+        {% for post in posts %}
             <div class="box">
                 <div class="box-title">
-                    <h5>{{ comment.course.title_tw }} / {{ comment.course.teacher | replace:'[\u4e00-\u9fa5]+' }}</h5>
+                    <h5>{{ post.course.title_tw }} / {{ post.course.teacher | replace:'[\u4e00-\u9fa5]+' }}</h5>
                     <div class="box-tool">
-                        <a href="/course_comment/{{ comment.id }}/edit" class="btn btn-xs btn-main">
+                        <a href="/course_post/{{ post.id }}/edit" class="btn btn-xs btn-main">
                             <i class="fa fa-pencil" aria-hidden="true"></i>
                             修改心得
                         </a>
-                        <a href="/course_comment/{{ comment.id }}/delete" class="btn btn-xs btn-danger">
+                        <a href="/course_post/{{ post.id }}/delete" class="btn btn-xs btn-danger">
                             <i class="fa fa-trash-o" aria-hidden="true"></i>
                             刪除心得
                         </a>
                     </div>
                 </div>
                 <div class="box-content">
-                    <h3>{{ comment.title }}</h3>
+                    <h3>{{ post.title }}</h3>
                     <div>
-                        甜度：{{ comment.sweety }} <i class="fa fa-star star" aria-hidden="true"></i>
-                        涼度：{{ comment.cold }} <i class="fa fa-star star" aria-hidden="true" ></i>
-                        難度：{{ comment.hardness }} <i class="fa fa-star star" aria-hidden="true" ></i>
+                        甜度：{{ post.sweety }} <i class="fa fa-star star" aria-hidden="true"></i>
+                        涼度：{{ post.cold }} <i class="fa fa-star star" aria-hidden="true" ></i>
+                        難度：{{ post.hardness }} <i class="fa fa-star star" aria-hidden="true" ></i>
                     </div>
-                    <p id='unfold'>{{ comment.content | truncatetw | linebreaksbr }}</p>
-                    <p id='hidden'>{{ comment.content | linebreaksbr }}</p>
+                    <p id='unfold'>{{ post.content | truncatetw | linebreaksbr }}</p>
+                    <p id='hidden'>{{ post.content | linebreaksbr }}</p>
                 </div>
             </div>
         {% endfor %}

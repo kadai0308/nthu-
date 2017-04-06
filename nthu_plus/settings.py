@@ -51,11 +51,12 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
     'index',
     'users',
-    'course',
-    'course_comment',
     'django_rq',
     'channels',
     'course_apps.course_page',
+    'course_apps.course_post',
+    'course',
+    'course_comment',
 ]
 
 MIDDLEWARE = [
@@ -76,6 +77,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             './course_apps/course_page/templates',
+            './course_apps/course_post/templates',
             './templates',
         ],
         'APP_DIRS': True,
@@ -198,7 +200,7 @@ CHANNEL_LAYERS = {
         "CONFIG": {
             "hosts": [os.environ.get('REDISTOGO_URL', 'redis://localhost:6379')],
         },
-        "ROUTING": "course.channels.routing.channel_routing",
+        "ROUTING": "course_apps.course_page.channels.routing.channel_routing",
     },
 }
 

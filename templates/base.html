@@ -41,8 +41,8 @@
     <div class="metabar">
         <div class="metabar-top">
             <div class="metabar-left">
-                <a id='course_comment' class="metabar-left-item" href="/course_comment">修課心得</a>
-                <a id='course' class="metabar-left-item" href="/course">瀏覽課程</a>
+                <a id='course_post' class="metabar-left-item" href="/course_post">修課心得</a>
+                <a id='course' class="metabar-left-item" href="/course_page">瀏覽課程</a>
                 <a class="metabar-left-item" id="not-yet" href="#"><img src="/static/image/metabar_item.png"></a>
             </div>
             <div class="metabar-middle"><a href="/">NTHU+</a></div>
@@ -64,8 +64,8 @@
                     <ul class="user-dropdown">
                         <li class="pointer"></li>
                         <a href="/users/{{ request.user.id }}"><li>個人資訊</li></a>
-                        <a href="/users/{{ request.user.id }}/course_comment"><li>我的修課心得</li></a>
-                        <!-- <a href="/users/{{ request.user.id }}/course_comment"><li>歷年成績</li></a> -->
+                        <a href="/users/{{ request.user.id }}/course_post"><li>我的修課心得</li></a>
+                        <!-- <a href="/users/{{ request.user.id }}/course_post"><li>歷年成績</li></a> -->
                     </ul>
                 </div>
                 <a class="metabar-btn" href="/accounts/logout">登出</a>

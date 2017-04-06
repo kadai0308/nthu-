@@ -38,7 +38,7 @@
                 <h5>{{ course.title_tw }} / {{ course.teacher }}</h5>
             </div>
             <div class="box-content">
-                <h4>綜合評價 ({{ comments_amount }} 人)</h4>
+                <h4>綜合評價 ({{ posts_amount }} 人)</h4>
                 <div class="rating-area">
                     <div class="rating">
                         <div class="rating-title">甜度</div>
@@ -59,27 +59,27 @@
                         <div id="left" class="slide-icon"><i class="fa fa-angle-left" aria-hidden="true"></i></div>
                         <div class="slide-main">
                             <div class="slide-main-ab">
-                                {% if not comments %}
-                                    <div class="no-comment box">
+                                {% if not posts %}
+                                    <div class="no-post box">
                                         <div class="title">暫時還沒有心得喔～</div>
-                                        <a href="/course_comment/new?course_id={{ course.id }}" class="btn btn-m btn-main">新增心得</a>
+                                        <a href="/course_post/new?course_id={{ course.id }}" class="btn btn-m btn-main">新增心得</a>
                                     </div>
                                 {% endif %}
-                                {% for comment in comments %}
+                                {% for post in posts %}
                                     <div class="box slide-box" style="margin: 0px;">
                                         <div class="box-title">
-                                            <h5>{{ comment.course.title_tw }} / {{ comment.course.teacher | replace:'[\u4e00-\u9fa5]+' }}</h5>
+                                            <h5>{{ post.course.title_tw }} / {{ post.course.teacher | replace:'[\u4e00-\u9fa5]+' }}</h5>
                                         </div>
                                         <div class="box-content">
-                                            <a class="comment-href" href="/course_comment/{{ comment.id }}">
-                                                <h3>{{ comment.title }}</h3>
+                                            <a class="post-href" href="/course_post/{{ post.id }}">
+                                                <h3>{{ post.title }}</h3>
                                                 <div>
-                                                    甜度：{{ comment.sweety }} <i class="fa fa-star star" aria-hidden="true"></i>
-                                                    涼度：{{ comment.cold }} <i class="fa fa-star star" aria-hidden="true"></i>
-                                                    難度：{{ comment.hardness }} <i class="fa fa-star star" aria-hidden="true"></i>
+                                                    甜度：{{ post.sweety }} <i class="fa fa-star star" aria-hidden="true"></i>
+                                                    涼度：{{ post.cold }} <i class="fa fa-star star" aria-hidden="true"></i>
+                                                    難度：{{ post.hardness }} <i class="fa fa-star star" aria-hidden="true"></i>
                                                 </div>
                                                 <p>
-                                                    {{ comment.content| truncatetw:4 | linebreaksbr }}
+                                                    {{ post.content| truncatetw:4 | linebreaksbr }}
                                                 </p>
                                             </a>
                                         </div>
@@ -111,16 +111,16 @@
         </div>
     </div>
     <script type="text/javascript">
-        var comments_amount = {{ comments.count }}
-        if (comments_amount !== 0) {
-            now_comment = 1;
+        var posts_amount = {{ posts.count }}
+        if (posts_amount !== 0) {
+            now_post = 1;
             $('#left').click(function () {
-                now_comment--;
-                if (now_comment <= 0) {
+                now_post--;
+                if (now_post <= 0) {
                     $('.slide-main-ab').animate({
-                        left: "-=" + 500*(comments_amount - 1)
+                        left: "-=" + 500*(posts_amount - 1)
                     })   
-                    now_comment = comments_amount;
+                    now_post = posts_amount;
                 } else {
                     $('.slide-main-ab').animate({
                         left: "+=500"
@@ -128,13 +128,13 @@
                 }
             })
             $('#right').click(function () {
-                now_comment++;
+                now_post++;
 
-                if (now_comment >= comments_amount+1) {
+                if (now_post >= posts_amount+1) {
                     $('.slide-main-ab').animate({
-                        right: "-=" + 500*(comments_amount - 1)
+                        right: "-=" + 500*(posts_amount - 1)
                     })   
-                    now_comment = 1;
+                    now_post = 1;
                 } else {
                     $('.slide-main-ab').animate({
                         right: "+=500"

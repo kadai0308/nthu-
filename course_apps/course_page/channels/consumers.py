@@ -2,7 +2,7 @@ from channels import Group
 from channels.sessions import channel_session
 
 from django.contrib.auth.models import User
-from course.models import Course, CourseByYear, ScoreRange
+from course_apps.course_page.models import Course, CourseByYear, ScoreDistribution
 
 from bs4 import BeautifulSoup
 import requests
@@ -87,7 +87,7 @@ def ws_message(message):
                     course_no = course_data_col[0].text + course_data_col[1].text + course_data_col[2].text.replace('\xa0', '')
 
                     course_by_year = CourseByYear.objects.get(course_no = course_no)
-                    ScoreRange.objects.update_or_create(
+                    ScoreDistribution.objects.update_or_create(
                             course = course_by_year,
                             defaults = {
                                 "user": user,

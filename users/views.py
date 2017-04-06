@@ -5,7 +5,7 @@ from django.contrib import messages
 from functools import wraps
 
 from django.contrib.auth.models import User
-from course_comment.models import Comment
+from course_apps.course_post.models import Post
 
 # private
 
@@ -44,23 +44,23 @@ def update (request, user_id):
     return redirect('/users/{user_id}'.format(user_id = user_id))
 
 @_checkAuth
-def course_comment (request, user_id):
+def course_post (request, user_id):
 
-    user_comments = Comment.objects.filter(user = request.user).order_by('-created_time')
+    posts = Post.objects.filter(user = request.user).order_by('-created_time')
     
-    paginator = Paginator(user_comments, 10) # Show 10 conmment per page
+    paginator = Paginator(posts, 10) # Show 10 Posts per page
 
     page = request.GET.get('page')
     try:
-        comments = paginator.page(page)
+        results = paginator.page(page)
     except PageNotAnInteger:
         # If page is not an integer, deliver first page.
-        comments = paginator.page(1)
+        results = paginator.page(1)
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
-        comments = paginator.page(paginator.num_pages)
+        results = paginator.page(paginator.num_pages)
 
-    return render(request, 'users/course_comment.html', locals())
+    return render(request, 'users/course_post.html', locals())
 
 def login_cancelled (request):
     messages.warning(request, '登入取消呦')
