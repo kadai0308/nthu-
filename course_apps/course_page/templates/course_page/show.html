@@ -232,7 +232,7 @@
 
         // socket
         var user_id = "{{request.user.id}}"
-        socket = new WebSocket("ws://" + window.location.host + '/' + user_id);
+        socket = new WebSocket("wss://" + window.location.host + '/' + user_id);
         socket.onmessage = function(message) {
             var data = JSON.parse(message.data)
             if (data.status === 'initial progress bar') {
