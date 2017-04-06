@@ -90,7 +90,7 @@ urlpatterns += (
     url(r'^course_post/(?P<post_id>[0-9]+)/edit$', course_post.edit),
     url(r'^course_post/(?P<post_id>[0-9]+)/update$', course_post.update),
     url(r'^course_post/(?P<post_id>[0-9]+)/delete$', course_post.delete),
-    url(r'^course_post/$', course_post.index),
+    url(r'^copy_post_data/$', course_post.copy_post_data),
 )
 
 # user
