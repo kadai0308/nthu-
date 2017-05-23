@@ -48,26 +48,40 @@
                 // initial progress bar
                 $('#acixstore, #send_post').hide();
                 $('.progress-bar').fadeIn();
-            } 
-            else if (data.status === 'update') {
-                // update progress
-                $('.progress-bar .fill-color').animate({
-                    width: data.progress + '%'
-                }, 1000)
-            }
-            else if (data.status === 'complete') {
-                // notice import complete
-                $('.progress-bar .fill-color').animate({
-                    width: '100%'
-                }, 1000)
-                $('span.state').text('匯入成功！')
-                $('.system-message').append(
+                for (var i = 0; i <= 100; i+=10) {
+                    $('.progress-bar .fill-color').animate({
+                        width: i + '%'
+                    }, 1000)   
+                }
+                setTimeout(function(){ 
+                    $('span.state').text('匯入成功！')
+                    $('.system-message').append(
                         '<div class="message-card">' +
                             '<i class="fa fa-info-circle" aria-hidden="true"></i>' +
                             ' 匯入成功摟' +
                         '</div>'
                     )
-            }
+                }, 11000);
+            } 
+            // else if (data.status === 'update') {
+            //     // update progress
+            //     $('.progress-bar .fill-color').animate({
+            //         width: data.progress + '%'
+            //     }, 1000)
+            // }
+            // else if (data.status === 'complete') {
+            //     // notice import complete
+            //     $('.progress-bar .fill-color').animate({
+            //         width: '100%'
+            //     }, 1000)
+            //     $('span.state').text('匯入成功！')
+            //     $('.system-message').append(
+            //             '<div class="message-card">' +
+            //                 '<i class="fa fa-info-circle" aria-hidden="true"></i>' +
+            //                 ' 匯入成功摟' +
+            //             '</div>'
+            //         )
+            // }
             else if (data.status === 'fail') {
                 $('.system-message').append(
                         '<div class="message-card">' +
