@@ -21,6 +21,11 @@
             </div>
             <div class="explain">
                 <p>登入校務資訊系統後，複製網址列上的 ACIXSTORE (在 ACIXSTORE= 到 ＆之間) 貼在下面的格子中，按下匯入</p>
+                <p>
+                    ex: 假設登入校入資訊系統之後的網址是：<br/>
+                    https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/select_entry.php?ACIXSTORE=25np4nenqeiemub8ae9sqemij5&hint=你的學號
+                </p>
+                <p>那你要填入的序號就是：25np4nenqeiemub8ae9sqemij5</p>
                 <img src="/static/image/ccxp.png" style="width: 100%;">
             </div>
             <input name='acixstore' id="acixstore" class="input-main input-m" type="text" placeholder="acixstore">
@@ -233,7 +238,8 @@
 
         // socket
         var user_id = "{{request.user.id}}"
-        socket = new WebSocket("wss://" + window.location.host + '/' + user_id);
+        var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+        socket = new WebSocket(ws_scheme + '://' + window.location.host + '/' + user_id);
         socket.onmessage = function(message) {
             var data = JSON.parse(message.data)
             if (data.status === 'initial progress bar') {

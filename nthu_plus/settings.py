@@ -78,6 +78,7 @@ TEMPLATES = [
         'DIRS': [
             './course_apps/course_page/templates',
             './course_apps/course_post/templates',
+            './users/templates',
             './templates',
         ],
         'APP_DIRS': True,

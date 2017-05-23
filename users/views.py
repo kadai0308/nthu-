@@ -9,6 +9,7 @@ from course_apps.course_post.models import Post
 
 # private
 
+
 def _checkAuth(view):
     @wraps(view)
     def check(request, *args, **kargs):
@@ -21,30 +22,36 @@ def _checkAuth(view):
         return view(request, kargs['user_id'])
     return check
 
+# views
+
+
 @_checkAuth
-def show (request, user_id):
+def show(request, user_id):
 
     user = User.objects.get(id = user_id)
     return render(request, 'users/show.html', locals())
 
+
 @_checkAuth
-def edit (request, user_id):
+def edit(request, user_id):
 
     User.objects.get(id = user_id)
     return render(request, 'users/edit.html')
 
+
 @_checkAuth
-def update (request, user_id):
+def update(request, user_id):
 
     nickname = request.POST.get('nickname', '')
     user = User.objects.get(id = user_id)
     user.profile.nickname = nickname
-    user.save() 
+    user.save()
 
     return redirect('/users/{user_id}'.format(user_id = user_id))
 
+
 @_checkAuth
-def course_post (request, user_id):
+def course_post(request, user_id):
 
     posts = Post.objects.filter(user = request.user).order_by('-created_time')
     
@@ -62,6 +69,12 @@ def course_post (request, user_id):
 
     return render(request, 'users/course_post.html', locals())
 
-def login_cancelled (request):
+
+@_checkAuth
+def import_score(request, user_id):
+    return render(request, 'users/import_score.html', locals())
+
+
+def login_cancelled(request):
     messages.warning(request, '登入取消呦')
     return redirect('/')

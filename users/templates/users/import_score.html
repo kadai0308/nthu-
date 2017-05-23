@@ -1,0 +1,89 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block content %}
+    <!-- css import -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ui/button.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/app/course/show.css' %}">
+    <style type="text/css">
+        .import_score {
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+    <div class="box import_score">
+        <div class="box-title inline-box">
+            <div class="left">匯入成績</div>
+        </div>
+        <div class="box-content">
+            <div class="warning">
+                NTHU+ 承諾不從校務資訊系統中取用任何其他資料，若仍有疑慮可以參考我們的程式碼：https://github.com/kadai0308/nthu-plus
+            </div>
+            <div class="explain">
+                <p>登入校務資訊系統後，複製網址列上的 ACIXSTORE (在 ACIXSTORE= 到 ＆之間) 貼在下面的格子中，按下匯入</p>
+                <p>
+                    ex: 假設登入校入資訊系統之後的網址是：<br/>
+                    https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/select_entry.php?ACIXSTORE=25np4nenqeiemub8ae9sqemij5&hint=你的學號
+                </p>
+                <p>那你要填入的序號就是：25np4nenqeiemub8ae9sqemij5</p>
+                <img src="/static/image/ccxp.png" style="width: 100%;">
+            </div>
+            <input name='acixstore' id="acixstore" class="input-main input-m" type="text" placeholder="acixstore">
+            <button id="send_post" class="btn btn-s btn-white">匯入</button>
+            <div class="progress-bar">
+                <div class="fill-color"></div>
+                <span class="state">匯入中...</span>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        // socket
+        var user_id = "{{request.user.id}}"
+        var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+        socket = new WebSocket(ws_scheme + '://' + window.location.host + '/' + user_id);
+        socket.onmessage = function(message) {
+            var data = JSON.parse(message.data)
+            if (data.status === 'initial progress bar') {
+                // initial progress bar
+                $('#acixstore, #send_post').hide();
+                $('.progress-bar').fadeIn();
+            } 
+            else if (data.status === 'update') {
+                // update progress
+                $('.progress-bar .fill-color').animate({
+                    width: data.progress + '%'
+                }, 1000)
+            }
+            else if (data.status === 'complete') {
+                // notice import complete
+                $('.progress-bar .fill-color').animate({
+                    width: '100%'
+                }, 1000)
+                $('span.state').text('匯入成功！')
+                $('.system-message').append(
+                        '<div class="message-card">' +
+                            '<i class="fa fa-info-circle" aria-hidden="true"></i>' +
+                            ' 匯入成功摟' +
+                        '</div>'
+                    )
+            }
+            else if (data.status === 'fail') {
+                $('.system-message').append(
+                        '<div class="message-card">' +
+                            '<i class="fa fa-info-circle" aria-hidden="true"></i>' +
+                            ' 匯入失敗' +
+                        '</div>'
+                    )
+            }
+
+        }
+        $('#send_post').click(function() {
+            var send_data = {
+                task: 'import_course_score_range',
+                acixstore: $('#acixstore').val(),
+            }
+            socket.send(JSON.stringify(send_data))
+        })
+    </script>
+{% endblock %}
