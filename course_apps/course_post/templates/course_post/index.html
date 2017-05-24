@@ -34,7 +34,7 @@
         {% for post in results %}
             <div class="box">
                 <div class="box-title">
-                    <h5><a class="href-style" href="/course_post/{{post.id}}">{{ post.course.title_tw }} / {{ post.course.teacher | replace:'[\u4e00-\u9fa5]+' }}</a></h5>
+                    <h5><a class="href-style" href="/course_page/{{post.course.id}}">{{ post.course.title_tw }} / {{ post.course.teacher | replace:'[\u4e00-\u9fa5]+' }}</a></h5>
                 </div>
                 <div class="box-content">
                     <h3>{{ post.title }}</h3>
