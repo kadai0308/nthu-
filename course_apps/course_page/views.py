@@ -20,8 +20,20 @@ import django_rq
 from course_apps.course_page.worker import add_course_func
 
 
+# private
+def _check_user_auth(view):
+    @wraps(view)
+    def check(request, *args, **kargs):
+        if not request.user.is_authenticated():
+            messages.warning(request, '請先登入呦')
+            return redirect ('/')
+        return view(request, )
+    return check
+
+
+@_check_user_auth
 def index(request):
-    all_courses = Course.objects.order_by('department')
+    all_courses = Course.objects.filter(~Q(latest_open_time='暫無資料')).order_by('-latest_open_time')
     paginator = Paginator(all_courses, 10)  # Show 10 post per page
     page = request.GET.get('page', '')
     try:
@@ -80,3 +92,29 @@ def add_course(request):
     queue.enqueue(add_course_func)
     print('after')
     return redirect('/')
+
+# for i in Course.objects.all():
+#     if i.coursebyyear_set.exists():
+#             course_no = i.coursebyyear_set.order_by('course_no')[0].course_no
+#             s = course_no[:3] + ' '
+#             if course_no[3:5] == '10':
+#                     s += '上學期'
+#             else:
+#                     s += '下學期'
+#             print(s)
+#             i.latest_open_time = s
+#             i.save()
+#     else:
+#             i.latest_open_time = '暫無資料'
+#             i.save()
+
+
+
+
+
+
+
+
+
+
+

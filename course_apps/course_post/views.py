@@ -30,6 +30,7 @@ def _check_post_auth(view):
     
     return check
 
+
 @_check_post_auth
 def index (request):
     if not request.user.post_set.exists():

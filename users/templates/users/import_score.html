@@ -89,10 +89,14 @@
                             ' 匯入失敗' +
                         '</div>'
                     )
+                $('#send_post').prop('disabled', false);
+                $('#send_post').css('cursor', 'pointer');
             }
 
         }
         $('#send_post').click(function() {
+            $(this).prop('disabled', true);
+            $(this).css('cursor', 'not-allowed');
             var send_data = {
                 task: 'import_course_score_range',
                 acixstore: $('#acixstore').val(),

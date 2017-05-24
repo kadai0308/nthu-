@@ -32,6 +32,7 @@
                         <div class="table-box">課名</div>
                         <div class="table-box">授課老師</div>
                         <div class="table-box">學分</div>
+                        <div class="table-box">最近開課年份</div>
                     </div>
                         {% for course in results %}
                             <div class="table-row">
@@ -51,6 +52,7 @@
                                     </a>
                                 </div>
                                 <div class="table-box">{{ course.credit }}</div>
+                                <div class="table-box">{{ course.latest_open_time }}</div>
                                 <!-- <div class="table-box">
                                     <a href="/course_post/new?course_id={{ course.id }}" class="btn btn-xs btn-main">新增心得</a>
                                 </div> -->

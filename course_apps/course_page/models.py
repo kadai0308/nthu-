@@ -12,6 +12,7 @@ class Course (models.Model):
     teacher = models.TextField()
     semester = models.CharField(max_length=255)
     department = models.CharField(max_length=255)
+    latest_open_time = models.CharField(max_length=255)
 
 
 class CourseByYear (models.Model):
