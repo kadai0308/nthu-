@@ -39,10 +39,6 @@
                         <input type="text" id="title" name="title" required="required">
                     </div>
                     <div class="form-group">
-                        <label for="ta">助教表現</label>
-                        <textarea  id="ta" name="ta"></textarea>
-                    </div>
-                    <div class="form-group">
                         <label for="scoring">評分方式</label>
                         <textarea  id="scoring" name="scoring" required="required"></textarea>
                     </div>
@@ -50,7 +46,7 @@
                         <label for="content">修課心得</label>
                         <textarea  id="content" name="content" required="required"></textarea>
                     </div>
-
+                    <div class="total-word">評分方式 + 修課心得總字數：0 / 30</div>
                     <div class="display_flex">
                         <div class="line_height30 marginRight20">甜度</div>
                         <div class="rating">
@@ -123,6 +119,13 @@
             })            
         })
 
+        var wordAmount = 0;
+        $("#scoring, #content").keyup(function() {
+            wordAmount = $('#content').val().length + $('#scoring').val().length;
+            console.log(wordAmount)
+            $(".total-word").text('評分方式 + 修課心得總字數：' + wordAmount + '/ 30');
+        })
+
         // 目前課號衝突
         $('.course').change(function() {
             var teacher = $('.course option:checked').text().split(' / ')[1]
@@ -145,6 +148,10 @@
             if ($('.course option:checked').val() === '') {
                 alert('請選擇課程')
                 return false
+            }
+            if (wordAmount < 30) {
+                alert('評分方式 + 修課心得至少大於 30 個字')
+                return false   
             }
         })
     </script>

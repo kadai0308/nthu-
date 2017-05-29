@@ -73,11 +73,9 @@ def create (request):
     title = request.POST.get('title', '')
     teacher = request.POST.get('teacher', '')
     scoring = request.POST.get('scoring', '')
-    ta = request.POST.get('ta', '')
     content = request.POST.get('content', '')
 
     total_content = '【評分方式】' + scoring + '\n\n'
-    total_content += '【助教表現】' + ta + '\n\n'
     total_content += '【修課心得】' + content + '\n\n'
     
     score_img = request.FILES['score_img'] if 'score_img' in request.FILES else None

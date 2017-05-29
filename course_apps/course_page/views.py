@@ -92,29 +92,3 @@ def add_course(request):
     queue.enqueue(add_course_func)
     print('after')
     return redirect('/')
-
-# for i in Course.objects.all():
-#     if i.coursebyyear_set.exists():
-#             course_no = i.coursebyyear_set.order_by('-course_no')[0].course_no
-#             s = course_no[:3] + ' '
-#             if course_no[3:5] == '10':
-#                     s += '上學期'
-#             else:
-#                     s += '下學期'
-#             print(s)
-#             i.latest_open_time = s
-#             i.save()
-#     else:
-#             i.latest_open_time = '暫無資料'
-#             i.save()
-
-
-
-
-
-
-
-
-
-
-
