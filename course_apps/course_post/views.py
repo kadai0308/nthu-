@@ -151,6 +151,8 @@ def delete(request, post):
     return redirect('/users/{}/course_post'.format(request.user.id))
 
 def search (request):
+    if not request.user.post_set.exists():
+        ban = 'ban'
     
     keyword = request.GET.get('keyword', '')
     courses = Course.objects.filter(Q(title_tw__icontains = keyword) | Q(teacher__icontains = keyword) | Q(course_no__icontains = keyword))
