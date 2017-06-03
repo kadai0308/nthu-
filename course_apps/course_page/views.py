@@ -69,7 +69,7 @@ def show(request, course_id):
 
 def search(request):
     keyword = request.GET.get('keyword', '')
-    all_courses = Course.objects.filter(Q(title_tw__icontains=keyword) | Q(teacher__icontains=keyword) | Q(course_no__icontains = keyword))
+    all_courses = Course.objects.filter(Q(title_tw__icontains=keyword) | Q(teacher__icontains=keyword) | Q(course_no__icontains=keyword))
     all_courses = all_courses.order_by('course_no')
     paginator = Paginator(all_courses, 10)  # Show 10 post per page
 
