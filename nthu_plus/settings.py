@@ -24,15 +24,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'dp5kj0k1spp1*!#oc%-d#n594-_h4*3@7)*opos86(&1+#05yb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    'www.nthu-plus.com',
-    'nthu-plus.com',
-    'nthu-plus.herokuapp.com',
-]
+ALLOWED_HOSTS = ['*']
+
+# ALLOWED_HOSTS = [
+#     'localhost',
+#     '127.0.0.1',
+#     'www.nthu-plus.com',
+#     'nthu-plus.com',
+#     'nthu-plus.herokuapp.com',
+# ]
 
 
 # Application definition
