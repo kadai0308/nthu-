@@ -200,11 +200,21 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "asgi_redis.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [os.environ.get('REDISTOGO_URL', 'redis://localhost:6379')],
+            "hosts": [("localhost", 6379)],
         },
         "ROUTING": "course_apps.course_page.channels.routing.channel_routing",
     },
 }
+
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "asgi_redis.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [os.environ.get('REDISTOGO_URL', 'redis://localhost:6379')],
+#         },
+#         "ROUTING": "course_apps.course_page.channels.routing.channel_routing",
+#     },
+# }
 
 # ssl settings
 # SECURE_SSL_REDIRECT = True
