@@ -35,75 +35,91 @@ def ws_message(message):
             # acixstore invalid
             Group(group_name).send({ 'text': json.dumps({ 'status': 'fail' }) })
         else:
-            soup = BeautifulSoup(html.content, 'html.parser')
-            main_sheet = soup.find_all('table')[1]
-            # 4 is the amount of unnecessary tr tags
-            course_amount = len(main_sheet.find_all('tr')) - 4
-            # send initial progress bar message
-            Group(group_name).send({
-                'text': json.dumps({
-                    'status': 'initial progress bar',
-                    'course_amount': course_amount
-                })
-            }, immediately = True)
-            # iter the course
-            for index, i in enumerate(main_sheet.find_all('tr')[1:]):
-                if index % 5 == 0:
-                    Group(group_name).send({
-                        'text': json.dumps({
-                                    'status': 'update',
-                                    'progress': (index / course_amount)*100
-                                })
-                    }, immediately = True)
-                if index == course_amount - 1:
-                    Group(group_name).send({
-                        'text': json.dumps({
-                                    'status': 'complete',
-                                    'progress': 100
-                                })
-                    }, immediately = True)
-                try:
-                    if '成績未到' in i.find_all('td')[5].text:
-                        continue
-
-                    year = i.find_all('td')[0].text
-                    semester = i.find_all('td')[1].text
-                    course_no = i.find_all('td')[2].text.replace('\xa0', '').replace(' ','%20')
-
-                    c_key = year+semester+course_no
-
-                    score_range_url = ('https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/JH/8/8.3/8.3.3/JH83302.php?'
-                        'ACIXSTORE={}&'
-                        'c_key={}').format(ACIXSTORE, c_key)
-                    
-                    score_range_html = requests.get(score_range_url).content
-
-                    score_range_soup = BeautifulSoup(score_range_html, 'html.parser')
-
-                    score_range_data = score_range_soup.find_all('tr')[2].text
-                    score_range_data_list = score_range_data.replace('\xa0', '').replace(' ','').replace('%', '').split('\n')[2:]
-
-                    course_data_col = i.find_all('td')
-                    course_no = course_data_col[0].text + course_data_col[1].text + course_data_col[2].text.replace('\xa0', '')
-
-                    course_by_year = CourseByYear.objects.get(course_no = course_no)
-                    ScoreDistribution.objects.update_or_create(
-                            course = course_by_year,
-                            defaults = {
-                                "user": user,
-                                "course": course_by_year,
-                                "score_data": score_range_data_list,
-                            } 
-                        )
-                    print (course_by_year.course.title_tw)
-                    print (score_range_data_list)
-                    # print ('-'*100)
-                except  Exception as e:
-                    print (str(e))
-                    continue
-
+            crawl_data(ACIXSTORE, html, group_name, user)
 
 # Connected to websocket.disconnect
 @channel_session
 def ws_disconnect(message):
     Group("chat-%s" % message.channel_session['room']).discard(message.reply_channel)
+
+
+def crawl_data(ACIXSTORE, html, group_name, user):
+    soup = BeautifulSoup(html.content, 'html.parser')
+    main_sheet = soup.find_all('table')[1]
+    data_table = main_sheet.find_all('tr')[1:]
+
+    # 4 is the amount of unnecessary tr tags
+    course_amount = len(main_sheet.find_all('tr')) - 4
+
+    # send initial progress bar message
+    Group(group_name).send({
+        'text': json.dumps({
+            'status': 'initial progress bar',
+            'course_amount': course_amount
+        })
+    }, immediately = True)
+
+    # iter the course
+    for index, i in enumerate(data_table):
+
+        # to send the process of importing data
+        if index % 5 == 0:
+            Group(group_name).send({
+                'text': json.dumps({
+                            'status': 'update',
+                            'progress': (index / course_amount)*100
+                        })
+            }, immediately = True)
+
+        if index == course_amount - 1:
+            Group(group_name).send({
+                'text': json.dumps({
+                            'status': 'complete',
+                            'progress': 100
+                        })
+            }, immediately = True)
+
+        try:
+            # skip 成績未到 and 二退
+            grade_state = i.find_all('td')[5].text
+            if '成績未到' in grade_state or '二退' in grade_state:
+                continue
+
+            # 學校系統把代碼寫在 onclick (js) 中
+            # ex: <input type="button" name="c_key" value="成績分布表" 
+            #     onclick="form1.get_ckey.value='10520CS  
+            #     431100';distribution();">
+            # 直接從裡面撈出代碼
+            c_key = i.find_all('td')[7].find('input')['onclick'][22:37].replace(' ','%20')
+
+            # request the data page
+            score_range_url = ('https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/JH/8/8.3/8.3.3/JH83302.php?'
+                'ACIXSTORE={}&'
+                'c_key={}').format(ACIXSTORE, c_key)
+            score_range_html = requests.get(score_range_url).content
+            score_range_soup = BeautifulSoup(score_range_html, 'html.parser')
+
+            # get distribution data and convert to array
+            score_range_data = score_range_soup.find_all('tr')[2].text
+            score_range_data_list = score_range_data.replace('\xa0', '').replace(' ','').replace('%', '').split('\n')[2:]
+
+            # get course_no to query the course
+            course_data_col = i.find_all('td')
+            course_no = course_data_col[0].text + course_data_col[1].text + course_data_col[2].text.replace('\xa0', '')
+            course_by_year = CourseByYear.objects.get(course_no = course_no)
+
+            # write data to database
+            ScoreDistribution.objects.update_or_create(
+                    course = course_by_year,
+                    defaults = {
+                        "user": user,
+                        "course": course_by_year,
+                        "score_data": score_range_data_list,
+                    } 
+                )
+            print (course_by_year.course.title_tw)
+            print (score_range_data_list)
+            # print ('-'*100)
+        except  Exception as e:
+            print (str(e))
+            continue
