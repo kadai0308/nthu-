@@ -34,7 +34,8 @@ def _check_post_auth(view):
 @_check_post_auth
 def index (request):
     if not request.user.post_set.exists():
-        ban = 'ban'
+        ban = False #time for new student comming
+        # ban = 'ban'
 
     all_posts = Post.objects.all().order_by('-created_time')
     course_post = 'focus'
