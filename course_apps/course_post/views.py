@@ -68,8 +68,8 @@ def create (request):
     # get course
     course_id = request.POST.get('course_no', '')
 
-    # if course_id == '':
-    #     return redirect(request.META.get('HTTP_REFERER'))
+    if course_id == '':
+        return redirect(request.META.get('HTTP_REFERER'))
 
     title = request.POST.get('title', '')
     teacher = request.POST.get('teacher', '')
