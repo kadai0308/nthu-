@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'allauth',
+    'sslserver',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
@@ -57,8 +58,6 @@ INSTALLED_APPS = [
     'channels',
     'course_apps.course_page',
     'course_apps.course_post',
-    'course',
-    'course_comment',
 ]
 
 MIDDLEWARE = [

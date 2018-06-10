@@ -3,12 +3,12 @@ from django.shortcuts import render, redirect, render_to_response
 from django.contrib import messages
 from functools import wraps
 from django.db.models import Q
-
+from django.views import View
 from course_apps.course_page.models import Course
-from course_comment.models import Comment
 from course_apps.course_post.models import Post
 
 import datetime
+from mixins.login import OwnerCheckMixin
 
 # private
 def _check_post_auth(view):
@@ -27,11 +27,11 @@ def _check_post_auth(view):
             return view(request, post)
 
         return view(request)
-    
+
     return check
 
 
-@_check_post_auth
+# @_check_post_auth
 def index (request):
     if not request.user.post_set.exists():
         ban = False #time for new student comming
@@ -194,4 +194,38 @@ def copy_post_data (request):
                 created_time = str(comment.created_time)        
             )
 
+
+class CoursePostList(View):
+
+    def get(self, request):
+        pass
+
+
+class CoursePostDetail(OwnerCheckMixin, View):
+
+    permission_denied_message = '權限不符'
+    model = Post
+
+    # show
+    def get(self, request, post_id):
+        all_posts = [Post.objects.get(id=post_id)]
+        course_post = 'focus'
+        paginator = Paginator(all_posts, 10)  # Show 10 conmment per page
+
+        page = request.GET.get('page')
+        try:
+            results = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            results = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range, deliver last page of results.
+            results = paginator.page(paginator.num_pages)
+        return render(request, 'course_post/index.html', locals())
+
+    def put(self, request):
+        return render(request, 'course_post/edit.html', locals())
+
+    def delete(self, request):
+        pass
 
