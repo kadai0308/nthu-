@@ -4,6 +4,7 @@ from django.contrib import messages
 from functools import wraps
 from django.db.models import Q
 from django.views import View
+from django.contrib.auth.models import User
 from course_apps.course_page.models import Course
 from course_apps.course_post.models import Post
 
@@ -14,9 +15,10 @@ from mixins.login import OwnerCheckMixin
 def _check_post_auth(view):
     @wraps(view)
     def check(request, *args, **kargs):
-        if not request.user.is_authenticated():
-            messages.warning(request, '請先登入呦')
-            return redirect ('/')
+        # HOTFIX
+        # if not request.user.is_authenticated():
+        #     messages.warning(request, '請先登入呦')
+        #     return redirect ('/')
 
         if 'post_id' in kargs:
             post = Post.objects.get(id = kargs['post_id'])
@@ -31,10 +33,10 @@ def _check_post_auth(view):
     return check
 
 
-# @_check_post_auth
+@_check_post_auth
 def index (request):
-    if not request.user.post_set.exists():
-        ban = False #time for new student comming
+    #if not request.user.post_set.exists():
+        #ban = False #time for new student comming
         # ban = 'ban'
 
     all_posts = Post.objects.all().order_by('-created_time')
@@ -85,6 +87,8 @@ def create (request):
     cold = request.POST['cold'] if 'cold' in request.POST else 0
     hardness = request.POST['hardness'] if 'hardness' in request.POST else 0
 
+    user = User.objects.get(username="davy0718@gmail.com")
+
     try:
         if course_id:
             course = Course.objects.get(id = course_id)
@@ -94,7 +98,8 @@ def create (request):
                 content = total_content,
                 anonymous = True,
                 course = course,
-                user = request.user,
+                # HOTFIX
+                user = user,
                 created_time = str(datetime.datetime.now()),
                 sweety = sweety,
                 cold = cold,
