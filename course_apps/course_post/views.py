@@ -3,20 +3,22 @@ from django.shortcuts import render, redirect, render_to_response
 from django.contrib import messages
 from functools import wraps
 from django.db.models import Q
-
+from django.views import View
+from django.contrib.auth.models import User
 from course_apps.course_page.models import Course
-from course_comment.models import Comment
 from course_apps.course_post.models import Post
 
 import datetime
+from mixins.login import OwnerCheckMixin
 
 # private
 def _check_post_auth(view):
     @wraps(view)
     def check(request, *args, **kargs):
-        if not request.user.is_authenticated():
-            messages.warning(request, '請先登入呦')
-            return redirect ('/')
+        # HOTFIX
+        # if not request.user.is_authenticated():
+        #     messages.warning(request, '請先登入呦')
+        #     return redirect ('/')
 
         if 'post_id' in kargs:
             post = Post.objects.get(id = kargs['post_id'])
@@ -27,14 +29,14 @@ def _check_post_auth(view):
             return view(request, post)
 
         return view(request)
-    
+
     return check
 
 
 @_check_post_auth
 def index (request):
-    if not request.user.post_set.exists():
-        ban = False #time for new student comming
+    #if not request.user.post_set.exists():
+        #ban = False #time for new student comming
         # ban = 'ban'
 
     all_posts = Post.objects.all().order_by('-created_time')
@@ -85,6 +87,8 @@ def create (request):
     cold = request.POST['cold'] if 'cold' in request.POST else 0
     hardness = request.POST['hardness'] if 'hardness' in request.POST else 0
 
+    user = User.objects.get(username="davy0718@gmail.com")
+
     try:
         if course_id:
             course = Course.objects.get(id = course_id)
@@ -94,7 +98,8 @@ def create (request):
                 content = total_content,
                 anonymous = True,
                 course = course,
-                user = request.user,
+                # HOTFIX
+                user = user,
                 created_time = str(datetime.datetime.now()),
                 sweety = sweety,
                 cold = cold,
@@ -152,8 +157,9 @@ def delete(request, post):
     return redirect('/users/{}/course_post'.format(request.user.id))
 
 def search (request):
-    if not request.user.post_set.exists():
-        ban = 'ban'
+    # HITFIX
+    # if not request.user.post_set.exists():
+    #     ban = 'ban'
     
     keyword = request.GET.get('keyword', '')
     courses = Course.objects.filter(Q(title_tw__icontains = keyword) | Q(teacher__icontains = keyword) | Q(course_no__icontains = keyword))
@@ -194,4 +200,38 @@ def copy_post_data (request):
                 created_time = str(comment.created_time)        
             )
 
+
+class CoursePostList(View):
+
+    def get(self, request):
+        pass
+
+
+class CoursePostDetail(OwnerCheckMixin, View):
+
+    permission_denied_message = '權限不符'
+    model = Post
+
+    # show
+    def get(self, request, post_id):
+        all_posts = [Post.objects.get(id=post_id)]
+        course_post = 'focus'
+        paginator = Paginator(all_posts, 10)  # Show 10 conmment per page
+
+        page = request.GET.get('page')
+        try:
+            results = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            results = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range, deliver last page of results.
+            results = paginator.page(paginator.num_pages)
+        return render(request, 'course_post/index.html', locals())
+
+    def put(self, request):
+        return render(request, 'course_post/edit.html', locals())
+
+    def delete(self, request):
+        pass
 

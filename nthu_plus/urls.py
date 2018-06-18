@@ -23,6 +23,7 @@ import course_apps.course_post.views as course_post
 import api.views as api
 import users.views as users
 
+
 urlpatterns = (
     url(r'^admin/', admin.site.urls),
 )
@@ -41,11 +42,17 @@ urlpatterns += (
 
 # course_page
 urlpatterns += (
-    url(r'^course_page/$', course_page.index),
-    url(r'^course_page/(?P<course_id>[0-9]+)$', course_page.show),
+    url(r'^course_page/$', course_page.CoursePageList.as_view()),
+    url(r'^course_page/(?P<course_id>[0-9]+)$', course_page.CoursePageDetail.as_view()),
     url(r'^course_page/search$', course_page.search),
     url(r'^course_page/add_course$', course_page.add_course),
 )
+# urlpatterns += (
+#     url(r'^course_page/$', course_page.index),
+#     url(r'^course_page/(?P<course_id>[0-9]+)$', course_page.show),
+#     url(r'^course_page/search$', course_page.search),
+#     url(r'^course_page/add_course$', course_page.add_course),
+# )
 
 # course_post
 urlpatterns += (
@@ -53,10 +60,13 @@ urlpatterns += (
     url(r'^course_post/new$', course_post.new),
     url(r'^course_post/create$', course_post.create),
     url(r'^course_post/search$', course_post.search),
-    url(r'^course_post/(?P<post_id>[0-9]+)$', course_post.show),
-    url(r'^course_post/(?P<post_id>[0-9]+)/edit$', course_post.edit),
-    url(r'^course_post/(?P<post_id>[0-9]+)/update$', course_post.update),
-    url(r'^course_post/(?P<post_id>[0-9]+)/delete$', course_post.delete),
+    url(r'^course_post/(?P<post_id>[0-9]+)$', course_post.CoursePostDetail.as_view()),    
+
+    # url(r'^course_post/(?P<post_id>[0-9]+)$', course_post.show),
+    # url(r'^course_post/(?P<post_id>[0-9]+)/edit$', course_post.edit),
+    # url(r'^course_post/(?P<post_id>[0-9]+)/update$', course_post.update),
+    # url(r'^course_post/(?P<post_id>[0-9]+)/delete$', course_post.delete),
+    
     # url(r'^copy_post_data/$', course_post.copy_post_data),
 )
 
