@@ -205,6 +205,8 @@ CHANNEL_LAYERS = {
     },
 }
 
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+
 # CHANNEL_LAYERS = {
 #     "default": {
 #         "BACKEND": "asgi_redis.RedisChannelLayer",
