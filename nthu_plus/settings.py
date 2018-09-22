@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     'index',
     'users',
     'django_rq',
-    'channels',
+    # 'channels',
     'course_apps.course_page',
     'course_apps.course_post',
 ]
@@ -195,15 +195,15 @@ RQ_QUEUES = {
 
 # channels settings
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "asgi_redis.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [("localhost", 6379)],
-        },
-        "ROUTING": "course_apps.course_page.channels.routing.channel_routing",
-    },
-}
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "asgi_redis.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [("localhost", 6379)],
+#         },
+#         "ROUTING": "course_apps.course_page.channels.routing.channel_routing",
+#     },
+# }
 
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 
