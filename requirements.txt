@@ -11,7 +11,7 @@ constantly==15.1.0
 daphne==1.0.3
 defusedxml==0.4.1
 dj-database-url==0.4.2
-Django==1.10.6
+Django==1.11.29
 django-allauth==0.30.0
 django-rq==0.9.4
 elasticsearch==5.4.0
